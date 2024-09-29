@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+<!-- JANGAN LUPA MODEL attr review tolong diset kalo lebih dari 5 muncul tetep 5 dalam model gabisa masalahnya-->
+{% block meta %}
+<title>Dashboard</title>
+{% endblock meta %}
+
+{% block content %}
+<div>
+    {% for restaurant in restaurants %}
+        <tr>
+            <td>Nama Restaurant : {{ restaurant.name }}</td>
+            <td>Lokasi : {{ restaurant.location }}</td>
+            <td>Review : {{ restaurant.review }}</td>
+            <td>
+                {% for food in restaurant.food.all %}
+                {{ food.name }},
+                {% endfor %}
+            </td>
+        </tr>
+        <br>
+    {% endfor %}
+</div>
+{% endblock content %}
