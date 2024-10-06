@@ -6,23 +6,26 @@ README.md pada GitHub yang berisi:
 -
 
 ## 2. Deskripsi aplikasi (cerita aplikasi yang diajukan serta kebermanfaatannya)
-Terinspirasi Ibu Kota Nusantara (IKN) sebagai pusat pemerintahan dan aktivitas baru di Indonesia, fenomena menarik terjadi saat individu memindahkan diri atau mengunjungi kota yang asing baginya. Dalam keadaan demikian, tantangan besar yang dihadapi adalah menemukan tempat yang tepat untuk membeli produk spesifik. Karena belum akrab dengan kota tersebut, termasuk lokasi toko atau pusat perbelanjaannya, mencari produk yang diinginkan dapat menjadi pengalaman membingungkan dan memakan waktu.Keadaan ini tidak hanya terjadi di kota baru seperti IKN, melainkan juga di kota-kota besar lainnya seperti Mumbai. Saat sampai di Mumbai—baik untuk tinggal ataupun kunjungan—seseorang mungkin kebingungan menemukan beragam jenis makanan khas dan autentik dari kota tersebut. Di sinilah peran Mumbites menjadi sangat penting. Platform seperti Mumbites mampu memberikan solusi efisien bagi pendatang dan wisatawan dalam menemukan makanan yang diinginkan di berbagai sudut kota Mumbai.Sebagai pengetahuan kuliner lengkap, Mumbites tidak hanya memberikan informasi tentang lokasi restoran atau warung makan, tapi juga mengelompokkan opsi makanan berdasarkan jenis, harga, lokasi, serta ulasan dari pengguna lain. Hal ini serupa dengan kebutuhan seorang pendatang di IKN yang mungkin memerlukan panduan serupa untuk menemukan tempat yang menyediakan kebutuhan harian atau produk spesifik di kota baru tersebut. Mumbites memberikan kemudahan bagi siapa pun yang ingin merasakan ragam kuliner di Mumbai, termasuk makanan jalanan legendaris, kafe trendy, ataupun restoran mewah.
+Terinspirasi Ibu Kota Nusantara (IKN) sebagai pusat pemerintahan dan aktivitas baru di Indonesia, fenomena menarik terjadi saat individu memindahkan diri atau mengunjungi kota yang asing baginya. Dalam keadaan demikian, tantangan besar yang dihadapi adalah menemukan tempat yang tepat untuk membeli produk spesifik. Karena belum akrab dengan kota tersebut, termasuk lokasi toko atau pusat perbelanjaannya, mencari produk yang diinginkan dapat menjadi pengalaman membingungkan dan memakan waktu. Keadaan ini tidak hanya terjadi di kota baru seperti IKN, melainkan juga di kota-kota besar lainnya seperti Padang.
+
+Saat sampai di Padang—baik untuk tinggal ataupun kunjungan—seseorang mungkin kebingungan menemukan beragam jenis makanan khas dan autentik dari kota tersebut. Di sinilah peran platform seperti Mineat menjadi sangat penting. Platform seperti Mineat mampu memberikan solusi efisien bagi pendatang dan wisatawan dalam menemukan makanan yang diinginkan di berbagai sudut kota Padang.
 
 ## 3. Daftar modul yang akan diimplementasikan
-Pada saat ini kami berencana mengimplementasikan modul berikut:
-- ## Membuat Akun dan Melakukan Login:
-Kami ingin agar User dapat menyimpan makanan atau restoran favorit mereka dan dapat melakukan review terhadap makanan atau restoran yang ada
-- ## Membuat Search Bar (Restoran dan Makanan):
+Pada saat ini produk utama kami adalah 100 jenis makanan Padang di Kota Padang dan kami berencana mengimplementasikan modul berikut:
+- ## Restoran:
+Kami ingin agar User dapat mencari makanan berdasarkan restoran yang mereka inginkan
+- ## Makanan:
 Kami ingin agar User dapat mencari makanan yang mereka inginkan
-- ## Filter dan Sort Bedasarkan review:
-Kami ingin User dapat menmfilter jenis makanan yang ingin mereka cari
-- ## Tampilan Website:
-Kami ingin tampilan website mengimplementasikan seluruh atribut yang ada di dalam model
+- ## Bahan Makanan:
+Kami ingin User dapat menmfilter jenis makanan yang ingin mereka cari berdasarkan bahan
+- ## Review:
+Kami ingin User dapat menilai makanan dan restoran 
+- ## Lokasi:
+Kami ingin user dapat mencari restotan berdasarkan kecamatan di Kota Padang
 
 ## 4. Sumber initial dataset kategori utama produk
-Kami pada saat ini hanya menggunakan publik dataset dari kaggle yaitu:
-- **Dataset (jenis)** = https://www.kaggle.com/datasets/nehaprabhavalkar/indian-food-101
-- **Dataset(gambar)** = https://www.kaggle.com/datasets/anshulmehtakaggl/themassiveindianfooddataset
+Kami pada saat ini hanya menggunakan publik dataset dari wikipedia yaitu:
+- https://en.wikipedia.org/wiki/Padang_cuisine
   
 ## 5. Role atau peran pengguna beserta deskripsinya (karena bisa saja lebih dari satu jenis pengguna yang mengakses aplikasi)
 
