@@ -2,7 +2,7 @@ README.md pada GitHub yang berisi:
 ## 1. Nama-nama anggota kelompok
 - Cahya Bagus Gautama Gozales (2306275380)
 - Abdul Zacky (2306214510)
--
+- Muhammad Fadhlan Arradhi (2306240061)
 -
 
 ## 2. Deskripsi aplikasi (cerita aplikasi yang diajukan serta kebermanfaatannya)
