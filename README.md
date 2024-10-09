@@ -4,7 +4,7 @@ README.md pada GitHub yang berisi:
 - Abdul Zacky (2306214510)
 - Muhammad Fadhlan Arradhi (2306240061)
 - Ragnall Muhammad Al Fath (2306210550)
--
+- Khansa Khairunisa (2306152462)
 
 ## 2. Deskripsi aplikasi (cerita aplikasi yang diajukan serta kebermanfaatannya)
 Terinspirasi Ibu Kota Nusantara (IKN) sebagai pusat pemerintahan dan aktivitas baru di Indonesia, fenomena menarik terjadi saat individu memindahkan diri atau mengunjungi kota yang asing baginya. Dalam keadaan demikian, tantangan besar yang dihadapi adalah menemukan tempat yang tepat untuk membeli produk spesifik. Karena belum akrab dengan kota tersebut, termasuk lokasi toko atau pusat perbelanjaannya, mencari produk yang diinginkan dapat menjadi pengalaman membingungkan dan memakan waktu. Keadaan ini tidak hanya terjadi di kota baru seperti IKN, melainkan juga di kota-kota besar lainnya seperti Padang.
