@@ -1,4 +1,4 @@
-# [Mineat]((http://ragnall-muhammad-mineat.pbp.cs.ui.ac.id/))
+# [Mineat](http://ragnall-muhammad-mineat.pbp.cs.ui.ac.id/)
 
 # Discover Minang cuisine within minutes with Mineat!
 
@@ -55,7 +55,7 @@ Pada fitur ini, pengguna dapat memberikan review berupa nilai dan komentar untuk
 
 **Dikerjakan oleh Khansa Khairunisa**
 
-Pada fitur ini, pengguna dapat melakukan tanya-jawab dengan pengguna lainnya seputar hidangan khas Padang, ataupun budayanya
+Pada fitur ini, pengguna dapat melakukan tanya-jawab dengan pengguna lainnya seputar hidangan khas Padang, ataupun budayanya. 
 
 - ### Lokasi
 
@@ -75,7 +75,6 @@ Mineat menggunakan dataset publik dari [Wikipedia](https://en.wikipedia.org/), y
 | View food and restaurants        | ✅               | ✅                 |
 | Filter food and restaurants      | ✅               | ✅                 |
 
-
-## 7. Tautan deployment aplikasi
+## Tautan deployment aplikasi
 
 Deployment aplikasi Mineat dapat diakses melalui tautan berikut: [Mineat](http://ragnall-muhammad-mineat.pbp.cs.ui.ac.id/)
