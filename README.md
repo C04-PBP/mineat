@@ -39,4 +39,5 @@ Kami pada saat ini hanya menggunakan publik dataset dari wikipedia yaitu:
 
 
 ## 7. Tautan deployment aplikasi
+[Mineat](http://ragnall-muhammad-mineat.pbp.cs.ui.ac.id/)
 
