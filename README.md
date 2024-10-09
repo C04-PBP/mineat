@@ -3,6 +3,7 @@ README.md pada GitHub yang berisi:
 - Cahya Bagus Gautama Gozales (2306275380)
 - Abdul Zacky (2306214510)
 - Muhammad Fadhlan Arradhi (2306240061)
+- Ragnall Muhammad Al Fath (2306210550)
 -
 
 ## 2. Deskripsi aplikasi (cerita aplikasi yang diajukan serta kebermanfaatannya)
