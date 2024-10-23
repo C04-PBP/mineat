@@ -23,5 +23,6 @@ urlpatterns = [
     path("fnb/",include("fnb.urls")),
     path("location/",include("location.urls")),
     path("restaurant/",include("restaurant.urls")),
-    path("forum/",include("forum.urls"))
+    path("forum/",include("forum.urls")),
+    path("review/",include("review.urls")),
 ]
