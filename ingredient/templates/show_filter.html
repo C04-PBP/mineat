@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block meta %}
+<title>Filter</title>
+{% endblock meta %}
+
+{% block content %}
+{% include "show_header.html" %}
+
+<div class="flex flex-row gap-4">
+    <aside class="w-[20%]">
+        <div class="relative dropdown-container ">
+            
+            <div class="w-[20vw] h-[80vh] bg-[#ffee9e] rounded-[20px] shadow  overflow-auto">
+                {% for ingredient in ingredients %}
+                <div value = "{{ ingredient.name }}" class="ingredient-div w-[15vw] h-[10vh] bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-rose-500 to-indigo-700 rounded-[20px]
+                text-white shadow flex 
+                items-center justify-center">{{ ingredient.name }}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="submit-container">
+            <button id="submit-btn">Submit Selected Ingredients</button>
+        </div>
+    </aside>
+    <div id="result"></div>
+    
+</div>
+
+
+<style>
+    
+    .dropdown-container,.submit-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: flex-start;    
+        padding: 20px;
+    }
+
+    
+    select {
+        width: 20vw;           
+        height: 80vh;           
+        padding: 10px;          
+        font-size: 16px;        
+    }
+    select[multiple] {
+    height: 80vh;
+    width: 20vw;
+
+    
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+}
+.ingredient-div.selected {
+    background-color: #f0ad4e; /* Highlight color for selected ingredients */
+    border: 2px solid #000;    /* Optional: Add a border */
+}
+</style>
+
+<script>
+    // Get the submit button element
+// Initialize an array to store selected ingredients
+let selectedIngredients = [];
+
+// Add event listeners to each div (ingredient)
+document.querySelectorAll('.ingredient-div').forEach(div => {
+    div.addEventListener('click', function () {
+        const ingredient = div.getAttribute('value'); // Get the ingredient name
+
+        // Toggle the ingredient selection
+        if (selectedIngredients.includes(ingredient)) {
+            // If ingredient is already selected, remove it
+            selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
+            div.classList.remove('selected'); // Optional: Change style when deselected
+        } else {
+            // If ingredient is not selected, add it to the list
+            selectedIngredients.push(ingredient);
+            div.classList.add('selected'); // Optional: Change style when selected
+        }
+
+        console.log('Selected ingredients:', selectedIngredients);
+
+        // Send selected ingredients to the server after every change
+        sendSelectedIngredients(selectedIngredients);
+    });
+});
+
+// Function to send the selected ingredients to the server
+function sendSelectedIngredients(selectedIngredients) {
+    fetch('{% url "ingredient:record_ingredients" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({
+            ingredients: selectedIngredients
+        })
+    })
+    .then(response => response.json())  // Expect JSON response
+    .then(data => {
+        // Update the content of the page with the new HTML
+        document.getElementById('result').innerHTML = data.html;
+    })
+    .catch((error) => {
+        console.error("Error recording ingredients:", error);
+    });
+}
+</script>
+
+
+{% endblock content %}
+
