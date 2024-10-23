@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block meta %}
+<title>Fnb</title>
+{% endblock meta %}
+
+{% block content %}
+
+<div class="flex flex-row gap-4">
+  
+  <section class="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white">
+      <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+        <div class="mx-auto max-w-lg text-center">
+          <h2 class="text-3xl font-bold sm:text-4xl">Mineat</h2>
+          
+          <p class="mt-4 text-gray-300">
+            kosongg
+          </p>
+        </div>
+    
+        <!-- Mulai iterasi makanan -->
+        <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {% for fnb in fnbs %}
+              <a
+              class=" bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 block rounded-xl border border-gray-800 p-8 shadow-xl transition hover:border-black-500/10 hover:shadow-red-500/10"
+              href="#">
+              
+              
+
+              <h2 class="mt-4 text-xl font-bold text-white">{{ fnb.name }}</h2>
+
+              <p class="mt-1 text-sm text-white">
+              {{ fnb.description }}
+              </p>
+          </a>
+          {% endfor %}
+          
+        </div>
+    
+        <div class="mt-12 text-center">
+          <a
+            href="#"
+            class="inline-block rounded bg-pink-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring focus:ring-yellow-400"
+          >
+            Get Started Today
+          </a>
+        </div>
+      </div>
+  </section>
+</div>
+{% endblock content %}
