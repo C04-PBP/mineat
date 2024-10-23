@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block meta %}
+<title>Forum Umum</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="bg-gray-100 p-6">
+    <h2 class="text-lg font-bold mb-4">Comments</h2>
+    <div class="flex flex-col space-y-4" id="comment-section">
+        <!-- <div class="bg-white p-4 rounded-lg shadow-md">
+            <h3 class="text-lg font-bold">John Doe</h3>
+            <p class="text-gray-700 text-sm mb-2">Posted on April 17, 2023</p>
+            <p class="text-gray-700">This is a sample comment. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md">
+            <h3 class="text-lg font-bold">Jane Smith</h3>
+            <p class="text-gray-700 text-sm mb-2">Posted on April 16, 2023</p>
+            <p class="text-gray-700">I agree with John. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md">
+            <h3 class="text-lg font-bold">Bob Johnson</h3>
+            <p class="text-gray-700 text-sm mb-2">Posted on April 15, 2023</p>
+            <p class="text-gray-700">I have a different opinion. Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+        </div> -->
+        <div id="test">
+            {% for forum in forums %}
+                {% include "forum_card.html" %}
+            {% endfor %}
+        </div>
+        <form id="comment-form" class="bg-white p-4 rounded-lg shadow-md">
+            <h3 class="text-lg font-bold mb-2">Add a comment section</h3>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="name">
+                    Discussion Name
+                </label>
+                <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="name" type="text" placeholder="Enter your name">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 font-bold mb-2" for="comment">
+                    Comment
+                </label>
+                <textarea
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="comment" rows="3" placeholder="Enter your comment"></textarea>
+            </div>
+            <button
+                class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('comment-form');
+
+    form.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const comment = document.getElementById('comment').value;
+
+        if (name && comment) {
+            try {
+                const response = await fetch("{% url 'forum:add-forum' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Add CSRF token for security
+                    },
+                    body: JSON.stringify({
+                        'name': name,
+                        'comment': comment
+                    })
+                });
+
+                if (response.ok) {
+                    const newComment = await response.json();
+                    addCommentToPage(newComment);
+                    form.reset();  // Clear the form after submission
+                } else {
+                    console.error('Failed to submit the comment.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        } else {
+            alert('Please fill out both fields!');
+        }
+    });
+
+    // Function to add the new comment to the comment section
+    function addCommentToPage(commentData) {
+        const commentSection = document.getElementById('comment-section');
+
+        const commentDiv = document.createElement('div');
+        commentDiv.classList.add('bg-white', 'p-4', 'rounded-lg', 'shadow-md');
+        commentDiv.innerHTML = `
+            <h3 class="text-lg font-bold">${commentData.name}</h3>
+            <p class="text-gray-700 text-sm mb-2">Posted just now</p>
+            <p class="text-gray-700">${commentData.comment}</p>
+        `;
+
+        commentSection.prepend(commentDiv);
+    }
+
+    // Utility function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+
+</script>
+{% endblock content %}

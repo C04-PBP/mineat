@@ -1,0 +1,14 @@
+{% block meta %}
+<title>Filter</title>
+{% endblock meta %}
+
+{% block content %}
+<div>
+    {% for restaurant in restaurants %}
+        <tr>
+            <td>Nama : {{ restaurant.name }}</td>
+        </tr>
+        <br>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,0 +1,132 @@
+Ingredient,Foods
+ Flour,"['Roti canai', 'Roti jala', 'Peyek', 'Peyek udang', 'Roti tisu']"
+ Fish head,['Gulai kepala ikan']
+ Cow fat,['Gulai gajeboh']
+ eggs,"['Gulai tambusu', 'Gulai talua', 'Martabak kubang', 'Pergedel jaguang', 'Roti canai', 'Roti jala', 'Sarikayo', 'Teh talua']"
+ Cow bone marrow,['Gulai sumsum']
+ Beef,"['Dendeng', 'Kalio', 'Rendang', 'Satay daging', 'Soto padang']"
+ cloves,['Nasi briyani']
+ sweet potato,['Bubur kampiun']
+ Cassava leaves,['Daun ubi tumbuk']
+ broth ,['Soto']
+ Fermented buffalo milk,['Dadiah']
+ saffron,['Nasi briyani']
+ lemongrass,"['Asam padeh', 'Ayam bakar', 'Ayam percik', 'Daun ubi tumbuk', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai udang', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Nasi kari or nasi gulai', 'Rendang', 'Sate padang', 'Gulai sayua']"
+ skewers,"['Satay chicken', 'Satay daging']"
+ peanut sauce,['Satay chicken']
+ Tea,"['Teh talua', 'Teh tarik']"
+ sweet soy sauce,"['Satay chicken', 'Satay daging']"
+ Cow intestines,['Gulai tambusu']
+ pre-cooked dishes,['Nasi padang']
+ flour,"['Bubur kampiun', 'Pergedel jaguang', 'Sate padang', 'Galamai', 'Kue putu', 'Pinyaram', 'Serabi', 'Es ampiang dadiah', 'Cindua']"
+ Dough,"['Martabak', 'Martabak kubang']"
+ Thin beef slices,"['Dendeng balado', 'Dendeng batokok']"
+ Cow skin,['Kerupuk jangek']
+ Small freshwater eels,['Baluik goreng']
+ lime leaves,"['Ayam balado', 'Ayam lado ijo', 'Ayam pop goreng', 'Ayam pop rebus', 'Dendeng balado', 'Gulai daging', 'Gulai ayam', 'Gulai banak', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai udang', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Rendang', 'Soto padang', 'Udang balado', 'Gulai sayua']"
+ Mutton,['Gulai kambiang']
+ Jengkol (stinky beans),['Gulai jariang']
+ cumin,"['Ayam bumbu', 'Martabak']"
+ Meat,"['Gulai daging', 'Gulai cancang', 'Sate padang', 'Soto']"
+ cardamom,['Nasi briyani']
+ Duck,['Gulai itik']
+ garlic,"['Asam padeh', 'Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam goreng', 'Ayam lado ijo', 'Ayam percik', 'Ayam pop goreng', 'Ayam pop rebus', 'Balado', 'Baluik goreng', 'Daun ubi tumbuk', 'Dendeng', 'Dendeng balado', 'Dendeng batokok', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai udang', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Lele goreng', 'Martabak', 'Martabak kubang', 'Nasi briyani', 'Nasi kari or nasi gulai', 'Palai', 'Paru goreng', 'Pergedel jaguang', 'Rendang', 'Sambal lado tanak', 'Satay chicken', 'Satay daging', 'Sate padang', 'Soto', 'Soto padang', 'Talua balado', 'Terong balado', 'Udang balado', 'Keripik balado', 'Peyek', 'Peyek udang', 'Gulai sayua']"
+ ginger,"['Asam padeh', 'Ayam bumbu', 'Ayam percik', 'Nasi briyani', 'Soto']"
+ coconut water,"['Ayam pop goreng', 'Ayam pop rebus']"
+ coconut,"['Ayam bumbu', 'Ayam percik', 'Ayam pop goreng', 'Ayam pop rebus', 'Bubur kampiun', 'Daun ubi tumbuk', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai udang', 'Gulai paku', 'Kalio', 'Lemang', 'Nasi kari or nasi gulai', 'Palai', 'Rendang', 'Roti jala', 'Sambal lado tanak', 'Galamai', 'Kue putu', 'Lupis', 'Pinyaram', 'Serabi', 'Lopek sarikayo', 'Wajik', 'Gulai sayua']"
+ durian,['Cindua']
+ Rice flour,"['Bubur kampiun', 'Galamai', 'Kue putu', 'Pinyaram', 'Serabi', 'Cindua']"
+ syrup,['Es campur']
+ broth,"['Soto', 'Soto padang']"
+ Corn,['Pergedel jaguang']
+ tomatoes,"['Ayam balado', 'Balado', 'Dendeng balado', 'Talua balado', 'Terong balado', 'Udang balado']"
+ Fish,"['Asam padeh', 'Gulai kepala ikan', 'Palai']"
+ Catfish,['Lele goreng']
+ tapioca pearls,['Es campur']
+ scallions,['Martabak']
+ bamboo tubes,['Lemang']
+ Rice flour jelly,['Cindua']
+ Buffalo milk (fermented),['Es ampiang dadiah']
+ Cow spleen,['Gulai limpo']
+ jackfruit,"['Bubur kampiun', 'Es campur', 'Es tebak']"
+ Eggs,['Talua balado']
+ Boiled eggs,['Gulai talua']
+ curry powder,['Martabak kubang']
+ Beef (or other meat),['Kalio']
+ ghee or oil,['Roti canai']
+ shrimp,['Peyek udang']
+ kaffir lime leaves,"['Gulai daging', 'Gulai ayam', 'Gulai banak', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai udang', 'Gulai paku', 'Kalio', 'Rendang', 'Gulai sayua']"
+ oil or ghee,['Roti tisu']
+ anchovies,['Sambal lado tanak']
+ Chicken,"['Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam goreng', 'Ayam lado ijo', 'Ayam percik', 'Ayam pop goreng', 'Ayam pop rebus', 'Gulai ayam']"
+ Cow lung,['Paru goreng']
+ Coconut milk,['Sarikayo']
+ Cassava,"['Daun ubi tumbuk', 'Keripik balado', 'Keripik sanjai']"
+ ginger,['Soto']
+ tofu,['Gulai tambusu']
+ green chilies,['Ayam lado ijo']
+ palm leaves,['Ketupat']
+ Cow tripe,['Gulai babek']
+ chilies,"['Asam padeh', 'Ayam balado', 'Ayam lado ijo', 'Dendeng balado', 'Dendeng batokok', 'Gulai daging', 'Gulai ati', 'Gulai babek', 'Gulai cancang', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Nasi kari or nasi gulai', 'Rendang', 'Sambal lado tanak', 'Talua balado', 'Terong balado', 'Udang balado', 'Gulai sayua']"
+ red chili paste,['Keripik balado']
+ water,"['Asam padeh', 'Ayam goreng', 'Ayam pop goreng', 'Ayam pop rebus', 'Gulai daging', 'Gulai paku', 'Ketupat', 'Roti canai', 'Roti jala', 'Peyek', 'Peyek udang', 'Roti tisu', 'Gulai sayua']"
+ chili paste,"['Ayam percik', 'Keripik balado']"
+ turmeric,"['Asam padeh', 'Ayam bakar', 'Ayam bumbu', 'Ayam goreng', 'Ayam percik', 'Baluik goreng', 'Daun ubi tumbuk', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai udang', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Lele goreng', 'Nasi kari or nasi gulai', 'Palai', 'Paru goreng', 'Rendang', 'Sate padang', 'Soto', 'Gulai sayua']"
+ red chilies,"['Ayam balado', 'Dendeng balado', 'Talua balado', 'Terong balado', 'Udang balado']"
+ stinky beans,['Sambal lado tanak']
+ bay leaves,"['Ayam pop goreng', 'Ayam pop rebus']"
+ kecap manis ,['Ayam bakar']
+ Chilies,['Balado']
+ Rice,"['Bubur kampiun', 'Ketupat', 'Nasi kapau', 'Nasi kari or nasi gulai', 'Nasi padang', 'Galamai', 'Kue putu', 'Pinyaram', 'Serabi', 'Cindua']"
+ Green chilies,['Sambal lado tanak']
+ mung beans,['Bubur kampiun']
+ yogurt,['Nasi briyani']
+ shallots,"['Asam padeh', 'Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam lado ijo', 'Ayam pop goreng', 'Ayam pop rebus', 'Balado', 'Daun ubi tumbuk', 'Dendeng balado', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai gajeboh', 'Gulai kepala ikan', 'Gulai limpo', 'Gulai sumsum', 'Gulai talua', 'Gulai udang', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Martabak kubang', 'Nasi kari or nasi gulai', 'Palai', 'Pergedel jaguang', 'Rendang', 'Sambal lado tanak', 'Satay chicken', 'Satay daging', 'Sate padang', 'Soto padang', 'Talua balado', 'Terong balado', 'Udang balado', 'Keripik balado', 'Gulai sayua']"
+ Eggplant,['Terong balado']
+ yeast,['Tapai']
+ jackfruit,['Es campur']
+ Beef,"['Dendeng', 'Kalio', 'Rendang', 'Soto padang']"
+ coriander,"['Ayam bumbu', 'Ayam goreng', 'Dendeng', 'Martabak', 'Peyek', 'Peyek udang']"
+ Paku,['Gulai paku']
+ pandan leaves,"['Bubur kampiun', 'Lemang', 'Roti jala', 'Sarikayo', 'Kue putu', 'Serabi', 'Lopek sarikayo']"
+ Basmati rice,['Nasi briyani']
+ chili,"['Asam padeh', 'Ayam bakar', 'Ayam balado', 'Ayam lado ijo', 'Ayam percik', 'Dendeng balado', 'Dendeng batokok', 'Gulai daging', 'Gulai ati', 'Gulai babek', 'Gulai cancang', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai paku', 'Kalio', 'Kepiting saus padang', 'Nasi kari or nasi gulai', 'Rendang', 'Sambal lado tanak', 'Talua balado', 'Terong balado', 'Udang balado', 'Keripik balado', 'Gulai sayua']"
+ Red snapper's head,['Gulai kepala ikan kakap merah']
+ rice flour,['Es ampiang dadiah']
+ ice,"['Es ampiang dadiah', 'Cindua', 'Es campur', 'Es tebak']"
+ Glutinous rice,"['Lupis', 'Lopek sarikayo', 'Wajik']"
+ Shrimp,"['Gulai udang', 'Udang balado']"
+ salt,"['Asam padeh', 'Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam goreng', 'Ayam lado ijo', 'Ayam percik', 'Ayam pop goreng', 'Ayam pop rebus', 'Balado', 'Baluik goreng', 'Daun ubi tumbuk', 'Dendeng', 'Dendeng balado', 'Dendeng batokok', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai tunjang', 'Gulai udang', 'Gulai paku', 'Ikan bilih', 'Kepiting saus padang', 'Lele goreng', 'Paru goreng', 'Pergedel jaguang', 'Rajungan goreng', 'Talua balado', 'Terong balado', 'Udang balado', 'Keripik sanjai', 'Kerupuk jangek', 'Peyek', 'Peyek udang', 'Gulai sayua']"
+ Vegetable,['Gulai sayua']
+  ,"['Asam padeh', 'Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam goreng', 'Ayam lado ijo', 'Ayam percik', 'Balado', 'Baluik goreng', 'Bubur kampiun', 'Daun ubi tumbuk', 'Dendeng', 'Dendeng balado', 'Dendeng batokok', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Ikan bilih', 'Kalio', 'Kepiting saus padang', 'Ketupat', 'Lele goreng', 'Lemang', 'Martabak', 'Martabak kubang', 'Nasi briyani', 'Nasi kapau', 'Nasi kari or nasi gulai', 'Nasi padang', 'Palai', 'Paru goreng', 'Pergedel jaguang', 'Petai goreng', 'Rajungan goreng', 'Rendang', 'Roti canai', 'Roti jala', 'Sambal lado tanak', 'Sarikayo', 'Sate padang', 'Soto', 'Soto padang', 'Talua balado', 'Terong balado', 'Udang balado', 'Galamai', 'Keripik balado', 'Keripik sanjai', 'Kerupuk jangek', 'Kue putu', 'Lupis', 'Peyek', 'Peyek udang', 'Pinyaram', 'Roti tisu', 'Serabi', 'Tapai', 'Lopek sarikayo', 'Wajik', 'Es ampiang dadiah', 'Cindua', 'Dadiah', 'Es campur', 'Es tebak', 'Teh talua', 'Teh tarik']"
+ cinnamon,['Nasi briyani']
+ condensed milk,"['Es campur', 'Es tebak', 'Teh tarik']"
+ vegetables,"['Soto', 'Soto padang']"
+ Mixed fruits ,['Es campur']
+ grated coconut,['Palai']
+ oil,"['Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam goreng', 'Ayam lado ijo', 'Ayam percik', 'Ayam pop goreng', 'Ayam pop rebus', 'Balado', 'Baluik goreng', 'Dendeng', 'Dendeng balado', 'Dendeng batokok', 'Ikan bilih', 'Kepiting saus padang', 'Lele goreng', 'Martabak', 'Martabak kubang', 'Paru goreng', 'Pergedel jaguang', 'Petai goreng', 'Rajungan goreng', 'Roti canai', 'Keripik balado', 'Keripik sanjai', 'Kerupuk jangek', 'Peyek', 'Peyek udang', 'Roti tisu']"
+ ground beef,"['Martabak', 'Martabak kubang']"
+ Cow foot tendons,['Gulai tunjang']
+ Small freshwater fish,['Ikan bilih']
+ lupis,['Cindua']
+ sugar,"['Ayam balado', 'Balado', 'Bubur kampiun', 'Sarikayo', 'Galamai', 'Keripik balado', 'Kue putu', 'Lupis', 'Pinyaram', 'Lopek sarikayo', 'Wajik', 'Es ampiang dadiah', 'Cindua', 'Teh talua']"
+ palm sugar,"['Bubur kampiun', 'Sarikayo', 'Galamai', 'Kue putu', 'Lupis', 'Pinyaram', 'Lopek sarikayo', 'Wajik', 'Es ampiang dadiah', 'Cindua']"
+ Chicken,"['Ayam bakar', 'Ayam balado', 'Ayam bumbu', 'Ayam goreng', 'Ayam lado ijo', 'Ayam percik', 'Ayam pop goreng', 'Ayam pop rebus', 'Gulai ayam', 'Satay chicken']"
+ ghee,"['Nasi briyani', 'Roti canai', 'Roti tisu']"
+ mutton or chicken,['Nasi briyani']
+ Stinky beans ,['Petai goreng']
+ onions,['Nasi briyani']
+ coconut milk,"['Ayam bumbu', 'Ayam percik', 'Bubur kampiun', 'Daun ubi tumbuk', 'Gulai daging', 'Gulai ati', 'Gulai ayam', 'Gulai babek', 'Gulai banak', 'Gulai cancang', 'Gulai gajeboh', 'Gulai tambusu', 'Gulai itik', 'Gulai jariang', 'Gulai kepala ikan', 'Gulai kambiang', 'Gulai kepala ikan kakap merah', 'Gulai limpo', 'Gulai sumsum', 'Gulai tunjang', 'Gulai talua', 'Gulai udang', 'Gulai paku', 'Kalio', 'Lemang', 'Nasi kari or nasi gulai', 'Rendang', 'Roti jala', 'Sambal lado tanak', 'Galamai', 'Pinyaram', 'Serabi', 'Lopek sarikayo', 'Wajik', 'Gulai sayua']"
+ tamarind,"['Asam padeh', 'Ayam bakar', 'Ayam percik', 'Dendeng', 'Dendeng batokok']"
+ Meat and internal organs,['Gulai cancang']
+ Cow brain,['Gulai banak']
+ Avocado,['Es tebak']
+ shaved ice,"['Es ampiang dadiah', 'Cindua', 'Es campur']"
+ various dishes,['Nasi kapau']
+ banana leaves,"['Palai', 'Lupis', 'Tapai']"
+ Crab,"['Kepiting saus padang', 'Rajungan goreng']"
+ thick sauce ,['Sate padang']
+ Sticky rice,"['Lemang', 'Tapai']"
+ peanuts,['Peyek']
+ Cow liver,['Gulai ati']
+ tebak,['Es tebak']

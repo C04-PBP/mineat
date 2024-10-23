@@ -1,0 +1,94 @@
+{% block meta %}
+<title>Filter</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="dropdown-container">
+    <select name="location" id="location" size="10">
+        {% for location in locations %}
+            <option value="{{ location.name }}">{{ location.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="submit-container">
+    <button id="submit-btn">Submit Selected Location</button>
+</div>
+
+<!-- Inline CSS for demonstration, or move it to an external stylesheet -->
+<style>
+    /* Center the container */
+    .dropdown-container, .submit-container {
+        display: flex;
+        justify-content: center; /* Horizontally center */
+        align-items: center;    /* Vertically center */
+        height: 100vh;          /* Full viewport height to center vertically */
+    }
+
+    /* Increase the size of the select box */
+    select {
+        width: 300px;           /* Make the select box wider */
+        height: auto;           /* Auto-height based on the number of options */
+        padding: 10px;          /* Add padding for better visuals */
+        font-size: 16px;        /* Increase font size for readability */
+    }
+
+    /* Style the submit button */
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<script>
+    const selectElement = document.getElementById('location');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    let selectedLocation = '';
+
+    // Add change event listener to capture the selected value
+    selectElement.addEventListener('change', function (e) {
+        selectedLocation = e.target.value;
+    });
+
+    // When the submit button is clicked
+    submitBtn.addEventListener('click', function () {
+        if (!selectedLocation) {
+            alert("Please select a location.");
+        } else {
+            sendSelectedLocation(selectedLocation);
+        }
+    });
+
+    function sendSelectedLocation(selectedLocation) {
+        fetch('{% url "location:get_restaurant" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({
+                location: selectedLocation
+            })
+        })
+        .then(response => response.text())  // Expect HTML as the response
+        .then(data => {
+            // Update the content of the page with the new HTML
+            document.getElementById('result').innerHTML = data;
+        })
+        .catch((error) => {
+            console.error("Error recording location:", error);
+        });
+    }
+</script>
+
+{% endblock content %}
