@@ -14,8 +14,37 @@ from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 
 # Create your views here.
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your account has been successfully created!')
+            return redirect('main:login')
+    context = {'form':form}
+    return render(request, 'register.html', context)
+
+def login_user(request):
+   if request.method == 'POST':
+      form = AuthenticationForm(data=request.POST)
+
+      if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('main:show_main')
+
+   else:
+      form = AuthenticationForm(request)
+   context = {'form': form}
+   return render(request, 'login.html', context)
+
+def logout_user(request):
+    logout(request)
+    return redirect('main:login')
+
 def show_fnb(request,food = None):
-    
     if food:
         context = {
             "fnbs" : food
@@ -24,7 +53,4 @@ def show_fnb(request,food = None):
         context = {
             "fnbs" : Fnb.objects.all()
         }
-
-
-    
     return render(request,"show_fnb.html",context)
