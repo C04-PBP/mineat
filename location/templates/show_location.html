@@ -1,94 +1,57 @@
+{% extends "base.html" %}
+
 {% block meta %}
-<title>Filter</title>
+    <title>locations</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock meta %}
 
 {% block content %}
-<div class="dropdown-container">
-    <select name="location" id="location" size="10">
-        {% for location in locations %}
-            <option value="{{ location.name }}">{{ location.name }}</option>
-        {% endfor %}
-    </select>
+<body class="bg-gray-700"></body>
+
+<!-- Search Bar -->
+<nav class="bg-gray-700 shadow-md p-4">
+    <div class="max-w-7xl mx-auto flex items-center">
+        <!-- Search input -->
+        <input 
+            type="text" 
+            id="search-input" 
+            placeholder="Search..." 
+            autocomplete="off" 
+            class="flex-grow border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+    </div>
+</nav>
+
+<!-- Search Results -->
+<div id="search-results" class="max-w-7xl mx-auto p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for location in locations %}
+    <a href="{% url 'location:location_details' %}?id={{ location.id }}"
+        class="location-item bg-blue-900 shadow-md rounded-lg overflow-hidden">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold">{{ location.name }}</h2>
+            </div>
+        </a>
+    {% endfor %}
 </div>
-
-<div class="submit-container">
-    <button id="submit-btn">Submit Selected Location</button>
-</div>
-
-<!-- Inline CSS for demonstration, or move it to an external stylesheet -->
-<style>
-    /* Center the container */
-    .dropdown-container, .submit-container {
-        display: flex;
-        justify-content: center; /* Horizontally center */
-        align-items: center;    /* Vertically center */
-        height: 100vh;          /* Full viewport height to center vertically */
-    }
-
-    /* Increase the size of the select box */
-    select {
-        width: 300px;           /* Make the select box wider */
-        height: auto;           /* Auto-height based on the number of options */
-        padding: 10px;          /* Add padding for better visuals */
-        font-size: 16px;        /* Increase font size for readability */
-    }
-
-    /* Style the submit button */
-    button {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-</style>
 
 <script>
-    const selectElement = document.getElementById('location');
-    const submitBtn = document.getElementById('submit-btn');
-    
-    let selectedLocation = '';
-
-    // Add change event listener to capture the selected value
-    selectElement.addEventListener('change', function (e) {
-        selectedLocation = e.target.value;
-    });
-
-    // When the submit button is clicked
-    submitBtn.addEventListener('click', function () {
-        if (!selectedLocation) {
-            alert("Please select a location.");
-        } else {
-            sendSelectedLocation(selectedLocation);
-        }
-    });
-
-    function sendSelectedLocation(selectedLocation) {
-        fetch('{% url "location:get_restaurant" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}',
+    $(document).ready(function() {
+    // Handle search by location name
+    $('#search-input').on('keyup', function() {
+        let query = $(this).val(); // Get the input value
+        $.ajax({
+            url: "{% url 'location:location_search_ajax' %}",  
+            method: 'GET',
+            data: { q: query }, // Send the search query as a GET parameter
+            success: function(response) {
+                $('#search-results').html(response.html); // Update the search results with new HTML
             },
-            body: JSON.stringify({
-                location: selectedLocation
-            })
-        })
-        .then(response => response.text())  // Expect HTML as the response
-        .then(data => {
-            // Update the content of the page with the new HTML
-            document.getElementById('result').innerHTML = data;
-        })
-        .catch((error) => {
-            console.error("Error recording location:", error);
+            error: function(xhr, status, error) {
+                console.error('Search error:', error);
+            }
         });
-    }
+    });
+});
 </script>
 
 {% endblock content %}

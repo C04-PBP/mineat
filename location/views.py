@@ -1,36 +1,55 @@
 from django.shortcuts import render
 from location.models import Location
 from restaurant.models import Restaurant
-from restaurant.views import show_restaurant
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.template.loader import render_to_string
 
 # Create your views here.
 
 def show_location(request):
-    location = Location.objects.all()
+    query = request.GET.get('q', '')
+    if query:
+        locations = Location.objects.filter(name__icontains=query)
+    else:
+        locations = Location.objects.all()
 
-    context = {"locations" : location}
+    context = {"locations": locations, "query": query}
+    return render(request, "show_location.html", context)
 
-    return render(request,"show_location.html",context)
+def location_details(request):
+    location_id = request.GET.get('id')
+    location = Location.objects.get(id=location_id)
+    restaurant = Restaurant.objects.filter(location=location)
 
-def get_restaurant(request):
-    
-    if request.method == "POST":
+    context = {
+        "location": location,
+        "restaurants": restaurant,
+    }
+    return render(request, "location_details.html", context)
+
+def location_search_ajax(request):
+    query = request.GET.get('q', '')
+    if query:
+        location = Location.objects.filter(name__icontains=query)
+    else:
+        location = Location.objects.all()
+
+    html = render_to_string('hasil_search_location.html', {'locations': location})
+    return JsonResponse({'html': html})
+
+def update_trivia(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        location_id = data.get('id')
+        new_trivia = data.get('trivia')
+
         try:
-            # Parse the JSON data
-            data = json.loads(request.body)
-            location = data.get('location', [])
-
-            location_object = Location.objects.filter(name=location)
-
-            restaurants = Restaurant.objects.filter(location = location_object)
-            
-            for i in restaurants:
-                print(i.name)
-
-            return show_restaurant(request,restaurants)
-        except Exception as e:
-            return JsonResponse({"status": "error", "message": str(e)})
-    return JsonResponse({"status": "error", "message": "Invalid request"})
+            location = Location.objects.get(id=location_id)
+            location.trivia = new_trivia
+            location.save()
+            return JsonResponse({'success': True})
+        except Location.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Location not found'})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})

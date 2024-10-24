@@ -1,8 +1,11 @@
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from restaurant.models import Restaurant
 from location.models import Location
+from restaurant.forms import RestaurantForm
+from django.urls import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 
@@ -20,7 +23,7 @@ def ajax_search_restaurant(request):
     else:
         restaurants = Restaurant.objects.all()
 
-    html = render_to_string('hasil_search.html', {'restaurants': restaurants})
+    html = render_to_string('hasil_search_restaurant.html', {'restaurants': restaurants})
     return JsonResponse({'html': html})
 
 def ajax_search_district(request):
@@ -31,5 +34,43 @@ def ajax_search_district(request):
     else:
         restaurants = Restaurant.objects.all()
 
-    html = render_to_string('hasil_search.html', {'restaurants': restaurants})
+    html = render_to_string('hasil_search_restaurant.html', {'restaurants': restaurants})
     return JsonResponse({'html': html})
+
+def restaurant_details(request):
+    restaurant_id = request.GET.get('id')
+    restaurant = Restaurant.objects.get(id=restaurant_id)
+    # Now pass this restaurant to the template for detailed information
+    context = {
+        "restaurant": restaurant,
+        "fnb_items": restaurant.fnb.all(),
+    }
+    return render(request, "restaurant_details.html", context)
+
+def add_restaurant(request):
+    form = RestaurantForm(request.POST or None)
+    if form.is_valid() and request.method == "POST":
+        restaurant = form.save(commit=False)
+        restaurant.save()
+        form.save_m2m()
+        return redirect('restaurant:show_restaurant')
+
+    context = {'form': form}
+    return render(request, "add_restaurant.html", context)
+
+def delete_restaurant(request, id):
+    restaurant = Restaurant.objects.get(pk=id)
+    restaurant.delete()
+    return HttpResponseRedirect(reverse('restaurant:show_restaurant'))
+
+def edit_restaurant(request, id):
+    order = Restaurant.objects.get(pk = id)
+
+    form = RestaurantForm(request.POST or None, instance=order)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        return HttpResponseRedirect(reverse('restaurant:show_restaurant'))
+
+    context = {'form': form}
+    return render(request, "edit_restaurant.html", context)  
