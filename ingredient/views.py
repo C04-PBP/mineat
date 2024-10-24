@@ -60,9 +60,11 @@ def record_ingredients(request):
                     fnb_set.intersection_update(food)
                 
 
+            if len(ingredients) == 0:
+                context = {'fnbs': Fnb.objects.all()}
             
-            
-            context = {'fnbs': fnb_set}
+            else:
+                context = {'fnbs': fnb_set}
             
             html = render_to_string('fnb_kosong.html', context)
             

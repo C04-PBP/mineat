@@ -32,10 +32,10 @@
       <!-- Mulai iterasi makanan -->
       <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         {% for fnb in fnbs %}
-        <a href='{% url "review:show_review" %}?id={{ fnb.id }}'>
+        <div>
           {% include "fnb_card.html" with fnb=fnb %}
 
-        </a>
+        </div>
         {% endfor %}
 
       </div>
