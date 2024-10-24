@@ -20,10 +20,14 @@
 <h2 class="text-xl font-bold mb-4">Review Section</h2>
 
 <div class="max-h-96 overflow-y-scroll border border-gray-300 p-4 rounded-lg" id="review-list">
-    <!-- Daftar review yang sudah ada -->
     {% if reviews %}
       {% for review in reviews %}
-        <div class="border-b border-gray-300 mb-4 pb-4">
+        <div class="border-b border-gray-300 mb-4 pb-4" data-review-id="{{ review.id }}">
+          <!-- Nama user -->
+          <div class="mb-2">
+            <span class="font-bold">{{ review.user.username }}</span>
+          </div>
+
           <!-- Jumlah bintang -->
           <div class="flex mb-2">
             {% for i in "12345" %}
@@ -38,26 +42,30 @@
               {% endif %}
             {% endfor %}
           </div>
-          
-          <!-- Nama user -->
-          <div class="mb-2">
-            <span class="font-bold">{{ review.user_name }}</span>
-          </div>
 
           <!-- Ulasan user -->
-          <p class="text-gray-700 mb-4">{{ review.text }}</p>
+          <p class="text-gray-700 mb-4 review-text">{{ review.text }}</p>
   
-          <!-- Tombol Like dan jumlah like -->
+          <!-- Tombol Like, Edit, Delete, dan jumlah like -->
           <div class="flex justify-end items-center">
-            <button class="like-button bg-green-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
-              Like
-            </button>
-            <span class="like-count text-gray-500 text-sm">{{ review.like }} orang menyukai ini</span>
+            {% if user.is_authenticated %}
+              <button class="like-button bg-green-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
+                Like
+              </button>
+            {% endif %}
+            {% if user.is_authenticated and review.user == user %}
+              <button class="edit-button bg-blue-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
+                Edit
+              </button>
+              <button class="delete-button bg-red-500 text-white py-1 px-3 rounded" data-review-id="{{ review.id }}">
+                Delete
+              </button>
+            {% endif %}
+            <span class="like-count text-gray-500 text-sm ml-2">{{ review.like }} orang menyukai ini</span>
           </div>
         </div>
       {% endfor %}
     {% else %}
-      <!-- Pesan jika tidak ada review -->
       <div class="text-center text-gray-500 italic">
         Belum ada review ditambahkan.
       </div>
@@ -67,7 +75,7 @@
 <div class="p-6 bg-white shadow-md rounded-lg">
     <h2 class="text-xl font-bold mb-4">Tulis Review</h2>
     
-      
+    {% if user.is_authenticated %}
       <form id="reviewForm" method="POST">
         {% csrf_token %}
         <input type="hidden" name="food_id" value="{{ id }}">
@@ -105,7 +113,12 @@
   
     <!-- Pesan berhasil atau error -->
     <div id="formMessage" class="mt-4"></div>
-  </div>
+  {% else %}
+    <div class="bg-gray-100 p-4 rounded-lg text-center">
+      <p class="text-gray-700 mb-2">Anda harus login untuk menulis review.</p>
+    </div>
+  {% endif %}
+</div>
   
   <!-- Tambahkan Script AJAX dan DOMPurify -->
   <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.3/dist/purify.min.js"></script>
@@ -198,30 +211,37 @@
   });
 });
 
-// Event listener untuk tombol like
-$('.like-button').on('click', function() {
+
+// Like button functionality
+$('.like-button').click(function() {
   var reviewId = $(this).data('review-id');
   var likeButton = $(this);
-  var likeCountSpan = likeButton.siblings('.like-count');
+  var likeCount = likeButton.siblings('.like-count');
 
   $.ajax({
-    type: 'POST',
     url: "{% url 'review:like_review' %}",
+    type: 'POST',
     data: {
       'review_id': reviewId,
       'csrfmiddlewaretoken': '{{ csrf_token }}'
     },
     success: function(response) {
       if (response === "CREATED") {
-        // Increment like count locally
-        var currentLikes = parseInt(likeCountSpan.text().split(' ')[0]);
+        var currentLikes = parseInt(likeCount.text().split(' ')[0]);
         var newLikes = currentLikes + 1;
-        likeCountSpan.text(newLikes + ' orang menyukai ini');
+        likeCount.text(newLikes + ' orang menyukai ini');
         
-        // Ubah warna tombol untuk menandakan sudah di-like (opsional)
+        // Ubah warna tombol untuk menandakan sudah di-like
         likeButton.removeClass('bg-green-500').addClass('bg-blue-500');
+      } else if (response === "DELETED") {
+        var currentLikes = parseInt(likeCount.text().split(' ')[0]);
+        var newLikes = currentLikes - 1;
+        likeCount.text(newLikes + ' orang menyukai ini');
+        
+        // Kembalikan warna tombol ke semula
+        likeButton.removeClass('bg-blue-500').addClass('bg-green-500');
       } else {
-        alert('Gagal menambahkan like');
+        alert('Gagal memproses like');
       }
     },
     error: function(xhr, status, error) {
@@ -232,3 +252,4 @@ $('.like-button').on('click', function() {
 </script>
 
 {% endblock content %}
+
