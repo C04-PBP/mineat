@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <title>{{ location.name }} - Location Details</title>
+{% endblock meta %}
+
+{% block content %}
+<body class="bg-gray-700"></body>
+<div class="bg-gray-700 max-w-7xl mx-auto p-4">
+
+    <!-- Back Button -->
+    <div class="flex justify-start mb-4">
+        <a href="{% url 'location:show_location' %}" class="text-indigo-500 hover:text-indigo-700 font-semibold">
+            &larr; Back to All Locations
+        </a>
+    </div>
+
+    <div class="bg-blue-900 shadow-md rounded-lg p-6 mb-4">
+        <h1 class="text-4xl font-bold">{{ location.name }}</h1>
+    </div>
+
+    <div class="bg-blue-900 shadow-md rounded-lg p-6 mb-4">
+        <h2 class="text-2xl font-semibold">Trivia</h2>
+        <div id="trivia-container">
+            <p class="text-white" id="trivia-text">{{ location.trivia }}</p>
+            <textarea id="trivia-edit" class="hidden bg-gray-200 p-2 rounded-md w-full">{{ location.trivia }}</textarea>
+        </div>
+        
+        <!-- Edit Button -->
+        <div id="trivia-buttons" class="mt-4">
+            <button id="edit-trivia" class="text-indigo-500 hover:text-indigo-700 font-semibold">Edit</button>
+            <button id="delete-trivia" class="ml-4 text-red-500 hover:text-red-700 font-semibold">Delete</button>
+            <button id="save-trivia" class="hidden text-green-500 hover:text-green-700 font-semibold">Save</button>
+            <button id="cancel-edit" class="hidden text-red-500 hover:text-red-700 font-semibold">Cancel</button>
+        </div>
+    </div>
+
+    <h2 class="mt-6 text-2xl font-semibold">Restaurants in {{ location.name }}</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for restaurant in restaurants %}
+            <div class="restaurant-item bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold">{{ restaurant.name }}</h3>
+                    <a href="{% url 'restaurant:restaurant_details' %}?id={{ restaurant.id }}" 
+                    class="mt-2 inline-block text-blue-600 hover:underline">View Details</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No restaurants found in this location.</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editBtn = document.getElementById('edit-trivia');
+        const deleteBtn = document.getElementById('delete-trivia');
+        const saveBtn = document.getElementById('save-trivia');
+        const cancelBtn = document.getElementById('cancel-edit');
+        const triviaText = document.getElementById('trivia-text');
+        const triviaEdit = document.getElementById('trivia-edit');
+
+        // Toggle edit mode
+        editBtn.addEventListener('click', function() {
+            triviaText.classList.add('hidden');
+            triviaEdit.classList.remove('hidden');
+            editBtn.classList.add('hidden');
+            deleteBtn.classList.add('hidden');
+            saveBtn.classList.remove('hidden');
+            cancelBtn.classList.remove('hidden');
+        });
+
+        // Cancel edit
+        cancelBtn.addEventListener('click', function() {
+            triviaEdit.classList.add('hidden');
+            triviaText.classList.remove('hidden');
+            saveBtn.classList.add('hidden');
+            cancelBtn.classList.add('hidden');
+            editBtn.classList.remove('hidden');
+            deleteBtn.classList.remove('hidden');
+        });
+
+        // Save trivia using AJAX
+        saveBtn.addEventListener('click', function() {
+            const newTrivia = triviaEdit.value;
+            const locationId = '{{ location.id }}';
+
+            fetch("{% url 'location:update_trivia' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({ 'id': locationId, 'trivia': newTrivia })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    triviaText.textContent = newTrivia;
+                    triviaEdit.classList.add('hidden');
+                    triviaText.classList.remove('hidden');
+                    saveBtn.classList.add('hidden');
+                    cancelBtn.classList.add('hidden');
+                    editBtn.classList.remove('hidden');
+                    deleteBtn.classList.remove('hidden');
+                } else {
+                    alert('Error saving trivia');
+                }
+            });
+        });
+
+        // Delete trivia using AJAX
+        deleteBtn.addEventListener('click', function() {
+                const locationId = '{{ location.id }}';
+
+                fetch("{% url 'location:update_trivia' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ 'id': locationId, 'trivia': '' })  // Set trivia to empty string
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        triviaText.textContent = '';
+                        triviaEdit.value = '';
+                    } else {
+                        alert('Error deleting trivia');
+                    }
+                });
+        });
+    });
+</script>
+
+{% endblock content %}
