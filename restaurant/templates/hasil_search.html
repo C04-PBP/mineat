@@ -1,0 +1,21 @@
+{% for restaurant in restaurants %}
+        <div class="restaurant-item bg-white shadow-md rounded-lg overflow-hidden">
+            <div class="p-4">
+                <h2 class="text-2xl font-bold">{{ restaurant.name }}</h2>
+                <p class="text-gray-600">{{ restaurant.address }}</p>
+                <h3 class="mt-4 text-lg font-semibold">Food and Beverages</h3>
+                <ul class="mt-2 space-y-2">
+                    {% for fnb_item in restaurant.fnb.all %}
+                        <li class="bg-gray-50 p-2 rounded-md shadow-sm">
+                            <strong>{{ fnb_item.name }}</strong><br>
+                            <!-- <img src="{{ fnb_item.image }}" alt="{{ fnb_item.name }}" class="w-20 h-20 mt-1"><br>
+                            <span class="text-gray-600">Description: {{ fnb_item.description }}</span><br>
+                            <span class="text-gray-600">Price: Rp {{ fnb_item.price }}</span> -->
+                        </li>
+                    {% empty %}
+                        <li>No food and beverages available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
