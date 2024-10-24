@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block meta %}
 <title>Filter</title>
 {% endblock meta %}
@@ -70,6 +71,8 @@
 }
 </style>
 
+<script src="{% static 'js/fnb_card.js' %}"></script>
+
 <script>
     // Get the submit button element
 // Initialize an array to store selected ingredients
@@ -114,6 +117,8 @@ function sendSelectedIngredients(selectedIngredients) {
     .then(data => {
         // Update the content of the page with the new HTML
         document.getElementById('result').innerHTML = data.html;
+        // Reinitialize tilt effect after updating content dynamically
+        initializeTiltEffect();
     })
     .catch((error) => {
         console.error("Error recording ingredients:", error);

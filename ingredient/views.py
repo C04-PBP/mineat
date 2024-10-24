@@ -65,6 +65,9 @@ def record_ingredients(request):
             return JsonResponse({"status": "error", "message": str(e)})
     return JsonResponse({"status": "error", "message": "Invalid request"})
 
+def show_card(request):
+    return render(request,"nyoba2.html")
+
 def show_fnb_json(request):
     data = Fnb.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
