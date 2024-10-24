@@ -1,0 +1,7 @@
+@keyframes identifier {
+    0%   { background_position: 0% 50%; }
+    100% { background_position: 0% 50%; }
+    50% { background_position: '100% 50%' }
+
+}
+
