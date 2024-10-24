@@ -22,7 +22,7 @@ def register(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your account has been successfully created!')
-            return redirect('main:login')
+            return redirect('fnb:login')
     context = {'form':form}
     return render(request, 'register.html', context)
 
