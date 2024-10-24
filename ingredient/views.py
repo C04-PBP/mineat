@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
-# from main.forms import MoodEntryForm
+from django.core.paginator import Paginator
 from fnb.views import show_fnb
 from fnb.models import Fnb
 from ingredient.models import Ingredient
@@ -26,7 +26,13 @@ def show_filter(request):
     ingredient = Ingredient.objects.all()
     fnb = Fnb.objects.all()
 
-    context = {"ingredients" : ingredient,"fnb" : fnb}
+    paginator = Paginator(fnb,6)
+
+    page_number = request.GET.get("page")
+
+    page_obj = paginator.get_page(page_number)
+
+    context = {"ingredients" : ingredient,"fnb" : page_obj}
 
     return render(request,"show_filter.html",context)
 
@@ -63,6 +69,7 @@ def record_ingredients(request):
             return JsonResponse({'html': html})
         except Exception as e:
             return JsonResponse({"status": "error", "message": str(e)})
+    
     return JsonResponse({"status": "error", "message": "Invalid request"})
 
 def show_card(request):

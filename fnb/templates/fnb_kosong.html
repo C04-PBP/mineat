@@ -1,43 +1,100 @@
 {% extends 'base.html' %}
 {% block meta %}
 <title>Fnb</title>
+<style>
+  /* Remove arrows in input[type="number"] */
+  input[type="number"]::-webkit-inner-spin-button, 
+  input[type="number"]::-webkit-outer-spin-button { 
+      -webkit-appearance: none;
+      margin: 0; 
+  }
+  
+  input[type="number"] {
+      -moz-appearance: textfield;
+  }
+  </style>
 {% endblock meta %}
 
 {% block content %}
 
 <div class="flex flex-row gap-4">
-  
+
   <section class="bg-[#FFD700] text-white">
-      <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-        <div class="mx-auto max-w-lg text-center">
-          <h2 class="text-3xl font-bold sm:text-4xl">Mineat</h2>
-          
-          <p class="mt-4 text-gray-300">
-            kosongg
-          </p>
-        </div>
-    
-        <!-- Mulai iterasi makanan -->
-        <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {% for fnb in fnbs %}
-              <a href='{% url "review:show_review" %}?id={{ fnb.id }}'>
-              {% include "fnb_card.html" with fnb=fnb %}
-              
-              </a>
-          {% endfor %}
-          
-        </div>
-        <!-- Selesai Iterasi -->
-    
-        <div class="mt-12 text-center">
-          <a
-            href="#"
-            class="inline-block rounded bg-pink-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring focus:ring-yellow-400"
-          >
-            Get Started Today
-          </a>
-        </div>
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+      <div class="mx-auto max-w-lg text-center">
+        <h2 class="text-3xl font-bold sm:text-4xl">Mineat</h2>
+
+        <p class="mt-4 text-gray-300">
+          kosongg
+        </p>
       </div>
+
+      <!-- Mulai iterasi makanan -->
+      <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {% for fnb in fnbs %}
+        <a href='{% url "review:show_review" %}?id={{ fnb.id }}'>
+          {% include "fnb_card.html" with fnb=fnb %}
+
+        </a>
+        {% endfor %}
+
+      </div>
+      <!-- Selesai Iterasi -->
+
+      <div class="pagination">
+        <span class="step-links">
+          {% if fnbs.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ fnbs.previous_page_number }}">previous</a>
+          {% endif %}
+
+          <span class="current">
+            Page {{ fnbs.number }} of {{ fnbs.paginator.num_pages }}.
+          </span>
+
+          {% if fnbs.has_next %}
+          <a href="?page={{ fnbs.next_page_number }}">next</a>
+          <a href="?page={{ fnbs.paginator.num_pages }}">last &raquo;</a>
+          {% endif %}
+        </span>
+      </div>
+
+      <div class="inline-flex items-center justify-center gap-3" style="padding: 10px;">
+        {% if fnbs.has_previous %}
+        <a href="?page={{ fnbs.previous_page_number }}"
+          class="inline-flex items-center justify-center rounded border border-gray-100 bg-white text-gray-900">
+          <span class="sr-only">Prev Page</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+        {% endif %}
+
+        <!-- Input Field for Typing Page Number -->
+        <form method="get" class="inline-flex items-center gap-2">
+          <input type="number" name="page" value="{{ fnbs.number }}" min="1" max="{{ fnbs.paginator.num_pages }}"
+            class="w-12 text-center border border-gray-300 rounded" style="background-color: yellow;" />
+
+          <span class="mx-0.25">/</span>
+          <span>{{ fnbs.paginator.num_pages }}</span>
+        </form>
+
+        {% if fnbs.has_next %}
+        <a href="?page={{ fnbs.next_page_number }}"
+          class="inline-flex items-center justify-center rounded border border-gray-100 bg-white text-gray-900">
+          <span class="sr-only">Next Page</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-3" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
+        {% endif %}
+      </div>
+
+
   </section>
 </div>
 {% endblock content %}
