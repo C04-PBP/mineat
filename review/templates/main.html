@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+{% block meta %}
+<title>Review</title>
+{% endblock meta %}
+
+{% block content %} 
+
+<div>
+    <h5 class="font-semibold text-lg">Nama Produk :</h5>
+    <p class="mb-4">{{ name }}</p>
+
+    <h5 class="font-semibold text-lg">Harga :</h5>
+    <p class="mb-4">Rp. {{ price }}</p>
+
+    <h5 class="font-semibold text-lg">Deskripsi :</h5>
+    <p class="mb-4">{{ description }}</p>
+
+</div>
+
+<h2 class="text-xl font-bold mb-4">Review Section</h2>
+
+<div class="max-h-96 overflow-y-scroll border border-gray-300 p-4 rounded-lg" id="review-list">
+    <!-- Daftar review yang sudah ada -->
+    {% if reviews %}
+      {% for review in reviews %}
+        <div class="border-b border-gray-300 mb-4 pb-4">
+          <!-- Jumlah bintang -->
+          <div class="flex mb-2">
+            {% for i in "12345" %}
+              {% if forloop.counter <= review.rating %}
+                <svg class="w-5 h-5 text-yellow-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
+                </svg>
+              {% else %}
+                <svg class="w-5 h-5 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
+                </svg>
+              {% endif %}
+            {% endfor %}
+          </div>
+          
+          <!-- Nama user -->
+          <div class="mb-2">
+            <span class="font-bold">{{ review.user_name }}</span>
+          </div>
+
+          <!-- Ulasan user -->
+          <p class="text-gray-700 mb-4">{{ review.text }}</p>
+  
+          <!-- Tombol Like dan jumlah like -->
+          <div class="flex justify-end items-center">
+            <button class="like-button bg-green-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
+              Like
+            </button>
+            <span class="like-count text-gray-500 text-sm">{{ review.like }} orang menyukai ini</span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <!-- Pesan jika tidak ada review -->
+      <div class="text-center text-gray-500 italic">
+        Belum ada review ditambahkan.
+      </div>
+    {% endif %}
+  </div>
+
+<div class="p-6 bg-white shadow-md rounded-lg">
+    <h2 class="text-xl font-bold mb-4">Tulis Review</h2>
+    
+      
+      <form id="reviewForm" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="food_id" value="{{ id }}">
+    
+        <!-- Bintang untuk rating -->
+        <div id="star-rating" class="flex mb-4">
+          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+          </svg>
+          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+          </svg>
+          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="3" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+          </svg>
+          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+          </svg>
+          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+          </svg>
+        </div>
+    
+        <!-- Input hidden untuk menyimpan rating -->
+        <input type="hidden" name="rating" id="rating" value="0">
+  
+      <!-- Input untuk ulasan -->
+      <textarea id="reviewText" name="text" rows="4" class="w-full p-2 border border-gray-300 rounded" placeholder="Tulis ulasan Anda..."></textarea>
+  
+      <!-- Tombol submit -->
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
+        Submit Review
+      </button>
+    </form>
+  
+    <!-- Pesan berhasil atau error -->
+    <div id="formMessage" class="mt-4"></div>
+  </div>
+  
+  <!-- Tambahkan Script AJAX dan DOMPurify -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.3/dist/purify.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+    // Event untuk bintang rating
+    $('.star').on('click', function() {
+      var ratingValue = $(this).data('value');  // Ambil nilai dari bintang yang diklik
+      $('#rating').val(ratingValue);  // Set nilai rating di input hidden
+
+      // Set semua bintang menjadi warna gelap
+      $('.star').removeClass('text-yellow-500').addClass('text-gray-400');
+
+      // Set bintang yang di-klik dan sebelumnya menjadi warna kuning
+      $(this).prevAll().addBack().removeClass('text-gray-400').addClass('text-yellow-500');
+    });
+  });
+  $(document).ready(function() {
+  $('#reviewForm').on('submit', function(event) {
+    event.preventDefault();
+
+    // Ambil nilai form
+    var formData = {
+      food_id: $('input[name="food_id"]').val(),
+      rating: $('#rating').val(),
+      text: $('#reviewText').val(),
+      csrfmiddlewaretoken: '{{ csrf_token }}'  // Jika tidak menggunakan csrf_exempt
+    };
+
+    // Validasi rating
+    if (formData.rating == 0) {
+      $('#formMessage').html('<p class="text-red-500">Silakan pilih rating bintang terlebih dahulu.</p>');
+      return;
+    }
+
+    // Kirim data melalui AJAX
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'review:add_review' %}",
+      data: formData,
+      success: function(response) {
+        $('#formMessage').html('<p class="text-green-500">Review berhasil ditambahkan!</p>');
+        $('#reviewForm')[0].reset();  // Reset form setelah berhasil submit
+        $('.star').removeClass('text-yellow-500').addClass('text-gray-400');  // Reset bintang
+        $('#rating').val(0);  // Reset nilai rating
+
+        // Tambahkan review baru ke dalam daftar secara asinkron
+        var newReview = `
+          <div class="border-b border-gray-300 mb-4 pb-4">
+            <div class="flex mb-2">`;
+
+        // Loop untuk menambahkan bintang sesuai jumlah yang dipilih
+        for (var i = 1; i <= 5; i++) {
+    if (i <= formData.rating) {
+        // Bintang kuning
+        newReview += `
+          <svg class="w-5 h-5 text-yellow-500 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.27l5.18 3.73-1.64-6.81L21 9.5l-6.78-.58L12 2.5 9.78 8.92 3 9.5l4.46 4.69L5.82 20.5z" />
+          </svg>`;
+    } else {
+        // Bintang abu-abu
+        newReview += `
+          <svg class="w-5 h-5 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.27l5.18 3.73-1.64-6.81L21 9.5l-6.78-.58L12 2.5 9.78 8.92 3 9.5l4.46 4.69L5.82 20.5z" />
+          </svg>`;
+    }
+}
+
+
+          newReview += `
+              </div>
+              <div class="mb-2">
+                <span class="font-bold">{{ request.user.username }}</span>
+              </div>
+              <p class="text-gray-700 mb-4">${formData.text}</p>
+              <div class="flex justify-end items-center">
+                <button class="bg-green-500 text-white py-1 px-3 rounded mr-2">Like</button>
+                <span class="text-gray-500 text-sm">0 orang menyukai ini</span>
+              </div>
+            </div>`;
+
+          // Append review baru ke dalam daftar
+          $('#review-list').append(newReview);
+      },
+      error: function(response) {
+        $('#formMessage').html('<p class="text-red-500">Terjadi kesalahan saat menambahkan review.</p>');
+      }
+    });
+  });
+});
+
+// Event listener untuk tombol like
+$('.like-button').on('click', function() {
+  var reviewId = $(this).data('review-id');
+  var likeButton = $(this);
+  var likeCountSpan = likeButton.siblings('.like-count');
+
+  $.ajax({
+    type: 'POST',
+    url: "{% url 'review:like_review' %}",
+    data: {
+      'review_id': reviewId,
+      'csrfmiddlewaretoken': '{{ csrf_token }}'
+    },
+    success: function(response) {
+      if (response === "CREATED") {
+        // Increment like count locally
+        var currentLikes = parseInt(likeCountSpan.text().split(' ')[0]);
+        var newLikes = currentLikes + 1;
+        likeCountSpan.text(newLikes + ' orang menyukai ini');
+        
+        // Ubah warna tombol untuk menandakan sudah di-like (opsional)
+        likeButton.removeClass('bg-green-500').addClass('bg-blue-500');
+      } else {
+        alert('Gagal menambahkan like');
+      }
+    },
+    error: function(xhr, status, error) {
+      alert('Terjadi kesalahan: ' + error);
+    }
+  });
+});
+</script>
+
+{% endblock content %}

@@ -25,16 +25,15 @@
 
           <h2 class="mt-4 text-xl font-bold text-white">{{ fnb.name }}</h2>
 
-          <p class="mt-1 text-sm text-white">
+          <p class="mt-1 text-sm text-white mb-4">
             {{ fnb.description }}
           </p>
 
           <!-- Tombol yang menggunakan JavaScript untuk redirect ke halaman review -->
-          <button type="button"
-            style="background-color: green; color: white; padding: 10px 20px; border: none; border-radius: 5px;"
-            onclick="window.location.href='{% url 'review:show_review' %}'">
-            Lihat Review
-          </button>
+          <a href='{% url "review:show_review" %}?id={{ fnb.id }}'>
+          <button type="button" class="bg-amber-400 text-white font-semibold px-1 py-3 rounded-lg hover:bg-amber-500 transition duration-300 ease-in-out w-full">
+            Lihat Ulasan
+          </button></a>
 
         </div>
         {% endfor %}
