@@ -4,6 +4,65 @@
 {% endblock meta %}
 
 {% block content %}
+<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg mt-8 p-6">
+    <div class="border-b pb-4 mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ forum.name }}</h1>
+        <p class="text-gray-700">{{ forum.text }}</p>
+    </div>
+
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
+    <ul id="comments-list" class="space-y-4">
+        {% for comment in comments %}
+        <li class="p-4 bg-gray-100 rounded-lg shadow-sm">
+            <p class="text-gray-800">{{ comment.text }}</p>
+            <small class="text-gray-500">{{ comment.time_created }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <div class="mt-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">Add a comment</h3>
+        <textarea id="new-comment" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" rows="4" placeholder="Write your comment..."></textarea>
+        <button id="submit-btn" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Submit Comment</button>
+    </div>
+</div>
+
+
+<script>
+document.getElementById('submit-btn').addEventListener('click', function() {
+    const comment = document.getElementById('new-comment').value;
+
+    if (comment) {
+        fetch("{% url 'forum:forum-khusus' forum.id %}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ 'comment': comment })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else {
+                const commentList = document.getElementById('comments-list');
+                const newComment = document.createElement('li');
+                newComment.innerHTML = `${data.comment_text} - <small>${data.time_created}</small>`;
+                commentList.appendChild(newComment);
+
+                document.getElementById('new-comment').value = '';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    } else {
+        alert('Please enter a comment before submitting.');
+    }
+});
+</script>
+{% endblock %}
+
+{% comment %} {% block content %}
 <div class="w-full bg-white rounded-lg border p-2 my-4 mx-6">
 
     <h3 class="font-bold">Discussion</h3>
@@ -64,4 +123,4 @@
 
 
 </div>
-{% endblock content %}
+{% endblock content %} {% endcomment %}
