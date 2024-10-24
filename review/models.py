@@ -11,6 +11,7 @@ class Review(models.Model):
     text = models.TextField()
     like = models.IntegerField(default=0)
     
+    
     @property
     def like_count(self):
         return self.likes.count()

@@ -49,9 +49,15 @@
           <!-- Tombol Like, Edit, Delete, dan jumlah like -->
           <div class="flex justify-end items-center">
             {% if user.is_authenticated %}
-              <button class="like-button bg-green-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
-                Like
+            {% if review.id in review_user %}
+              <button class="like-button bg-green-600 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
+                Unlike
               </button>
+            {% else %}
+            <button class="like-button bg-green-400 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
+              Like
+            </button>
+            {% endif %}
             {% endif %}
             {% if user.is_authenticated and review.user == user %}
               <button class="edit-button bg-blue-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
@@ -188,7 +194,6 @@
     }
 }
 
-
           newReview += `
               </div>
               <div class="mb-2">
@@ -226,25 +231,30 @@ $('.like-button').click(function() {
       'csrfmiddlewaretoken': '{{ csrf_token }}'
     },
     success: function(response) {
+      console.log('Response:', response); // Debugging: log the response
       if (response === "CREATED") {
+        // Toggle like status
         var currentLikes = parseInt(likeCount.text().split(' ')[0]);
-        var newLikes = currentLikes + 1;
+        var newLikes;
+        if (likeButton.hasClass('bg-green-400')) {
+          // User is liking
+          newLikes = currentLikes + 1;
+          likeButton.removeClass('bg-green-400').addClass('bg-green-600');
+          likeButton.text('Unlike');
+        } else {
+          // User is unliking
+          newLikes = currentLikes - 1;
+          likeButton.removeClass('bg-green-600').addClass('bg-green-400');
+          likeButton.text('Like');
+        }
         likeCount.text(newLikes + ' orang menyukai ini');
-        
-        // Ubah warna tombol untuk menandakan sudah di-like
-        likeButton.removeClass('bg-green-500').addClass('bg-blue-500');
-      } else if (response === "DELETED") {
-        var currentLikes = parseInt(likeCount.text().split(' ')[0]);
-        var newLikes = currentLikes - 1;
-        likeCount.text(newLikes + ' orang menyukai ini');
-        
-        // Kembalikan warna tombol ke semula
-        likeButton.removeClass('bg-blue-500').addClass('bg-green-500');
       } else {
+        console.error('Unexpected response:', response);
         alert('Gagal memproses like');
       }
     },
     error: function(xhr, status, error) {
+      console.error('Error:', xhr.responseText);
       alert('Terjadi kesalahan: ' + error);
     }
   });
@@ -252,4 +262,6 @@ $('.like-button').click(function() {
 </script>
 
 {% endblock content %}
+
+
 
