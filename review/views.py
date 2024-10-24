@@ -2,7 +2,7 @@ from django.shortcuts import render,  redirect
 from fnb.models import Fnb
 from django.http import JsonResponse
 from django.shortcuts import render
-from review.models import Review
+from review.models import Review, ReviewLike
 from review.forms import ReviewForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
@@ -61,12 +61,20 @@ def like_review(request):
     
     # Dapatkan objek Review atau return 404 jika tidak ditemukan
     review = Review.objects.get(pk=review_id)
-    
-    # Tambahkan jumlah like
-    review.like += 1
-    review.save()
+    user = request.user
 
-    # Buat dictionary dengan data response
+    if not user.is_authenticated:
+        return HttpResponse("User must be logged in", status=401)
 
-    # Kembalikan HttpResponse dengan JSON string dan status 200 OK
+    # Cek apakah user sudah like review ini
+    existing_like = ReviewLike.objects.filter(review=review, user=user).first()
+
+    if existing_like:
+        # User sudah like, jadi kita hapus like
+        existing_like.delete()
+    else:
+        # User belum like, jadi kita tambahkan like
+        ReviewLike.objects.create(review=review, user=user)
+
+    # Kembalikan response status 201 CREATED
     return HttpResponse(b"CREATED", status=201)
