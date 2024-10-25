@@ -5,39 +5,33 @@
 {% endblock meta %}
 
 {% block content %}
-<header  class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+<!-- Header fixed at the top -->
+<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
     {% include "show_header.html" %}
 </header>
 
-<div class="flex flex-row gap-4">
+<!-- Sidebar and Content Section -->
+<div class="flex flex-row gap-4 bg-[#FFD700]">
     <!-- Toggleable Sidebar -->
-    <aside id="sidebar" class="w-[20%] transition-transform transform translate-x-0">
-        <div class="relative dropdown-container ">
-            <div class="w-[20vw] h-[80vh] bg-[#ffee9e] rounded-[20px] shadow overflow-auto">
-                {% for ingredient in ingredients %}
-                <div value="{{ ingredient.name }}" class="ingredient-div w-[15vw] h-[10vh] bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-rose-500 to-indigo-700 rounded-[20px] text-white shadow flex items-center justify-center">
-                    {{ ingredient.name }}
-                </div>
-                {% endfor %}
+    <aside id="sidebar"
+        class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container">
+        <div class="ingredient-div w-full h-[100vh] rounded-[20px] shadow overflow-auto">
+            {% for ingredient in ingredients %}
+            <!-- Ingredient Cards with lazy-load class -->
+            <div class="lazy-load ingredient-card" data-name="{{ ingredient.name }}">
+                {% include "ingredient_card.html" with ingredient=ingredient %}
             </div>
+            {% endfor %}
         </div>
-
-        <!-- <div class="submit-container">
-            <button id="submit-btn">Submit Selected Ingredients</button>
-        </div> -->
     </aside>
 
-    <!-- Content section -->
+    <!-- Content Section -->
     <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
 </div>
 
-<!-- <button id="toggleSidebar" class="fixed top-4 left-4 z-10 bg-red-500 text-white px-4 py-2 rounded-md">
-    Toggle Sidebar
-</button> -->
-
 <!-- Styles -->
 <style>
-    .dropdown-container, .submit-container {
+    .dropdown-container {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -46,55 +40,87 @@
     }
 
     .ingredient-div.selected {
-        background-color: #f0ad4e; /* Highlight color for selected ingredients */
-        border: 2px solid #000; /* Optional: Add a border */
+        background-color: #f0ad4e;
+        border: 2px solid #000;
     }
 
     /* Sidebar Transition */
     #sidebar {
         transition: transform 0.3s ease-in-out;
     }
-    /* Hide Sidebar (Collapsed) */
+
     #sidebar.collapsed {
         transform: translateX(-100%);
     }
 
-    /* Position the toggle button */
-    #toggleSidebar {
-        z-index: 1000;
+    /* Lazy Load - initially hide cards */
+    .lazy-load {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* When in view, make the cards visible */
+    .lazy-load.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Selected state: prevent further animation reset */
+    .ingredient-card.selected {
+        animation: none;
+        transition: none;
     }
 </style>
 
 <script src="{% static 'js/fnb_card.js' %}"></script>
 
-<!-- JavaScript for Sidebar Toggle -->
 <script>
+    // Sidebar toggle functionality
     const sidebar = document.getElementById('sidebar');
-    const filterToggle = document.getElementById('filterToggle'); 
+    const filterToggle = document.getElementById('filterToggle'); // From the header
 
-    // Event listener for toggling the sidebar
     filterToggle.addEventListener('click', () => {
         sidebar.classList.toggle('collapsed');
     });
 
-    // Ingredient selection logic (same as before)
+    // Lazy load animation for ingredients
+    const lazyLoadElements = document.querySelectorAll('.lazy-load');
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);  // Stop observing once the element is loaded
+            }
+        });
+    }, {
+        root: null,       // Use viewport as root
+        threshold: 0.1    // Trigger when 10% of the element is visible
+    });
+
+    lazyLoadElements.forEach(element => {
+        observer.observe(element);
+    });
+
+    // Ingredient selection logic
     let selectedIngredients = [];
 
-    document.querySelectorAll('.ingredient-div').forEach(div => {
+    document.querySelectorAll('.ingredient-card').forEach(div => {
         div.addEventListener('click', function () {
-            const ingredient = div.getAttribute('value'); 
+            const ingredient = div.getAttribute('data-name');
 
-            if (selectedIngredients.includes(ingredient)) {
+            // Prevent animation reset on selected ingredients
+            if (!div.classList.contains('selected')) {
+                div.classList.add('selected');
+                selectedIngredients.push(ingredient);
+            } else {
+                // If already selected, deselect
                 selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
                 div.classList.remove('selected');
-            } else {
-                selectedIngredients.push(ingredient);
-                div.classList.add('selected');
             }
 
             console.log('Selected ingredients:', selectedIngredients);
-
-            // Send selected ingredients to the server
             sendSelectedIngredients(selectedIngredients);
         });
     });
@@ -110,14 +136,13 @@
                 ingredients: selectedIngredients
             })
         })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('result').innerHTML = data.html;
-            initializeTiltEffect();
-        })
-        .catch(error => {
-            console.error("Error recording ingredients:", error);
-        });
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = data.html;
+            })
+            .catch(error => {
+                console.error("Error recording ingredients:", error);
+            });
     }
 </script>
 
