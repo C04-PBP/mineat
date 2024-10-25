@@ -9,14 +9,19 @@
         transform-style: preserve-3d;
         transition: transform 0.3s ease-out;
     }
+    .content-wrapper {
+        margin-top: 64px; /* Adjust according to your navbar's height */
+    }
 </style>
 {% endblock meta %}
 
 {% block content %}
-{% include 'show_header.html' %}
+<header  class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+  {% include "show_header.html" %}
+</header>
 
 
-<div class="flex flex-row gap-4">
+<div class="flex flex-row gap-4 content-wrapper">
   
   <section>
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">

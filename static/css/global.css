@@ -5,3 +5,6 @@
 
 }
 
+.content-wrapper {
+    margin-top: 64px; /* Adjust this value to match your navbar's height */
+}

@@ -5,11 +5,11 @@
 {% endblock meta %}
 
 {% block content %}
-<header  class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+<header>
     {% include "show_header.html" %}
 </header>
 
-<div class="flex flex-row gap-4">
+<div class="flex flex-row gap-4 content-wrapper">
     <!-- Toggleable Sidebar -->
     <aside id="sidebar" class="w-[20%] transition-transform transform translate-x-0">
         <div class="relative dropdown-container ">
@@ -62,6 +62,10 @@
     /* Position the toggle button */
     #toggleSidebar {
         z-index: 1000;
+    }
+
+    .content-wrapper {
+        margin-top: 64px; /* Adjust according to your navbar's height */
     }
 </style>
 
