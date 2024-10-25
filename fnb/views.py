@@ -68,16 +68,27 @@ def ajax_search_fnb(request):
     html = render_to_string('hasil_search_fnb.html', {'fnbs': fnbs})
     return JsonResponse({'html': html})
 
-def add_fnb(request):
-    form = FnbForm(request.POST or None)
+from ingredient.models import Ingredient
 
-    if form.is_valid() and request.method == "POST":
-        mood_entry = form.save(commit=False)
-        mood_entry.user = request.user
-        mood_entry.save()
-        return redirect('ingredient:show_filter')
+def add_fnb(request):
+    if request.method == "POST":
+        form = FnbForm(request.POST)
+        if form.is_valid():
+            fnb_instance = form.save(commit=False)  # Save the Fnb instance
+            fnb_instance.user = request.user
+            fnb_instance.save()
+
+            # Link the Fnb instance to the selected ingredients
+            selected_ingredients = form.cleaned_data['ingredients']
+            for ingredient in selected_ingredients:
+                ingredient.fnb.add(fnb_instance)  # Add the Fnb to each ingredient's fnb field
+
+            return redirect('ingredient:show_filter')
+        else:
+            print("Form Errors:", form.errors)
     else:
         form = FnbForm()
 
     context = {'form': form}
     return render(request, "add_fnb.html", context)
+

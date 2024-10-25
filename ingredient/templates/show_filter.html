@@ -5,7 +5,7 @@
 {% endblock meta %}
 
 {% block content %}
-<header  class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
     {% include "show_header.html" %}
 </header>
 
@@ -73,14 +73,16 @@
     }
 
     .content-wrapper {
-        margin-top: 64px; /* Adjust according to your navbar's height */
+        margin-top: 64px;
+        /* Adjust according to your navbar's height */
     }
 
     .add-fnb-button {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background-color: #BB0000; /* Button color */
+        background-color: #BB0000;
+        /* Button color */
         color: white;
         padding: 10px 20px;
         border-radius: 8px;
@@ -91,9 +93,9 @@
     }
 
     .add-fnb-button:hover {
-        background-color: #ff0000; /* Hover color */
+        background-color: #ff0000;
+        /* Hover color */
     }
-    
 </style>
 
 <script src="{% static 'js/fnb_card.js' %}"></script>

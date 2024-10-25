@@ -1,11 +1,18 @@
-from django.forms import ModelForm
+from django import forms
 from fnb.models import Fnb
-from django.utils.html import strip_tags
+from ingredient.models import Ingredient
 
-class FnbForm(ModelForm):
+class FnbForm(forms.ModelForm):
+    ingredients = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(),  # Query all ingredients
+        widget=forms.CheckboxSelectMultiple,
+        required=True
+    )
+
     class Meta:
         model = Fnb
-        fields = ["name", "description", "price"]
+        fields = ["name", "description", "price"]  # Include the ingredients field
+
 
     # def clean_mood(self):
     #     mood = self.cleaned_data["mood"]
