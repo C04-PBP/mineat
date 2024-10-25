@@ -85,5 +85,5 @@ def search_fnbs(request):
     fnbs = Fnb.objects.filter(name__icontains=query) if query else Fnb.objects.all()
     
     # Render results to HTML
-    html = render_to_string('fnb_search_results.html', {'fnbs': fnbs})
+    html = render_to_string('fnb_kosong.html', {'fnbs': fnbs})
     return JsonResponse({'html': html})

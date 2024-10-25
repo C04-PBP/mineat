@@ -58,13 +58,24 @@ def record_ingredients(request):
                     fnb_set = food
                 else:
                     fnb_set.intersection_update(food)
-                
+
+    
+
+    
 
             if len(ingredients) == 0:
-                context = {'fnbs': Fnb.objects.all()}
+                fnb = Fnb.objects.all()
+                paginator = Paginator(fnb,6)
+                page_number = request.GET.get("page")
+                page_obj = paginator.get_page(page_number)
+                context = {'fnbs': page_obj}
             
             else:
-                context = {'fnbs': fnb_set}
+                fnb = list(fnb_set)
+                paginator = Paginator(fnb,6)
+                page_number = request.GET.get("page")
+                page_obj = paginator.get_page(page_number)
+                context = {'fnbs': page_obj}
             
             html = render_to_string('fnb_kosong.html', context)
             

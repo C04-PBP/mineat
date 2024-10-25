@@ -2,6 +2,45 @@
 {% load static %}
 {% block meta %}
 <title>Filter</title>
+{% endblock meta %}
+
+{% block content %}
+<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+    {% include "show_header.html" %}
+    <div class="flex items-center gap-4 justify-center mt-4">
+        <div class="search-container">
+            <svg class="search-icon w-6 h-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-4.35-4.35M8.5 14a5.5 5.5 0 100-11 5.5 5.5 0 000 11z" />
+            </svg>
+            <input type="text" id="filter-search-bar" placeholder="Search Fnbs..." class="search-input" />
+        </div>
+    </div>
+</header>
+
+<div class="flex flex-row gap-4 content-wrapper">
+    <!-- Toggleable Sidebar -->
+    <aside id="sidebar"
+        class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container collapsed">
+        <div class="ingredient-div w-full h-[100vh] rounded-[20px] shadow overflow-auto">
+            {% for ingredient in ingredients %}
+            <!-- Ingredient Cards with lazy-load class -->
+            <div class="lazy-load ingredient-card" data-name="{{ ingredient.name }}">
+                {% include "ingredient_card.html" with ingredient=ingredient %}
+            </div>
+            {% endfor %}
+        </div>
+    </aside>
+
+    <!-- Content Section -->
+    <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
+
+</div>
+
+<a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
+
+<!-- Styles -->
 <style>
     .dropdown-container {
         display: flex;
@@ -25,6 +64,25 @@
         transform: translateX(-100%);
     }
 
+    /* Lazy Load - initially hide cards */
+    .lazy-load {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* When in view, make the cards visible */
+    .lazy-load.in-view {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Selected state: prevent further animation reset */
+    .ingredient-card.selected {
+        animation: none;
+        transition: none;
+    }
+
     .content-wrapper {
         margin-top: 64px;
     }
@@ -34,6 +92,7 @@
         bottom: 20px;
         right: 20px;
         background-color: #BB0000;
+        /* Button color */
         color: white;
         padding: 10px 20px;
         border-radius: 8px;
@@ -77,97 +136,109 @@
         padding: 5px 10px;
     }
 </style>
-{% endblock meta %}
-
-{% block content %}
-<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
-    {% include "show_header.html" %}
-    <!-- Search Bar -->
-    <div class="flex items-center gap-4 justify-center mt-4">
-        <div class="search-container">
-            <svg class="search-icon w-6 h-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M8.5 14a5.5 5.5 0 100-11 5.5 5.5 0 000 11z" />
-            </svg>
-            <input type="text" id="filter-search-bar" placeholder="Search Fnbs..." class="search-input" />
-        </div>
-    </div>
-</header>
-
-<div class="flex flex-row gap-4 content-wrapper">
-    <aside id="sidebar" class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container">
-        <div class="ingredient-div w-full h-[100vh] rounded-[20px] shadow overflow-auto">
-            {% for ingredient in ingredients %}
-            <div class="lazy-load ingredient-card" data-name="{{ ingredient.name }}">
-                {% include "ingredient_card.html" with ingredient=ingredient %}
-            </div>
-            {% endfor %}
-        </div>
-    </aside>
-
-    <!-- Content Section -->
-    <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
-</div>
 
 <a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
 
 <script src="{% static 'js/fnb_card.js' %}"></script>
 
 <script>
-    // Sidebar toggle functionality
-    const sidebar = document.getElementById('sidebar');
-    const filterToggle = document.getElementById('filterToggle'); 
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebar = document.getElementById('sidebar');
+        const filterToggle = document.getElementById('filterToggle');
+        let lazyLoadInitialized = false; // Track if lazy load has been initialized
 
-    filterToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-    });
+        if (filterToggle) {
+            filterToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
 
-    // AJAX Search for Fnbs
-    document.getElementById('filter-search-bar').addEventListener('input', function() {
-        const query = this.value;
+                // Initialize lazy loading only when the sidebar is first opened
+                if (!lazyLoadInitialized && !sidebar.classList.contains('collapsed')) {
+                    initializeLazyLoad(); // Call lazy load initializer on first open
+                    lazyLoadInitialized = true; // Ensure it initializes only once
+                }
+            });
+        }
 
-        if (query.trim() !== '') {
-            fetch(`{% url 'fnb:search_fnbs' %}?q=${encodeURIComponent(query)}`)
+        // Lazy load animation for ingredients, only called when sidebar is first opened
+        function initializeLazyLoad() {
+            const lazyLoadElements = document.querySelectorAll('.lazy-load');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target); // Stop observing once loaded
+                    }
+                });
+            }, {
+                root: null,       // Use viewport as root
+                threshold: 0.1    // Trigger when 10% of the element is visible
+            });
+
+            // Start observing elements after the sidebar opens for the first time
+            lazyLoadElements.forEach(element => observer.observe(element));
+        }
+
+        // AJAX Search for Fnbs
+        document.getElementById('filter-search-bar').addEventListener('input', function () {
+            const query = this.value;
+
+            if (query.trim() !== '') {
+                fetch(`{% url 'fnb:search_fnbs' %}?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerHTML = data.html;
+                    })
+                    .catch(error => console.error('Error with search:', error));
+            } else {
+                document.getElementById('result').innerHTML = '';  // Clear results if query is empty
+            }
+        });
+
+        // Ingredient selection logic
+        let selectedIngredients = [];
+
+        document.querySelectorAll('.ingredient-card').forEach(div => {
+            div.addEventListener('click', function () {
+                const ingredient = div.getAttribute('data-name');
+
+                // Prevent animation reset on selected ingredients
+                if (!div.classList.contains('selected')) {
+                    div.classList.add('selected');
+                    selectedIngredients.push(ingredient);
+                } else {
+                    // If already selected, deselect
+                    selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
+                    div.classList.remove('selected');
+                }
+
+                console.log('Selected ingredients:', selectedIngredients);
+                sendSelectedIngredients(selectedIngredients);
+            });
+        });
+
+        function sendSelectedIngredients(selectedIngredients) {
+            fetch('{% url "ingredient:record_ingredients" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',
+                },
+                body: JSON.stringify({
+                    ingredients: selectedIngredients
+                })
+            })
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('result').innerHTML = data.html;
+                    initializeTiltEffect();
                 })
-                .catch(error => console.error('Error with search:', error));
-        } else {
-            document.getElementById('result').innerHTML = '';  // Clear results if query is empty
+                .catch(error => {
+                    console.error("Error recording ingredients:", error);
+                });
         }
     });
 
-    // Ingredient selection logic
-    let selectedIngredients = [];
-    document.querySelectorAll('.ingredient-card').forEach(div => {
-        div.addEventListener('click', function () {
-            const ingredient = div.getAttribute('data-name');
-            if (!div.classList.contains('selected')) {
-                div.classList.add('selected');
-                selectedIngredients.push(ingredient);
-            } else {
-                selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
-                div.classList.remove('selected');
-            }
-            sendSelectedIngredients(selectedIngredients);
-        });
-    });
-
-    function sendSelectedIngredients(selectedIngredients) {
-        fetch('{% url "ingredient:record_ingredients" %}', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}',
-            },
-            body: JSON.stringify({ ingredients: selectedIngredients })
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('result').innerHTML = data.html;
-        })
-        .catch(error => console.error("Error recording ingredients:", error));
-    }
 </script>
 
 {% endblock content %}
