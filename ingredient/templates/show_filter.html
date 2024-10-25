@@ -23,6 +23,25 @@
     <!-- Toggleable Sidebar -->
     <aside id="sidebar"
         class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container collapsed">
+
+        <!-- Animated Search Bar -->
+        <div class="flex justify-center">
+            <div class="relative">
+                <input type="text" id="ingredient-search-bar"
+                    class="bg-white h-10 px-5 pr-10 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out w-12 focus:w-64"
+                    placeholder="Search..." onfocus="this.classList.remove('w-12'); this.classList.add('w-64');"
+                    onblur="if(this.value === '') { this.classList.remove('w-64'); this.classList.add('w-12'); }">
+                <div class="absolute right-0 top-0 mt-3 mr-4">
+                    <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path
+                            d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Ingredient List -->
         <div class="ingredient-div w-full h-[100vh] rounded-[20px] shadow overflow-auto">
             {% for ingredient in ingredients %}
             <!-- Ingredient Cards with lazy-load class -->
@@ -32,6 +51,8 @@
             {% endfor %}
         </div>
     </aside>
+
+
 
     <!-- Content Section -->
     <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
@@ -50,13 +71,33 @@
         padding: 20px;
     }
 
+    .ingredient-div {
+        width: 100%;
+        height: calc(100vh - 128px);
+        /* Height minus the search bar and header */
+        overflow-y: auto;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
     .ingredient-div.selected {
         background-color: #f0ad4e;
         border: 2px solid #000;
     }
 
+    /* Ingredient search bar styling */
+    .ingredient-search-bar {
+        position: relative;
+        background-color: #fff;
+        z-index: 10;
+        /* Keep it above the scrollable area */
+        padding: 10px;
+        /* Add some padding around the search bar */
+    }
+
     /* Sidebar Transition */
     #sidebar {
+
         transition: transform 0.3s ease-in-out;
     }
 
@@ -195,6 +236,53 @@
             }
         });
 
+        // AJAX Search for Ingredients
+        // AJAX Search for Ingredients
+const ingredientSearchBar = document.getElementById('ingredient-search-bar');
+
+ingredientSearchBar.addEventListener('input', function () {
+    const query = this.value;
+
+    if (query.trim() !== '') {
+        fetch('{% url "ingredient:search_ingredient" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify({ ingredient: query }) // Send the search query as a string
+        })
+        .then(response => response.json())
+        .then(data => {
+            const ingredientCards = document.querySelectorAll('.ingredient-card');
+
+            // Hide all ingredient cards by default
+            ingredientCards.forEach(card => {
+                card.style.display = 'none';
+            });
+
+            // Show only matching ingredient cards
+            const ingredients = JSON.parse(data.ingredients);
+            ingredients.forEach(item => {
+                const matchingCard = document.querySelector(`.ingredient-card[data-name="${item.fields.name}"]`);
+                if (matchingCard) {
+                    matchingCard.style.display = ''; // Show matching ingredient
+                }
+            });
+        })
+        .catch(error => {
+            console.error('Error with ingredient search:', error);
+        });
+    } else {
+        // Show all ingredients if search input is cleared
+        document.querySelectorAll('.ingredient-card').forEach(card => {
+            card.style.display = ''; // Reset to visible
+        });
+    }
+});
+
+
+
         // Ingredient selection logic
         let selectedIngredients = [];
 
@@ -207,7 +295,7 @@
                     div.classList.add('selected');
                     selectedIngredients.push(ingredient);
                 } else {
-                    // If already selected, deselect
+                    // kalo udah diselect dimatiin
                     selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
                     div.classList.remove('selected');
                 }

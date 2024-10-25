@@ -85,6 +85,19 @@ def record_ingredients(request):
     
     return JsonResponse({"status": "error", "message": "Invalid request"})
 
+def search_ingredient(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        ingredient_query = data.get('ingredient', '')
+
+        # Filter ingredients by partial match
+        ingredients = Ingredient.objects.filter(name__icontains=ingredient_query)
+        
+        # Serialize the queryset to JSON
+        serialized_ingredients = serializers.serialize('json', ingredients)
+        
+        return JsonResponse({'ingredients': serialized_ingredients})
+    
 def show_card(request):
     return render(request,"nyoba2.html")
 
