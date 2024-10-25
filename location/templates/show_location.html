@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    <title>locations</title>
+    <title>Locations</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 {% endblock meta %}
 
@@ -29,6 +29,7 @@
         class="location-item bg-blue-900 shadow-md rounded-lg overflow-hidden">
             <div class="p-4">
                 <h2 class="text-2xl font-bold">{{ location.name }}</h2>
+                <img src="{{ location.image }}" alt="{{ location.name }}" class="w-full h-32 object-cover rounded-md">
             </div>
         </a>
     {% endfor %}

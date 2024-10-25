@@ -74,3 +74,17 @@ def edit_restaurant(request, id):
 
     context = {'form': form}
     return render(request, "edit_restaurant.html", context)  
+
+def add_restaurant_ajax(request):
+    if request.method == "POST":
+        form = RestaurantForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})
+        else:
+            html = render_to_string('add_restaurant_ajax.html', {'form': form}, request=request)
+            return JsonResponse({'success': False, 'html': html})
+    else:
+        form = RestaurantForm()
+        html = render_to_string('add_restaurant_ajax.html', {'form': form}, request=request)
+        return JsonResponse({'html': html})

@@ -11,3 +11,4 @@ class Restaurant(models.Model):
     address = models.TextField()
     location = models.ForeignKey(Location,on_delete=models.CASCADE)
     fnb = models.ManyToManyField(Fnb,related_name= "restaurant_fnb")
+    image = models.CharField(max_length=511)

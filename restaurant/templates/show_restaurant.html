@@ -6,7 +6,6 @@
 {% endblock meta %}
 
 {% block content %}
-
 <body class="bg-gray-700"></body>
 <!-- Search Bar and Choice Box -->
 <nav class="bg-gray-700 shadow-md p-4">
@@ -34,6 +33,19 @@
     <a href="{% url 'restaurant:add_restaurant' %}" class="bg-sky-500 hover:bg-lime-500 text-white font-serif font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4">
         Add Restaurant
     </a>
+    <button id="ajax-add-restaurant-btn" class="bg-indigo-500 hover:bg-indigo-700 text-white font-serif font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 mx-4">
+        Add Restaurant (AJAX)
+    </button>
+</div>
+
+<!-- Modal -->
+<div id="ajax-add-restaurant-modal" class="hidden fixed z-50 inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 overflow-y-auto">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md max-h-screen overflow-y-auto">
+        <button id="close-modal" class="float-right text-gray-700 hover:text-red-500 font-bold">&times;</button>
+        <div id="ajax-add-restaurant-content" class="max-h-[80vh] overflow-y-auto p-4">
+            <!-- AJAX content will be loaded here -->
+        </div>
+    </div>
 </div>
 
 <!-- Search Results -->
@@ -44,7 +56,7 @@
             <div class="p-4">
                 <h2 class="text-2xl font-bold">{{ restaurant.name }}</h2>
                 <p class="text-gray-600">{{ restaurant.address }}</p>
-                <h1 class="text-4xl">Image PlaceHolder</h1>
+                <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}" class="w-full h-32 object-cover rounded-md">
             </div>
         </a>
     {% endfor %}
@@ -81,5 +93,39 @@
             search();
         });
     });
+    $(document).ready(function() {
+    $('#ajax-add-restaurant-btn').on('click', function() {
+        $.ajax({
+            url: "{% url 'restaurant:add_restaurant_ajax' %}",
+            method: 'GET',
+            success: function(response) {
+                $('#ajax-add-restaurant-content').html(response.html);
+                $('#ajax-add-restaurant-modal').removeClass('hidden');
+                $('#ajax-add-restaurant-modal')[0].scrollTop = 0; // Scroll to the top of the modal
+            }
+        });
+    });
+
+    $('#close-modal').on('click', function() {
+        $('#ajax-add-restaurant-modal').addClass('hidden');
+    });
+
+    $(document).on('submit', '#ajax-add-restaurant-form', function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "{% url 'restaurant:add_restaurant_ajax' %}",
+            method: 'POST',
+            data: $(this).serialize(),
+            success: function(response) {
+                if (response.success) {
+                    $('#ajax-add-restaurant-modal').addClass('hidden');
+                    location.reload(); // Reload to see new restaurant
+                } else {
+                    $('#ajax-add-restaurant-content').html(response.html);
+                }
+            }
+        });
+    });
+});
 </script>
 {% endblock content %}
