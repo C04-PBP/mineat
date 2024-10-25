@@ -1,17 +1,18 @@
 from django.db import models
 from fnb.models import Fnb
 from django.contrib.auth.models import User
-from django.utils import timezone
+# from django.utils import timezone
+from django.utils.timezone import now
 
 # Create your models here.
 class Forum(models.Model):
     name = models.CharField(max_length= 255)
     text = models.TextField()
-    user = models.ForeignKey(User,on_delete= models.CASCADE, related_name= "forum_umum", null=True)
-    time_created = models.DateField(default=timezone.now)
+    user = models.ForeignKey(User,on_delete= models.CASCADE, null=True)
+    time_created = models.DateTimeField(default=now)
 
 class ForumKhusus(models.Model):
-    user = models.ForeignKey(User,on_delete= models.CASCADE, related_name= "forum_khusus", null=True)
+    user = models.ForeignKey(User,on_delete= models.CASCADE, null=True)
     text = models.TextField()
     forum = models.ForeignKey(Forum,on_delete= models.CASCADE, related_name= "forum_khusus")
-    time_created = models.DateField(default=timezone.now)
+    time_created = models.DateTimeField(default=now)
