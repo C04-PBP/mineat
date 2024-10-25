@@ -35,7 +35,7 @@
 {% endblock meta %}
 
 {% block content %}
-<header  class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
   {% include "show_header.html" %}
 </header>
 
@@ -47,8 +47,14 @@
           <p class="mt-4 text-gray-300">kosongg</p>
         </div>
 
-        <!-- Iterating food cards -->
-        <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+        <!-- Search Bar -->
+        <div class="mt-4">
+            <input type="text" id="search-bar" placeholder="Search Fnbs..." class="w-full px-4 py-2 border rounded">
+        </div>
+
+        <!-- Results Section -->
+        <div id="fnb-results" class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
+          <!-- Initial results loaded here -->
           {% for fnb in fnbs %}
           <div class="tilt-card-container">
             <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
@@ -62,15 +68,6 @@
           </div>
           {% endfor %}
         </div>
-
-        <div class="mt-12 text-center">
-          <a
-            href="#"
-            class="inline-block rounded bg-pink-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-pink-700 focus:outline-none focus:ring focus:ring-yellow-400"
-          >
-            Get Started Today
-          </a>
-        </div>
       </div>
   </section>
 </div>
@@ -79,6 +76,19 @@
 <a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
 
 <script>
+    // JavaScript for AJAX search
+    document.getElementById('search-bar').addEventListener('input', function() {
+        const query = this.value;
+
+        fetch(`{% url 'fnb:search_fnbs' %}?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('fnb-results').innerHTML = data.html;
+            })
+            .catch(error => console.error('Error with search:', error));
+    });
+
+    // Tilt effect for Fnb cards
     const tiltCards = document.querySelectorAll('.tilt-card');
     const ROTATION_RANGE = 32.5;
     const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;

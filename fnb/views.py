@@ -58,18 +58,6 @@ def show_fnb(request,food = None):
         }
     return render(request,"show_fnb.html",context)
 
-def ajax_search_fnb(request):
-    query = request.GET.get('q', '')
-    if query:
-        fnbs = Fnb.objects.filter(name__icontains=query)
-    else:
-        fnbs = Fnb.objects.all()
-
-    html = render_to_string('hasil_search_fnb.html', {'fnbs': fnbs})
-    return JsonResponse({'html': html})
-
-from ingredient.models import Ingredient
-
 def add_fnb(request):
     if request.method == "POST":
         form = FnbForm(request.POST)
@@ -92,3 +80,10 @@ def add_fnb(request):
     context = {'form': form}
     return render(request, "add_fnb.html", context)
 
+def search_fnbs(request):
+    query = request.GET.get('q', '')
+    fnbs = Fnb.objects.filter(name__icontains=query) if query else Fnb.objects.all()
+    
+    # Render results to HTML
+    html = render_to_string('fnb_search_results.html', {'fnbs': fnbs})
+    return JsonResponse({'html': html})

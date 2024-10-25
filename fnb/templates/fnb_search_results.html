@@ -1,0 +1,14 @@
+{% for fnb in fnbs %}
+<div class="tilt-card-container">
+    <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
+        <div class="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg" style="transform: translateZ(75px);">
+            <div class="absolute bottom-10 w-full">
+                <p class="text-center text-xl font-bold text-black" style="transform: translateZ(50px);">{{ fnb.name }}</p>
+                <p class="text-center text-l text-black" style="transform: translateZ(50px);">{{ fnb.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<p class="text-center text-gray-500">No results found.</p>
+{% endfor %}
