@@ -7,6 +7,12 @@
 <div class="bg-gray-100 p-6">
     <h2 class="text-lg font-bold mb-4">Comments</h2>
     <div class="flex flex-col space-y-4" id="comment-section">
+        <div class="mb-4">
+            <label>
+                <input type="checkbox" id="filterUnanswered" {% if filter_unanswered %}checked{% endif %}>
+                Show Unanswered Discussions Only
+            </label>
+        </div>
         <div id="test">
             {% for forum in forums %}
                 {% include "forum_card.html" %}
@@ -115,6 +121,16 @@
         }
         return cookieValue;
     }
+});
+
+document.getElementById('filterUnanswered').addEventListener('change', function() {
+    let filter;
+    if (this.checked) {
+        filter = 'true';
+    } else {
+        filter = 'false';
+    }
+    window.location.href = "{% url 'forum:show-forum-umum' %}?filter_unanswered=" + filter;
 });
 
 </script>

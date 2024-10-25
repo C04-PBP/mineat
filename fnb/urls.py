@@ -2,7 +2,7 @@ from django.urls import path
 from fnb.views import (
     show_fnb
     )
-from fnb.views import register, login_user, logout_user, add_fnb, search_fnbs
+from fnb.views import register, login_user, logout_user, add_fnb, search_fnbs, landing_page
 
 
 app_name = 'fnb'
@@ -14,4 +14,6 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('add_fnb/', add_fnb, name='add_fnb'),
     path('search_fnbs/', search_fnbs, name='search_fnbs'),
+    path('', landing_page, name='landing_page'),
+    # path('', landing_page2, name='landing_page2'),
 ]

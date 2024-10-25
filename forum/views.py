@@ -14,14 +14,27 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
+from django.db.models import Count
 
 # Create your views here.
 def show_forum(request):
-    context = {
-        "forums" : Forum.objects.all()
-    }
+    # context = {
+    #     "forums" : Forum.objects.all()
+    # }
 
-    return render(request,"forum_umum.html",context)
+    # return render(request,"forum_umum.html",context)
+    filter_unanswered = request.GET.get('filter_unanswered', 'false') == 'true'
+
+    if filter_unanswered:
+        forums = Forum.objects.annotate(comment_count=Count('forum_khusus')).filter(comment_count=1)
+    else:
+        forums = Forum.objects.all()
+
+    context = {
+        "forums": forums,
+        "filter_unanswered": filter_unanswered,  # Pass the filter state to the template
+    }
+    return render(request, 'forum_umum.html', context)
 
 @login_required
 @csrf_exempt  
