@@ -7,11 +7,11 @@ from django.utils import timezone
 class Forum(models.Model):
     name = models.CharField(max_length= 255)
     text = models.TextField()
-    # user = models.ForeignKey(User,on_delete= models.CASCADE, related_name= "forum_umum")
+    user = models.ForeignKey(User,on_delete= models.CASCADE, related_name= "forum_umum", null=True)
     time_created = models.DateField(default=timezone.now)
 
 class ForumKhusus(models.Model):
-    # user = models.ForeignKey(User,on_delete= models.CASCADE, related_name= "forum_khusus")
+    user = models.ForeignKey(User,on_delete= models.CASCADE, related_name= "forum_khusus", null=True)
     text = models.TextField()
     forum = models.ForeignKey(Forum,on_delete= models.CASCADE, related_name= "forum_khusus")
     time_created = models.DateField(default=timezone.now)

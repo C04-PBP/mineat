@@ -23,6 +23,7 @@ def show_forum(request):
 
     return render(request,"forum_umum.html",context)
 
+@login_required
 @csrf_exempt  
 def add_forum(request):
     if request.method == 'POST':
@@ -48,6 +49,7 @@ def add_forum(request):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 # Jangan lupa nanti enable user di model supaya bisa ngerubah post date
+# @login_required
 @csrf_exempt
 def add_forum_khusus(request, id):
     forum = get_object_or_404(Forum, pk=id)

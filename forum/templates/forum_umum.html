@@ -33,6 +33,7 @@
                 {% include "forum_card.html" %}
             {% endfor %}
         </div>
+        {% if user.is_authenticated %}
         <form id="comment-form" class="bg-white p-4 rounded-lg shadow-md">
             <h3 class="text-lg font-bold mb-2">Add a comment section</h3>
             <div class="mb-4">
@@ -57,6 +58,11 @@
                 Submit
             </button>
         </form>
+        {% else %}
+        <p>
+            <a href="{% url 'fnb:login' %}">Log in</a> to add a new forum.
+        </p>
+        {% endif %}
     </div>
 </div>
 
