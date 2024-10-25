@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 {% block meta %}
 <title>Fnb</title>
+<style>
+    .tilt-card-container {
+        perspective: 1000px;
+    }
+    .tilt-card {
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease-out;
+    }
+</style>
 {% endblock meta %}
 
 {% block content %}
+{% include 'show_header.html' %}
+
 
 <div class="flex flex-row gap-4">
   
-  <section class="bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white">
+  <section>
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <div class="mx-auto max-w-lg text-center">
           <h2 class="text-3xl font-bold sm:text-4xl">Mineat</h2>
@@ -17,23 +28,20 @@
           </p>
         </div>
     
-        <!-- Mulai iterasi makanan -->
-        <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Iterating food cards -->
+        <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {% for fnb in fnbs %}
-              <a
-              class=" bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 block rounded-xl border border-gray-800 p-8 shadow-xl transition hover:border-black-500/10 hover:shadow-red-500/10"
-              href="#">
-              
-              
-
-              <h2 class="mt-4 text-xl font-bold text-white">{{ fnb.name }}</h2>
-
-              <p class="mt-1 text-sm text-white">
-              {{ fnb.description }}
-              </p>
-          </a>
+          <div class="tilt-card-container">
+            <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
+                <div class="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg" style="transform: translateZ(75px);">
+                    <div class="absolute bottom-10 w-full">
+                      <p class="text-center text-xl font-bold text-black" style="transform: translateZ(50px);">{{ fnb.name }}</p>
+                      <p class="text-center text-l text-black" style="transform: translateZ(50px);">{{ fnb.description }}</p>
+                    </div>
+                </div>
+            </div>
+          </div>
           {% endfor %}
-          
         </div>
     
         <div class="mt-12 text-center">
@@ -47,4 +55,31 @@
       </div>
   </section>
 </div>
+
+<script>
+    const tiltCards = document.querySelectorAll('.tilt-card');
+    const ROTATION_RANGE = 32.5;
+    const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
+
+    tiltCards.forEach(tiltCard => {
+        tiltCard.addEventListener('mousemove', (e) => {
+            const rect = tiltCard.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
+
+            const mouseX = (e.clientX - rect.left) * ROTATION_RANGE;
+            const mouseY = (e.clientY - rect.top) * ROTATION_RANGE;
+
+            const rX = (mouseY / height - HALF_ROTATION_RANGE) * -1;
+            const rY = mouseX / width - HALF_ROTATION_RANGE;
+
+            tiltCard.style.transform = `rotateX(${rX}deg) rotateY(${rY}deg)`;
+        });
+
+        tiltCard.addEventListener('mouseleave', () => {
+            tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        });
+    });
+</script>
+
 {% endblock content %}

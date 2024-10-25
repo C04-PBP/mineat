@@ -12,6 +12,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 # Create your views here.
 def register(request):
@@ -54,3 +56,13 @@ def show_fnb(request,food = None):
             "fnbs" : Fnb.objects.all()
         }
     return render(request,"show_fnb.html",context)
+
+def ajax_search_fnb(request):
+    query = request.GET.get('q', '')
+    if query:
+        fnbs = Fnb.objects.filter(name__icontains=query)
+    else:
+        fnbs = Fnb.objects.all()
+
+    html = render_to_string('hasil_search_fnb.html', {'fnbs': fnbs})
+    return JsonResponse({'html': html})
