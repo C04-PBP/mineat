@@ -12,6 +12,25 @@
     .content-wrapper {
         margin-top: 64px; /* Adjust according to your navbar's height */
     }
+
+    /* Style for the button at the bottom-left of the screen */
+    .add-fnb-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #BB0000; /* Button color */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .add-fnb-button:hover {
+        background-color: #ff0000; /* Hover color */
+    }
 </style>
 {% endblock meta %}
 
@@ -20,21 +39,16 @@
   {% include "show_header.html" %}
 </header>
 
-
-<div class="flex flex-row gap-4 content-wrapper">
-  
+<div class="flex justify-center content-wrapper">
   <section>
       <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <div class="mx-auto max-w-lg text-center">
           <h2 class="text-3xl font-bold sm:text-4xl">Mineat</h2>
-          
-          <p class="mt-4 text-gray-300">
-            kosongg
-          </p>
+          <p class="mt-4 text-gray-300">kosongg</p>
         </div>
-    
+
         <!-- Iterating food cards -->
-        <div class="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
           {% for fnb in fnbs %}
           <div class="tilt-card-container">
             <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
@@ -48,7 +62,7 @@
           </div>
           {% endfor %}
         </div>
-    
+
         <div class="mt-12 text-center">
           <a
             href="#"
@@ -60,6 +74,9 @@
       </div>
   </section>
 </div>
+
+<!-- Fixed button to add new Fnb item -->
+<a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
 
 <script>
     const tiltCards = document.querySelectorAll('.tilt-card');

@@ -9,11 +9,11 @@
     {% include "show_header.html" %}
 </header>
 
-<div class="flex flex-row gap-4">
+<div class="flex flex-row gap-4 content-wrapper">
     <!-- Toggleable Sidebar -->
     <aside id="sidebar"
         class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container">
-        <div class="ingredient-div w-full h-[100vh] rounded-[20px] shadow overflow-auto">
+        <div class="ingredient-div w-full h-full rounded-[20px] shadow overflow-auto">
             {% for ingredient in ingredients %}
             <!-- Ingredient Cards with lazy-load class -->
             <div class="lazy-load ingredient-card" data-name="{{ ingredient.name }}">
@@ -26,6 +26,8 @@
     <!-- Content Section -->
     <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
 </div>
+
+<a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
 
 <!-- Styles -->
 <style>
@@ -73,6 +75,25 @@
     .content-wrapper {
         margin-top: 64px; /* Adjust according to your navbar's height */
     }
+
+    .add-fnb-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #BB0000; /* Button color */
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease;
+    }
+
+    .add-fnb-button:hover {
+        background-color: #ff0000; /* Hover color */
+    }
+    
 </style>
 
 <script src="{% static 'js/fnb_card.js' %}"></script>

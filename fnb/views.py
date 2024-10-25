@@ -14,6 +14,7 @@ from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from .forms import FnbForm
 
 # Create your views here.
 def register(request):
@@ -66,3 +67,17 @@ def ajax_search_fnb(request):
 
     html = render_to_string('hasil_search_fnb.html', {'fnbs': fnbs})
     return JsonResponse({'html': html})
+
+def add_fnb(request):
+    form = FnbForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        mood_entry = form.save(commit=False)
+        mood_entry.user = request.user
+        mood_entry.save()
+        return redirect('ingredient:show_filter')
+    else:
+        form = FnbForm()
+
+    context = {'form': form}
+    return render(request, "add_fnb.html", context)
