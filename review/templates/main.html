@@ -15,279 +15,192 @@
     <h5 class="font-semibold text-lg">Deskripsi :</h5>
     <p class="mb-4">{{ description }}</p>
 
+    <input type="hidden" id="food_id" name="food_id" value="{{ id }}">
+
+    <input type="hidden" id="liked_review" name="liked_review" value="{{ review_user }}">
+
 </div>
 
 <h2 class="text-xl font-bold mb-4">Review Section</h2>
 
-<div class="max-h-96 overflow-y-scroll border border-gray-300 p-4 rounded-lg" id="review-list">
-    {% if reviews %}
-      {% for review in reviews %}
-        <div class="border-b border-gray-300 mb-4 pb-4" data-review-id="{{ review.id }}">
-          <!-- Nama user -->
-          <div class="mb-2">
-            <span class="font-bold">{{ review.user.username }}</span>
-          </div>
+<div id="show_review_space"></div>
 
-          <!-- Jumlah bintang -->
-          <div class="flex mb-2">
-            {% for i in "12345" %}
-              {% if forloop.counter <= review.rating %}
-                <svg class="w-5 h-5 text-yellow-500 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
-                </svg>
-              {% else %}
-                <svg class="w-5 h-5 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
-                </svg>
-              {% endif %}
-            {% endfor %}
-          </div>
+<div id="add_review_space"></div>
 
-          <!-- Ulasan user -->
-          <p class="text-gray-700 mb-4 review-text">{{ review.text }}</p>
-  
-          <!-- Tombol Like, Edit, Delete, dan jumlah like -->
-          <div class="flex justify-end items-center">
-            {% if user.is_authenticated %}
-            {% if user.is_authenticated and review.user == user %}
-            <button class="edit-button bg-blue-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
-              Edit
-            </button>
-            <button class="delete-button bg-red-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
-              Delete
-            </button>
-          {% endif %}
-            {% if review.id in review_user %}
-              <button class="like-button bg-green-600 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
-                Unlike
-              </button>
-            {% else %}
-            <button class="like-button bg-green-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
-              Like
-            </button>
-            {% endif %}
-            {% endif %}
-           
-            <span class="like-count text-gray-500 text-sm ml-2">{{ review.like }} orang menyukai ini</span>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      <div class="text-center text-gray-500 italic">
-        Belum ada review ditambahkan.
-      </div>
-    {% endif %}
-  </div>
 
-<div class="p-6 bg-white shadow-md rounded-lg">
-    <h2 class="text-xl font-bold mb-4">Tulis Review</h2>
-    
-    {% if user.is_authenticated %}
-      <form id="reviewForm" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="food_id" value="{{ id }}">
-    
-        <!-- Bintang untuk rating -->
-        <div id="star-rating" class="flex mb-4">
-          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="1" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
-          </svg>
-          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
-          </svg>
-          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="3" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
-          </svg>
-          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
-          </svg>
-          <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
-          </svg>
-        </div>
-    
-        <!-- Input hidden untuk menyimpan rating -->
-        <input type="hidden" name="rating" id="rating" value="0">
-  
-      <!-- Input untuk ulasan -->
-      <textarea id="reviewText" name="text" rows="4" class="w-full p-2 border border-gray-300 rounded" placeholder="Tulis ulasan Anda..."></textarea>
-  
-      <!-- Tombol submit -->
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded mt-4">
-        Submit Review
-      </button>
-    </form>
-  
-    <!-- Pesan berhasil atau error -->
-    <div id="formMessage" class="mt-4"></div>
-  {% else %}
-    <div class="bg-gray-100 p-4 rounded-lg text-center">
-      <p class="text-gray-700 mb-2">Anda harus login untuk menulis review.</p>
-    </div>
-  {% endif %}
-</div>
   
   <!-- Tambahkan Script AJAX dan DOMPurify -->
   <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.3/dist/purify.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    // Event listener untuk bintang rating
-    const stars = document.querySelectorAll('.star');
-    const ratingInput = document.getElementById('rating');
+  document.addEventListener('DOMContentLoaded', function () {
+    const foodId = document.getElementById('food_id').value;
+        // Fungsi untuk memuat Tampilkan Review
+        function loadReviews() {
+          fetch(`/review/load_reviews/?id=${foodId}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('show_review_space').innerHTML = html;
+                })
+                .catch(error => console.error('Error loading reviews:', error));
+        }
 
-    stars.forEach((star, index) => {
-        star.addEventListener('click', function () {
-            const ratingValue = index + 1;  // Nilai rating berdasarkan urutan bintang
+        // Fungsi untuk memuat Tulis Review
+        function loadWriteReview() {
+          fetch(`/review/load_write_review/?id=${foodId}`)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('add_review_space').innerHTML = html;
+                })
+                .catch(error => console.error('Error loading write review:', error));
+              }
+            
+            loadReviews();
+          loadWriteReview();});
+
+          
+          document.addEventListener('DOMContentLoaded', function () {
+    const foodId = document.getElementById('food_id').value;
+
+    // Fungsi untuk memuat Review
+    function loadReviews() {
+        fetch(`/review/load_reviews/?id=${foodId}`)
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('show_review_space').innerHTML = html;
+            })
+            .catch(error => console.error('Error loading reviews:', error));
+    }
+
+    // Memuat review saat halaman dimuat
+    loadReviews();
+
+    // Event listener untuk menambah review
+    document.getElementById('add_review_space').addEventListener('click', function (event) {
+        const ratingInput = document.getElementById('rating');
+
+        // Mengelola klik pada bintang
+        const clickedStar = event.target.closest('.star');
+        if (clickedStar) {
+            const ratingValue = parseInt(clickedStar.getAttribute('data-value'), 10);
+            const stars = document.querySelectorAll('.star');
 
             // Update input hidden untuk rating
             ratingInput.value = ratingValue;
 
-            // Set semua bintang sebelum dan termasuk yang diklik menjadi kuning
-            stars.forEach((s, i) => {
-                if (i < ratingValue) {
-                    s.classList.remove('text-gray-400');
-                    s.classList.add('text-yellow-500');
+            // Set warna bintang sesuai rating yang dipilih
+            stars.forEach((star, index) => {
+                if (index < ratingValue) {
+                    star.classList.remove('text-gray-400');
+                    star.classList.add('text-yellow-500'); // Bintang terpilih berwarna kuning
                 } else {
-                    s.classList.remove('text-yellow-500');
-                    s.classList.add('text-gray-400');
+                    star.classList.remove('text-yellow-500');
+                    star.classList.add('text-gray-400'); // Bintang yang tidak terpilih berwarna abu-abu
                 }
             });
-        });
-    });
-
-    // Event listener untuk submit form review dengan Fetch API
-    document.getElementById('reviewForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        // Ambil nilai form
-        const foodId = document.querySelector('input[name="food_id"]').value;
-        const rating = ratingInput.value;
-        const text = document.getElementById('reviewText').value;
-        const csrfToken = '{{ csrf_token }}';
-
-        // Validasi rating
-        if (rating == 0) {
-            document.getElementById('formMessage').innerHTML = '<p class="text-red-500">Silakan pilih rating bintang terlebih dahulu.</p>';
-            return;
         }
 
-        // Kirim data melalui Fetch API
-        fetch("{% url 'review:add_review' %}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-CSRFToken': csrfToken
-            },
-            body: `food_id=${foodId}&rating=${rating}&text=${encodeURIComponent(text)}`
-        })
-        .then(response => {
-            if (response.ok) {
+        // Menangani klik pada tombol submit
+        if (event.target.matches('#submitReviewButton')) {
+            event.preventDefault();
+
+            // Ambil nilai form
+            const foodId = document.querySelector('input[name="food_id"]').value;
+            const rating = ratingInput.value; // Dapatkan nilai dari input rating
+            const text = document.getElementById('reviewText').value;
+            const csrfToken = '{{ csrf_token }}';
+
+            // Validasi rating
+            if (rating == 0) {
+                document.getElementById('formMessage').innerHTML = '<p class="text-red-500">Silakan pilih rating bintang terlebih dahulu.</p>';
+                return;
+            }
+
+            // Kirim data melalui Fetch API
+            fetch("{% url 'review:add_review' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': csrfToken
+                },
+                body: `food_id=${foodId}&rating=${rating}&text=${encodeURIComponent(text)}`
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text(); // Mengharapkan respons dalam bentuk teks
+                } else {
+                    throw new Error('Gagal menambah review');
+                }
+            })
+            .then(data => {
+                // Tindakan setelah berhasil menambah review
                 document.getElementById('formMessage').innerHTML = '<p class="text-green-500">Review berhasil ditambahkan!</p>';
                 document.getElementById('reviewForm').reset();  // Reset form setelah berhasil submit
+
+                // Reset bintang
+                const stars = document.querySelectorAll('.star');
                 stars.forEach(star => star.classList.remove('text-yellow-500'));
                 stars.forEach(star => star.classList.add('text-gray-400'));
                 ratingInput.value = 0;  // Reset nilai rating
 
-                // Tambahkan review baru ke dalam daftar
-                let newReview = `
-                  <div class="border-b border-gray-300 mb-4 pb-4">
-                    <div class="flex mb-2">`;
-
-                // Loop untuk menambahkan bintang sesuai jumlah yang dipilih
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= rating) {
-                        newReview += `
-                          <svg class="w-5 h-5 text-yellow-500 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.27l5.18 3.73-1.64-6.81L21 9.5l-6.78-.58L12 2.5 9.78 8.92 3 9.5l4.46 4.69L5.82 20.5z" />
-                          </svg>`;
-                    } else {
-                        newReview += `
-                          <svg class="w-5 h-5 text-gray-400 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 17.27l5.18 3.73-1.64-6.81L21 9.5l-6.78-.58L12 2.5 9.78 8.92 3 9.5l4.46 4.69L5.82 20.5z" />
-                          </svg>`;
-                    }
-                }
-
-                newReview += `
-                    </div>
-                    <div class="mb-2">
-                      <span class="font-bold">{{ request.user.username }}</span>
-                    </div>
-                    <p class="text-gray-700 mb-4">${text}</p>
-                    <div class="flex justify-end items-center">
-                      <button class="bg-green-500 text-white py-1 px-3 rounded mr-2">Like</button>
-                      <span class="text-gray-500 text-sm">0 orang menyukai ini</span>
-                    </div>
-                  </div>`;
-
-                // Append review baru ke dalam daftar
-                document.getElementById('review-list').insertAdjacentHTML('beforeend', newReview);
-            } else {
-                throw new Error('Gagal menambah review');
-            }
-        })
-        .catch(error => {
-            document.getElementById('formMessage').innerHTML = '<p class="text-red-500">Terjadi kesalahan saat menambahkan review.</p>';
-            console.error('Error:', error);
-        });
+                // Muat ulang daftar review setelah menambahkan review baru
+                loadReviews();
+            })
+            .catch(error => {
+                document.getElementById('formMessage').innerHTML = '<p class="text-red-500">Terjadi kesalahan saat menambahkan review.</p>';
+                console.error('Error:', error);
+            });
+        }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Event listener for Like button clicks within the review section
+    document.getElementById('show_review_space').addEventListener('click', function (event) {
+        if (event.target.classList.contains('like-button')) {
+            const button = event.target;
+            const reviewId = button.getAttribute('data-review-id');
+            const csrfToken = '{{ csrf_token }}';  // CSRF token for secure requests
+
+            // Send AJAX request to toggle like
+            fetch("{% url 'review:like_review' %}", {
+    method: 'POST',
+    headers: {
+        'X-CSRFToken': csrfToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `review_id=${reviewId}`
+})
+            .then(response => response.ok ? response.text() : Promise.reject("Failed to toggle like"))
+            .then(() => {
+                // Toggle the button text between Like and Unlike
+                const isLiked = button.textContent.trim() === 'Like';
+                button.textContent = isLiked ? 'Unlike' : 'Like';
+
+                // Toggle button color by changing class based on like status
+                if (isLiked) {
+                    button.classList.remove('bg-green-500'); // Original Like color
+                    button.classList.add('bg-green-600');   // Unlike color
+                } else {
+                    button.classList.remove('bg-green-600'); // Unlike color
+                    button.classList.add('bg-green-500');   // Like color
+                }
+
+
+                // Update the like count display
+                const likeCountSpan = button.nextElementSibling;
+                let likeCount = parseInt(likeCountSpan.textContent);
+                likeCountSpan.textContent = button.textContent.trim() === 'Like' ? `${--likeCount} orang menyukai ini` : `${++likeCount} orang menyukai ini`;
+            })
+            .catch(error => console.error('Error toggling like:', error));
+        }
+    });
+});
+
 
 
 
 // Like button functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const likeButtons = document.querySelectorAll('.like-button');
-
-    likeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const reviewId = this.dataset.reviewId;
-            const likeButton = this;
-            const likeCountElement = likeButton.nextElementSibling;
-
-            fetch("{% url 'review:like_review' %}", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: new URLSearchParams({
-                    'review_id': reviewId
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal memproses like');
-                }
-                return response.text();  // Assuming the server returns "CREATED"
-            })
-            .then(responseText => {
-                if (responseText === "CREATED") {
-                    let currentLikes = parseInt(likeCountElement.textContent.split(' ')[0]);
-                    let newLikes;
-
-                    if (likeButton.classList.contains('bg-green-500')) {
-                        newLikes = currentLikes + 1;
-                        likeButton.classList.remove('bg-green-500');
-                        likeButton.classList.add('bg-green-600');
-                        likeButton.textContent = 'Unlike';
-                    } else {
-                        newLikes = currentLikes - 1;
-                        likeButton.classList.remove('bg-green-600');
-                        likeButton.classList.add('bg-green-500');
-                        likeButton.textContent = 'Like';
-                    }
-                    likeCountElement.textContent = newLikes + ' orang menyukai ini';
-                } else {
-                    alert('Unexpected response');
-                }
-            })
-            .catch(error => {
-                alert('Terjadi kesalahan: ' + error.message);
-            });
-        });
-    });
-});
 
 </script>
 

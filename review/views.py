@@ -12,18 +12,19 @@ from django.utils.html import strip_tags
 def show_review(request):
     food_id = request.GET.get('id')
     fnb_object = Fnb.objects.get(pk=food_id)
-    semua_review = Review.objects.filter(makanan=fnb_object)
     
+    if request.user.is_authenticated:
     # Ambil semua review yang disukai oleh pengguna saat ini
-    review_user = ReviewLike.objects.filter(user=request.user).values_list('review_id', flat=True)
+        review_user = ReviewLike.objects.filter(user=request.user).values_list('review_id', flat=True)
+        
+    else:
+        review_user = "Null"
 
     context = {
         'name': fnb_object.name,
         'price': fnb_object.price,
         'description': fnb_object.description,
-        'reviews': semua_review,
-        'id': fnb_object.id,
-        'review_user': list(review_user)  # Ubah menjadi list untuk kemudahan penggunaan di template
+        'id': fnb_object.id,  # Ubah menjadi list untuk kemudahan penggunaan di template
     }
     return render(request, "main.html", context)
 # Create your views here.
@@ -82,3 +83,24 @@ def like_review(request):
 
     # Kembalikan response status 201 CREATED
     return HttpResponse(b"CREATED", status=201)
+
+def load_reviews(request):
+    # Query untuk mendapatkan data review
+    food_id = request.GET.get('id')
+    fnb_object = Fnb.objects.get(pk=food_id)
+    reviews = Review.objects.filter(makanan=fnb_object)
+    
+    if request.user.is_authenticated:
+    # Ambil semua review yang disukai oleh pengguna saat ini
+        review_user = ReviewLike.objects.filter(user=request.user).values_list('review_id', flat=True)
+        
+    else:
+        review_user = "Null"
+        
+    context = {'reviews': reviews,
+               'review_user': list(review_user)}
+    return render(request, 'show_review.html', context)
+
+def load_write_review(request):
+    food_id = request.GET.get('id')  # Get the food_id from query parameters
+    return render(request, 'add_review.html', {'food_id': food_id})
