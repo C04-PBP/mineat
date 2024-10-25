@@ -1,6 +1,6 @@
 function initializeTiltEffect() {
     const tiltCards = document.querySelectorAll('.tilt-card');
-    const ROTATION_RANGE = 32.5;
+    const ROTATION_RANGE = 36;
     const HALF_ROTATION_RANGE = ROTATION_RANGE / 2;
 
     tiltCards.forEach(tiltCard => {
