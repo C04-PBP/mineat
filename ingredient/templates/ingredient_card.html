@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tailwind Animation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+
+    @keyframes slideUp {
+      0% {
+        transform: translateY(50px); /* Start from below */
+        opacity: 0; /* Invisible */
+      }
+      100% {
+        transform: translateY(0); /* End in the original position */
+        opacity: 1; /* Fully visible */
+      }
+    }
+
+    /* Initially hide the button */
+    #animate-slide-up {
+      opacity: 0;
+      transform: translateY(50px); /* Position it out of view */
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* Apply the animation when the card is hovered */
+    .stacked-cards:hover #animate-slide-up {
+      animation: slideUp 0.2s ease-in-out forwards; /* Controls speed and easing */
+    } 
+
+
+    /* Custom styling for the stacking effect */
+    .stacked-cards {
+      position: relative;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Move the front card slightly up on hover */
+    .stacked-cards:hover {
+      transform: translate(-16px,-16px); /* Small upward shift */
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Softer shadow on hover */
+      z-index: 0;
+    }
+
+    /* Create the stacking with subtle offsets */
+    .stacked-cards::before, .stacked-cards::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #86efac;
+      border-radius: 8px;
+      border: 2px solid black; /* Add borders to the layers */
+      transition: transform 0.2s ease;
+    }
+
+    /* First stacked layer */
+    .stacked-cards::before {
+        z-index: -2; /* Ensure it stays behind the card */
+        background-color: #86efac; /* Slightly darker green */
+    }
+
+    /* Second stacked layer */
+    .stacked-cards::after {
+        z-index: -3; /* Ensure it stays behind the card */
+        background-color: #86efac; /* Slightly darker green */
+    }
+
+    
+
+    .stacked-cards:hover::after {
+      transform: translate(16px, 16px); /* Larger adjustment upward and left */
+    }
+
+    /* Ensure the LEARN text is fixed in place on the last layer */
+    .rotate-text {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 12px;
+      font-weight: bold;
+      transform: rotate(45deg);
+      color: black;
+      z-index: -2; /* Keep it behind the main content but on the last layer */
+    }
+
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <!-- Card container with stacking -->
+  <div class="stacked-cards bg-green-300 rounded-lg shadow-lg p-6 w-[300px] relative">
+    <h2 class="text-xl font-bold mb-4">→ DYNAMIC</h2>
+    <p class="mb-6">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem doloreque vitae minima.</p>
+    <button id = "animate-slide-up" class="bg-white text-black py-2 px-4 rounded-md border border-black hover:bg-gray-100 transition">LET'S GO</button>
+    <span class="rotate-text">Review</span>
+  </div>
+
+</body>
+</html>
