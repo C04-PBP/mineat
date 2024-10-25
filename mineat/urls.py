@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from fnb import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,5 @@ urlpatterns = [
     path("restaurant/",include("restaurant.urls")),
     path("forum/",include("forum.urls")),
     path("review/",include("review.urls")),
+    path('', views.landing_page, name='landing-page'),
 ]
