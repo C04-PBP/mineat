@@ -29,8 +29,8 @@
     <!-- Toggleable Sidebar -->
     <aside id="sidebar"
         class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container collapsed flex flex-col">
-        
-        <!-- Animated Search Bar -->
+
+        <!-- Search Bar -->
         <div class="flex justify-center">
             <div class="relative">
                 <input type="text" id="ingredient-search-bar"
@@ -47,11 +47,16 @@
             </div>
         </div>
 
+        <!-- Selected Ingredients Button List -->
+        <div id="selected-ingredients" class="selected-ingredients flex overflow-x-auto space-x-2 px-4 py-2">
+            <!-- Selected ingredient buttons will be added here dynamically -->
+        </div>
+
         <!-- Scrollable Ingredient List -->
-        <div class="ingredient-div flex flex-col w-full rounded-[20px] shadow overflow-y-auto flex-grow items-center" style="margin-bottom: 20px;">
+        <div class="ingredient-div flex flex-col w-full rounded-[20px] shadow overflow-y-auto flex-grow items-center"
+            style="margin-bottom: 20px;">
             {% for ingredient in ingredients %}
-            <!-- Ingredient Cards with lazy-load class -->
-            <div class="lazy-load ingredient-card py-5 " data-name="{{ ingredient.name }}">
+            <div class="lazy-load ingredient-card py-5" data-name="{{ ingredient.name }}">
                 {% include "ingredient_card.html" with ingredient=ingredient %}
             </div>
             {% endfor %}
@@ -180,6 +185,31 @@
         opacity: 1;
         padding: 5px 10px;
     }
+
+    .selected-ingredients {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        gap: 8px;
+    }
+
+    .selected-ingredient-button {
+        background-color: #BB0000;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 9999px;
+        /* Makes it a pill shape */
+        font-size: 14px;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .selected-ingredient-button:hover {
+        background-color: #ff0000;
+    }
 </style>
 
 <a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
@@ -295,26 +325,45 @@
 
         // Ingredient selection logic
         let selectedIngredients = [];
+        const selectedIngredientsContainer = document.getElementById('selected-ingredients');
 
         document.querySelectorAll('.ingredient-card').forEach(div => {
             div.addEventListener('click', function () {
                 const ingredient = div.getAttribute('data-name');
-
-                // Prevent animation reset on selected ingredients
-                if (!div.classList.contains('selected')) {
-                    div.classList.add('selected');
+                if (!selectedIngredients.includes(ingredient)) {
+                    // Add to selected ingredients
                     selectedIngredients.push(ingredient);
-                } else {
-                    // kalo udah diselect dimatiin
-                    selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
-                    div.classList.remove('selected');
+                    div.classList.add('selected'); // Visually mark the ingredient as selected
+                    addSelectedIngredientButton(ingredient);
+                    sendSelectedIngredients(selectedIngredients);
                 }
-
-                console.log('Selected ingredients:', selectedIngredients);
-                sendSelectedIngredients(selectedIngredients);
             });
         });
 
+        // Function to add a selected ingredient as a button
+        function addSelectedIngredientButton(ingredient) {
+            const button = document.createElement('button');
+            button.classList.add('selected-ingredient-button');
+            button.textContent = ingredient;
+            button.setAttribute('data-ingredient', ingredient);
+            button.addEventListener('click', function () {
+                removeSelectedIngredient(ingredient);
+            });
+            selectedIngredientsContainer.appendChild(button);
+        }
+
+        // Function to remove selected ingredient
+        function removeSelectedIngredient(ingredient) {
+            selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
+            document.querySelector(`.ingredient-card[data-name="${ingredient}"]`).classList.remove('selected');
+            const button = selectedIngredientsContainer.querySelector(`[data-ingredient="${ingredient}"]`);
+            if (button) {
+                selectedIngredientsContainer.removeChild(button);
+            }
+            sendSelectedIngredients(selectedIngredients);
+        }
+
+        // Function to send selected ingredients to the server
         function sendSelectedIngredients(selectedIngredients) {
             fetch('{% url "ingredient:record_ingredients" %}', {
                 method: 'POST',
@@ -322,9 +371,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}',
                 },
-                body: JSON.stringify({
-                    ingredients: selectedIngredients
-                })
+                body: JSON.stringify({ ingredients: selectedIngredients })
             })
                 .then(response => response.json())
                 .then(data => {
