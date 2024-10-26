@@ -26,5 +26,5 @@ urlpatterns = [
     path("restaurant/",include("restaurant.urls")),
     path("forum/",include("forum.urls")),
     path("review/",include("review.urls")),
-    path('', views.landing_page, name='landing-page'),
+    path('', views.landing_page, name='landing_page'),
 ]

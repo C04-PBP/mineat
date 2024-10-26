@@ -46,6 +46,10 @@
             z-index: 0;
         }
 
+        .darken {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
         .content {
             position: relative;
             z-index: 1;
@@ -158,9 +162,38 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2023 Mineat. All rights reserved.</p>
-        <p>Follow us on <a href="#" class="text-yellow-500 hover:text-yellow-600">Social Media</a></p>
+    <footer class="text-white py-8 darken">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+            <!-- Left Section - Logo and Contact Info -->
+            <div class="text-center md:text-left flex flex-col items-center md:items-start">
+                <img src="{% static 'image/in7.png' %}" alt="Logo" class="w-auto h-20 mb-4">
+                <div class="text-sm">
+                    <p><strong>Email:</strong> help.mineat@gmail.com</p>
+                    <p><strong>Phone:</strong> 0812 3456 7890</p>
+                </div>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#"><img src="{% static 'image/instagram.svg' %}" alt="Instagram" class="w-6 h-6"></a>
+                    <a href="#"><img src="{% static 'image/twitter.svg' %}" alt="Twitter" class="w-6 h-6"></a>
+                    <a href="#"><img src="{% static 'image/facebook.svg' %}" alt="Facebook" class="w-6 h-6"></a>
+                    <a href="https://github.com/C04-PBP">
+                        <img src="{% static 'image/github.svg' %}" alt="Github" class="w-6 h-6"></a>
+                </div>
+            </div>
+
+            <!-- Middle Section - Features -->
+            <div class="text-center md:text-left space-y-2">
+                <h3 class="font-bold">Our Features</h3>
+                <ul class="space-y-1">
+                    <li><a href="#" class="hover:text-yellow-400">Food and Beverage</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Ingredient</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Restaurant</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Review</a></li>
+                    <li><a href="#" class="hover:text-yellow-400">Forum</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="my-8 border-gray-400">
+        <p class="text-center text-sm">&copy; 2024 Mineat. All rights reserved.</p>
     </footer>
 
 </body>
