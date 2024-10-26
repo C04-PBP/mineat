@@ -48,10 +48,10 @@
         </div>
 
         <!-- Scrollable Ingredient List -->
-        <div class="ingredient-div w-full rounded-[20px] shadow overflow-y-auto flex-grow justify-center" style="margin-bottom: 20px;">
+        <div class="ingredient-div flex flex-col w-full rounded-[20px] shadow overflow-y-auto flex-grow items-center" style="margin-bottom: 20px;">
             {% for ingredient in ingredients %}
             <!-- Ingredient Cards with lazy-load class -->
-            <div class="lazy-load ingredient-card " data-name="{{ ingredient.name }}">
+            <div class="lazy-load ingredient-card py-5 " data-name="{{ ingredient.name }}">
                 {% include "ingredient_card.html" with ingredient=ingredient %}
             </div>
             {% endfor %}
