@@ -11,6 +11,7 @@ import datetime
 import json
 from django.http import JsonResponse
 from django.urls import reverse
+from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
@@ -52,12 +53,24 @@ def add_forum(request):
             new_comment = ForumKhusus(text=comment_text, forum=new_forum, user=request.user)
             # new_comment.forum = new_forum
             new_comment.save()
-            
-            return JsonResponse({
-                'name': name,
-                'comment': comment_text,
-                'time_created': new_forum.time_created.strftime('%Y-%m-%d %H:%M')
-            })
+
+
+            context = {'name': name, 'comment': comment_text, 
+                       'time_created': new_forum.time_created.strftime('%Y-%m-%d %H:%M'),
+                        'forum': new_forum }
+
+            print(context)
+            try:
+                html = render_to_string('forum_card.html', context)
+            except Exception as e:
+                print(e)
+                html = "error"
+            # return JsonResponse({
+            #     'name': name,
+            #     'comment': comment_text,
+            #     'time_created': new_forum.time_created.strftime('%Y-%m-%d %H:%M')
+            # })
+            return JsonResponse({"html" : html})
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 

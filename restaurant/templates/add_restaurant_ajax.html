@@ -1,10 +1,10 @@
-<div class="bg-white shadow-md rounded-lg p-6 form-style">
-    <h2 class="text-2xl font-bold text-center mb-6 text-gray-700">Add Restaurant (AJAX)</h2>
+<div class="bg-red-900 shadow-md rounded-lg p-6 form-style">
+    <h2 class="text-2xl font-bold text-center mb-6 text-white">Add Restaurant (AJAX)</h2>
     <form id="ajax-add-restaurant-form" method="post" class="space-y-6">
       {% csrf_token %}
       {% for field in form %}
         <div class="flex flex-col">
-          <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+          <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-white">
             {{ field.label }}
           </label>
           <div class="w-full">
@@ -31,7 +31,7 @@
       {% endfor %}
       <div class="flex justify-center mt-6">
         <button type="submit" class="bg-sky-500 hover:bg-lime-500 text-white font-semibold px-6 py-3 rounded-lg transition duration-300 ease-in-out w-full">
-          Save Restaurant
+          Add Restaurant
         </button>
       </div>
     </form>

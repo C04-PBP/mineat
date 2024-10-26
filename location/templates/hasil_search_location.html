@@ -1,8 +1,9 @@
 {% for location in locations %}
     <a href="{% url 'location:location_details' %}?id={{ location.id }}"
-        class="location-item bg-blue-900 shadow-md rounded-lg overflow-hidden">
+        class="location-item bg-red-900 shadow-md rounded-lg overflow-hidden">
             <div class="p-4">
-                <h2 class="text-2xl font-bold">{{ location.name }}</h2>
+                <h2 class="text-white text-2xl font-bold">{{ location.name }}</h2>
+                <img src="{{ location.image }}" alt="{{ location.name }}" class="w-full h-32 object-cover rounded-md">
             </div>
         </a>
     {% endfor %}

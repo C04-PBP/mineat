@@ -5,17 +5,22 @@
 {% endblock meta %}
 
 {% block content %}
-<body class="bg-gray-700"></body>
-<div class="flex flex-col min-h-screen">
+{% include 'show_header.html' %}
+<div class="flex justify-start mb-4 pt-20 pl-20">
+  <a href="{% url 'restaurant:show_restaurant' %}" class="text-red-500 hover:text-lime-500 font-semibold">
+      &larr; Back to All Restaurants
+  </a>
+</div>
+<div class="flex flex-col min-h-screen bg-yellow-500">
   <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
     <h1 class="text-3xl font-bold text-center mb-8 text-white">Add Restaurant</h1>
 
-    <div class="bg-white shadow-md rounded-lg p-6 form-style">
+    <div class="bg-red-900 shadow-md rounded-lg p-6 form-style">
       <form method="POST" class="space-y-6">
         {% csrf_token %}
         {% for field in form %}
           <div class="flex flex-col">
-            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+            <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-white">
               {{ field.label }}
             </label>
             <div class="w-full">

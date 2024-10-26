@@ -21,7 +21,8 @@
       <nav id="navMenu" aria-label="Global" class="hidden md:block">
         <ul class="flex items-center gap-6 text-sm">
           <li><a class="menu-item" href="{% url 'ingredient:show_filter' %}"> Home </a></li>
-          <li><a class="menu-item" href="{% url 'restaurant:show_restaurant' %}"> Restaurant </a></li>
+          <li><a class="menu-item" href="{% url 'restaurant:show_restaurant' %}"> Restaurants </a></li>
+          <li><a class="menu-item" href="{% url 'location:show_location' %}"> Locations </a></li>
           <li><a class="menu-item" href="{% url 'forum:show-forum-umum' %}"> Forum </a></li>
           {% if request.resolver_match.app_name == 'ingredient' %}
           <li><a id="filterToggle" href="javascript:void(0)" class="menu-item"> Filter </a></li>
