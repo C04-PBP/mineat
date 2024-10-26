@@ -90,6 +90,3 @@ def search_fnbs(request):
 
 def landing_page(request):
     return render(request, 'landing_page.html')
-
-# def landing_page2(request):
-#     return redirect('fnb:landing_page')
