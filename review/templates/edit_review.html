@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block meta %}
+<title>Edit Mood</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="flex flex-col min-h-screen bg-gray-100">
+  <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
+    <h1 class="text-3xl font-bold text-center mb-8 text-indigo-600">Edit Review</h1>
+  
+    <div class="bg-white rounded-lg p-6 form-style shadow-md shadow-amber-300">
+      <form method="POST" class="space-y-6" enctype="multipart/form-data">
+          {% csrf_token %}
+          
+          <!-- Star Rating Section -->
+          <div id="edit-star-rating" class="flex mb-4">
+            {% for i in "12345" %}
+              <svg class="star w-6 h-6 text-gray-400 cursor-pointer" data-value="{{ i }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+              </svg>
+            {% endfor %}
+          </div>
+
+          <!-- Hidden Input to Store Rating Value -->
+          <input type="hidden" name="rating" id="editRating" value="{{ form.rating.value }}">
+          
+          <!-- Render Other Form Fields -->
+          {% for field in form %}
+              {% if field.name != "rating" %}
+                  <div class="flex flex-col">
+                      <label for="{{ field.id_for_label }}" class="mb-2 font-semibold text-gray-700">
+                          {{ field.label }}
+                      </label>
+                      <div class="w-full">
+                          {{ field }}
+                      </div>
+                      {% if field.help_text %}
+                          <p class="mt-1 text-sm text-gray-500">{{ field.help_text }}</p>
+                      {% endif %}
+                      {% for error in field.errors %}
+                          <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+                      {% endfor %}
+                  </div>
+              {% endif %}
+          {% endfor %}
+
+          <!-- Submit Button -->
+          <div class="flex justify-center mt-6">
+              <button type="submit" class="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out w-full">
+                  Edit Review
+              </button>
+          </div>
+      </form>
+
+      <a href="{% url 'review:show_review' %}?id={{ id }}" class="font-medium text-orange-400 hover:text-orange-500">
+        <button type="submit" class="bg-orange-400 text-white font-semibold px-6 py-3 rounded-lg hover:bg-orange-500 transition duration-300 ease-in-out w-full">
+          Kembali
+        </button>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript to Handle Star Rating Interaction -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const stars = document.querySelectorAll('#edit-star-rating .star');
+        const ratingInput = document.getElementById('editRating');
+
+        // Highlight selected stars and update the hidden input
+        stars.forEach((star, index) => {
+            star.addEventListener('click', function () {
+                const rating = index + 1;
+                ratingInput.value = rating;
+
+                // Update star colors based on selected rating
+                stars.forEach((s, i) => {
+                    if (i < rating) {
+                        s.classList.add('text-yellow-500');
+                        s.classList.remove('text-gray-400');
+                    } else {
+                        s.classList.add('text-gray-400');
+                        s.classList.remove('text-yellow-500');
+                    }
+                });
+            });
+        });
+
+        // Pre-fill stars based on existing rating value (for editing)
+        const existingRating = parseInt(ratingInput.value, 10);
+        if (existingRating) {
+            stars.forEach((s, i) => {
+                if (i < existingRating) {
+                    s.classList.add('text-yellow-500');
+                    s.classList.remove('text-gray-400');
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

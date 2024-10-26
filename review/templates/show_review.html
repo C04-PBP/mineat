@@ -1,6 +1,18 @@
+
 <!-- reviews.html -->
 <div class="max-h-96 overflow-y-scroll border border-gray-300 p-4 rounded-lg" id="review-list">
     {% if reviews %}
+    <div class="sort-buttons mb-4">
+      <button class="oldest bg-green-500 text-white py-1 px-3 rounded mr-2">
+        Sort by oldest
+      </button>
+      <button class="newest bg-green-500 text-white py-1 px-3 rounded mr-2">
+        Sort by newest
+      </button>
+      <button class="like bg-green-500 text-white py-1 px-3 rounded mr-2">
+        Sort by like
+      </button>
+  </div>
       {% for review in reviews %}
         <div class="border-b border-gray-300 mb-4 pb-4" data-review-id="{{ review.id }}">
           <!-- Nama user -->
@@ -30,9 +42,10 @@
           <div class="flex justify-end items-center">
             {% if user.is_authenticated %}
               {% if user.is_authenticated and review.user == user %}
+              <a href="{% url 'review:edit_review' review.pk %}?id={{ review.makanan.id }}">
                 <button class="edit-button bg-blue-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
                   Edit
-                </button>
+                </button></a>
                 <a href="{% url 'review:delete_review' review.pk %}?id={{ review.makanan.id }}">
                 <button class="delete-button bg-red-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
                   Delete
@@ -56,5 +69,6 @@
       <div class="text-center text-gray-500 italic">
         Belum ada review ditambahkan.
       </div>
+
     {% endif %}
 </div>

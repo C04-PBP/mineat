@@ -28,18 +28,19 @@
 <div id="add_review_space"></div>
 
 
+
   
   <!-- Tambahkan Script AJAX dan DOMPurify -->
   <script src="https://cdn.jsdelivr.net/npm/dompurify@2.3.3/dist/purify.min.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
     const foodId = document.getElementById('food_id').value;
         // Fungsi untuk memuat Tampilkan Review
-        function loadReviews() {
-          fetch(`/review/load_reviews/?id=${foodId}`)
+        function loadReviews(sortOption) {
+          fetch(`/review/load_reviews/?id=${foodId}&sort=${sortOption}`)
                 .then(response => response.text())
                 .then(html => {
-                    document.getElementById('show_review_space').innerHTML = html;
+                    console.log(html);  // Debug: Menampilkan HTML yang diterima
+            document.getElementById('show_review_space').innerHTML = html;
                 })
                 .catch(error => console.error('Error loading reviews:', error));
         }
@@ -54,25 +55,25 @@
                 .catch(error => console.error('Error loading write review:', error));
               }
             
-            loadReviews();
-          loadWriteReview();});
+            loadReviews('oldest');
+          loadWriteReview();
+        
+
+          document.getElementById('show_review_space').addEventListener('click', function (event) {
+        if (event.target.classList.contains('newest')) {
+            loadReviews('newest');
+        } else if (event.target.classList.contains('oldest')) {
+            loadReviews('oldest');
+        } else if (event.target.classList.contains('like')) {
+            loadReviews('like');
+        }
+    });
+
+
 
           
           document.addEventListener('DOMContentLoaded', function () {
     const foodId = document.getElementById('food_id').value;
-
-    // Fungsi untuk memuat Review
-    function loadReviews() {
-        fetch(`/review/load_reviews/?id=${foodId}`)
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('show_review_space').innerHTML = html;
-            })
-            .catch(error => console.error('Error loading reviews:', error));
-    }
-
-    // Memuat review saat halaman dimuat
-    loadReviews();
 
     // Event listener untuk menambah review
     document.getElementById('add_review_space').addEventListener('click', function (event) {
@@ -198,9 +199,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-
-// Like button functionality
 
 </script>
 
