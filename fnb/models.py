@@ -10,3 +10,6 @@ class Fnb(models.Model):
     image = models.ImageField()
     price = models.PositiveIntegerField()
     description = models.TextField()
+
+    def __str__(self):
+        return self.name
