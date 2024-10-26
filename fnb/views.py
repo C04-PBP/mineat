@@ -45,7 +45,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('fnb:login')
+    return redirect('landing_page')
 
 def show_fnb(request,food = None):
     if food:
