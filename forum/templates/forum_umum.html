@@ -4,50 +4,53 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="bg-gray-100 p-6">
-    <h2 class="text-lg font-bold mb-4">Comments</h2>
-    <div class="flex flex-col space-y-4" id="comment-section">
-        <div class="mb-4">
-            <label>
-                <input type="checkbox" id="filterUnanswered" {% if filter_unanswered %}checked{% endif %}>
-                Show Unanswered Discussions Only
-            </label>
-        </div>
-        <div id="test">
-            {% for forum in forums %}
-                {% include "forum_card.html" %}
-            {% endfor %}
-        </div>
+{% include 'show_header.html' %}
+<div class="pt-20 bg-gray-100 p-6"> <!-- Add padding-top to avoid collision with header -->
+    <h1 class="text-4xl text-center font-bold text-black mb-4">Discussion Forum</h1>
+    
+    <!-- Add Forum Box -->
+    <div class="bg-yellow-100 p-6 rounded-lg shadow-lg mb-6 mx-auto lg:w-1/2"> <!-- Center and restrict width -->
+        <h2 class="text-2xl font-semibold text-red-600 mb-4">Add a new forum</h2>
         {% if user.is_authenticated %}
-        <form id="comment-form" class="bg-white p-4 rounded-lg shadow-md">
-            <h3 class="text-lg font-bold mb-2">Add a comment section</h3>
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2" for="name">
-                    Discussion Name
-                </label>
+        <form id="comment-form" class="space-y-4">
+            <div>
+                <label for="name" class="block text-gray-800 font-bold mb-1">Discussion Name</label>
                 <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="name" type="text" placeholder="Enter your name">
+                    id="name" type="text" placeholder="Enter discussion name"
+                    class="w-full p-2 border rounded bg-yellow-50"
+                >
             </div>
-            <div class="mb-4">
-                <label class="block text-gray-700 font-bold mb-2" for="comment">
-                    Comment
-                </label>
+            <div>
+                <label for="comment" class="block text-gray-800 font-bold mb-1">Comment</label>
                 <textarea
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="comment" rows="3" placeholder="Enter your comment"></textarea>
+                    id="comment" rows="3" placeholder="Enter your comment"
+                    class="w-full p-2 border rounded bg-yellow-50"
+                ></textarea>
             </div>
-            <button
-                class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit">
+            <button type="submit"
+                class="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 transition"
+            >
                 Submit
             </button>
         </form>
         {% else %}
-        <p>
-            <a href="{% url 'fnb:login' %}">Log in</a> to add a new forum.
-        </p>
+        <p class="text-gray-600">Please <a href="{% url 'fnb:login' %}" class="text-blue-500 underline">log in</a> to add a new forum.</p>
         {% endif %}
+    </div>
+    
+    <!-- Filter Checkbox -->
+    <div class="mb-4">
+        <label>
+            <input type="checkbox" id="filterUnanswered" {% if filter_unanswered %}checked{% endif %}>
+            Show Unanswered Discussions Only
+        </label>
+    </div>
+
+    <!-- Forum Cards Grid -->
+    <div id="comment-section" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for forum in forums %}
+            {% include "forum_card.html" %}
+        {% endfor %}
     </div>
 </div>
 

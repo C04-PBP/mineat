@@ -4,40 +4,56 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg mt-8 p-6">
-    <div class="border-b pb-4 mb-6">
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ forum.name }}</h1>
-        <p class="text-gray-700">{{ forum.text }}</p>
+{% include 'show_header.html' %}
+
+<div class="max-w-4xl mx-auto mt-32 px-4">
+    <!-- Forum Header -->
+    <div class="bg-gradient-to-r from-yellow-400 to-red-500 p-6 rounded-lg shadow-md mb-6">
+        <h1 class="text-4xl font-bold text-white">{{ forum.name }}</h1>
+        <p class="text-gray-200 mt-2">{{ forum.text }}</p>
+        <small class="text-gray-100">Posted by: {{ forum.user.username }} on {{ forum.time_created|date:"M d, Y H:i" }} WIB</small>
     </div>
 
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Comments</h2>
-    <ul id="comments-list" class="space-y-4">
-        {% if comments.count > 1 %}
-            {% for comment in comments %}
-                {% if forloop.counter > 1 %}
-                    <li class="p-4 bg-gray-100 rounded-lg shadow-sm">
-                        <p class="text-gray-800">{{ comment.text }}</p>
-                        <small class="text-gray-500">By: {{ comment.user.username }} on {{ comment.time_created|date:"M d, Y H:i" }}</small>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        {% elif comments.count == 1 %}
-            <li class="text-gray-500">No comments yet. Be the first to comment!</li>
-        {% endif %}
-    </ul>
+    <!-- Comments Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-10">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-6">Comments</h2>
+        <ul id="comments-list" class="space-y-6">
+            {% if comments.count > 1 %}
+                {% for comment in comments %}
+                    {% if forloop.counter > 1 %}
+                        <li class="p-4 bg-yellow-50 rounded-lg shadow-sm hover:shadow-lg transition-all">
+                            <p class="text-gray-800">{{ comment.text }}</p>
+                            <small class="text-gray-500">By: {{ comment.user.username }} on {{ comment.time_created|date:"M d, Y H:i" }}</small>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            {% elif comments.count == 1 %}
+                <li class="text-gray-500">No comments yet. Be the first to comment!</li>
+            {% endif %}
+        </ul>
+    </div>
 
+    <!-- Add Comment Form -->
     {% if user.is_authenticated %}
-    <div class="mt-6">
-        <h3 class="text-xl font-semibold text-gray-800 mb-4">Add a comment</h3>
-        <textarea id="new-comment" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" rows="4" placeholder="Write your comment..."></textarea>
-        <button id="submit-btn" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Submit Comment</button>
+    <div class="bg-yellow-100 p-8 rounded-lg shadow-md mb-10">
+        <h3 class="text-xl font-bold text-red-700 mb-4">Add a comment</h3>
+        <textarea id="new-comment" class="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" rows="4" placeholder="Write your comment..."></textarea>
+        <button id="submit-btn" class="mt-6 px-6 py-3 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition duration-300">Submit Comment</button>
     </div>
     {% else %}
-        <p>
-            <a href="{% url 'fnb:login' %}">Log in</a> to add a new comment.
-        </p>
+    <div class="text-center mt-10 mb-10">
+        <p class="text-gray-600">Please <a href="{% url 'fnb:login' %}" class="text-red-500 font-bold hover:underline">log in</a> to add a new comment.</p>
+    </div>
     {% endif %}
+
+    <!-- Back Button -->
+    <div class="text-center mb-20">
+        <a href="{% url 'forum:show-forum-umum' %}" class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+            &larr; Back to Forum
+        </a>
+    </div>
 </div>
+    
 
 
 <script>
