@@ -1,11 +1,11 @@
 from django.shortcuts import render,  redirect
 from fnb.models import Fnb
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 from review.models import Review, ReviewLike
 from review.forms import ReviewForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.html import strip_tags
 
 
@@ -104,3 +104,12 @@ def load_reviews(request):
 def load_write_review(request):
     food_id = request.GET.get('id')  # Get the food_id from query parameters
     return render(request, 'add_review.html', {'food_id': food_id})
+
+def delete_review(request, id):
+    # Get mood berdasarkan id
+    food_id = request.GET.get('id')
+    review = Review.objects.filter(pk=id)
+    # Hapus mood
+    review.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('review:show_review') + f'?id={food_id}')

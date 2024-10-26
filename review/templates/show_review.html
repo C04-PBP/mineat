@@ -33,9 +33,10 @@
                 <button class="edit-button bg-blue-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
                   Edit
                 </button>
+                <a href="{% url 'review:delete_review' review.pk %}?id={{ review.makanan.id }}">
                 <button class="delete-button bg-red-500 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
                   Delete
-                </button>
+                </button></a>
               {% endif %}
               {% if review.id in review_user %}
                 <button class="like-button bg-green-600 text-white py-1 px-3 rounded mr-2" data-review-id="{{ review.id }}">
