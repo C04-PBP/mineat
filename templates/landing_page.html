@@ -33,12 +33,10 @@
             height: 100%;
             object-fit: cover;
             transform: scale(1.025);
-            /* Slightly zoomed */
         }
 
         .overlay {
             position: fixed;
-            /* Keep overlay fixed with video */
             top: 0;
             left: 0;
             width: 100%;
@@ -58,18 +56,38 @@
             text-align: center;
         }
 
-        .scrollable-section {
+        .scrollable-section,
+        .additional-section,
+        .footer {
+            padding: 4rem 2rem;
+            text-align: center;
             background-color: white;
             color: black;
-            padding: 2rem;
-            text-align: center;
-            z-index: 1;
-            position: relative;
         }
 
-        .logo {
-            filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
-            transition: transform 0.3s ease;
+        .scrollable-section h2,
+        .additional-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .additional-section {
+            background-color: #f9f9f9;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem;
+        }
+
+        #header-logo {
+            display: block;
+        }
+
+        #header-logo.hidden {
+            display: none;
+            /* Reveals the header logo when un-hidden */
         }
     </style>
 </head>
@@ -78,12 +96,9 @@
 
     <!-- Video and Overlay Section -->
     <div class="video-container">
-        <!-- Background Video -->
         <iframe src="https://player.vimeo.com/video/1023446694?autoplay=1&muted=1&loop=1&background=1" frameborder="0"
             allow="autoplay; fullscreen" allowfullscreen class="bg-video">
         </iframe>
-
-        <!-- Overlay for dimming -->
         <div class="overlay"></div>
     </div>
 
@@ -92,7 +107,6 @@
         <div class="logo">
             <img src="{% static 'image/in7.png' %}" alt="Logo" class="w-auto h-40">
         </div>
-
         <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg mt-8">
             Get Started
         </a>
@@ -101,24 +115,71 @@
     <!-- Scrollable Content Section Below Video -->
     <section class="scrollable-section">
         <h2>Explore Our Features</h2>
-        <p>Learn more about what we offer and how we can help you achieve your goals.</p>
-
+        <p>Discover the unique aspects of our platform and see how they can benefit you.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             <div class="bg-gray-100 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-bold">Feature 1</h3>
-                <p class="mt-2">Details about feature 1.</p>
+                <p class="mt-2">Detailed information about feature 1.</p>
             </div>
             <div class="bg-gray-100 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-bold">Feature 2</h3>
-                <p class="mt-2">Details about feature 2.</p>
+                <p class="mt-2">Detailed information about feature 2.</p>
             </div>
             <div class="bg-gray-100 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-bold">Feature 3</h3>
-                <p class="mt-2">Details about feature 3.</p>
+                <p class="mt-2">Detailed information about feature 3.</p>
             </div>
         </div>
     </section>
 
+    <!-- Additional Section -->
+    <section class="additional-section">
+        <h2>Why Choose Us?</h2>
+        <p>Our platform offers a range of features tailored to help you reach your goals effectively.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-bold">Benefit 1</h3>
+                <p class="mt-2">An explanation of benefit 1.</p>
+            </div>
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-bold">Benefit 2</h3>
+                <p class="mt-2">An explanation of benefit 2.</p>
+            </div>
+            <div class="bg-gray-100 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-bold">Benefit 3</h3>
+                <p class="mt-2">An explanation of benefit 3.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>Follow us on <a href="#" class="text-yellow-500 hover:text-yellow-600">Social Media</a></p>
+    </footer>
+
 </body>
 
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const headerLogo = document.querySelector("#header-logo");  // The logo in the header
+        const landingPageLogo = document.querySelector(".content .logo");  // Landing page logo
+        const observerOptions = {
+            root: null,
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    headerLogo.classList.add("hidden");  // Hide header logo when landing logo is in view
+                } else {
+                    headerLogo.classList.remove("hidden");  // Show header logo when landing logo is out of view
+                }
+            });
+        }, observerOptions);
+
+        observer.observe(landingPageLogo);
+    });
+</script>
