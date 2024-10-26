@@ -26,11 +26,66 @@
 
 <div class="flex flex-row gap-4 content-wrapper min-h-screen"> <!-- Full viewport height -->
 
+    <div id="crudModal" tabindex="-1" aria-hidden="true"
+        class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+        <div id="crudModalContent"
+            class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between p-4 border-b rounded-t">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    Add New FnB
+                </h3>
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                    id="closeModalBtn">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <!-- Modal body -->
+            <div class="px-6 py-4 space-y-6 form-style">
+                <form id="fnbForm">
+                    <div class="mb-4">
+                        <label for="fnb" class="block text-sm font-medium text-gray-700">FnB</label>
+                        <input type="text" id="fnb" name="fnb"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                            placeholder="Enter your FnB" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="description" name="description" rows="3"
+                            class="mt-1 block w-full h-52 resize-none border border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                            placeholder="Describe your FnB" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="price" class="block text-sm font-medium text-gray-700">Price
+                            (1-10)</label>
+                        <input type="number" id="price" name="price" min="1" max="10"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                            required>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div
+                class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+                <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg"
+                    id="cancelButton">Cancel</button>
+                <button type="submit" id="submitFnB" form="fnbForm"
+                    class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+            </div>
+        </div>
+    </div>
     <!-- Toggleable Sidebar -->
     <aside id="sidebar"
         class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container collapsed flex flex-col">
 
-        <!-- Search Bar -->
+        <!-- Animated Search Bar -->
         <div class="flex justify-center">
             <div class="relative">
                 <input type="text" id="ingredient-search-bar"
@@ -47,16 +102,12 @@
             </div>
         </div>
 
-        <!-- Selected Ingredients Button List -->
-        <div id="selected-ingredients" class="selected-ingredients flex overflow-x-auto space-x-2 px-4 py-2">
-            <!-- Selected ingredient buttons will be added here dynamically -->
-        </div>
-
         <!-- Scrollable Ingredient List -->
         <div class="ingredient-div flex flex-col w-full rounded-[20px] shadow overflow-y-auto flex-grow items-center"
             style="margin-bottom: 20px;">
             {% for ingredient in ingredients %}
-            <div class="lazy-load ingredient-card py-5" data-name="{{ ingredient.name }}">
+            <!-- Ingredient Cards with lazy-load class -->
+            <div class="lazy-load ingredient-card py-5 " data-name="{{ ingredient.name }}">
                 {% include "ingredient_card.html" with ingredient=ingredient %}
             </div>
             {% endfor %}
@@ -67,8 +118,12 @@
     <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
 </div>
 
-
-<a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
+<button data-modal-target="crudModal" data-modal-toggle="crudModal"
+    class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+    onclick="showModal();">
+    Add New FnB by AJAX
+</button>
+<!-- <a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a> -->
 
 <!-- Styles -->
 <style>
@@ -185,34 +240,7 @@
         opacity: 1;
         padding: 5px 10px;
     }
-
-    .selected-ingredients {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        padding-top: 8px;
-        padding-bottom: 8px;
-        gap: 8px;
-    }
-
-    .selected-ingredient-button {
-        background-color: #BB0000;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 9999px;
-        /* Makes it a pill shape */
-        font-size: 14px;
-        white-space: nowrap;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-    }
-
-    .selected-ingredient-button:hover {
-        background-color: #ff0000;
-    }
 </style>
-
-<a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
 
 <script src="{% static 'js/fnb_card.js' %}"></script>
 
@@ -325,45 +353,26 @@
 
         // Ingredient selection logic
         let selectedIngredients = [];
-        const selectedIngredientsContainer = document.getElementById('selected-ingredients');
 
         document.querySelectorAll('.ingredient-card').forEach(div => {
             div.addEventListener('click', function () {
                 const ingredient = div.getAttribute('data-name');
-                if (!selectedIngredients.includes(ingredient)) {
-                    // Add to selected ingredients
+
+                // Prevent animation reset on selected ingredients
+                if (!div.classList.contains('selected')) {
+                    div.classList.add('selected');
                     selectedIngredients.push(ingredient);
-                    div.classList.add('selected'); // Visually mark the ingredient as selected
-                    addSelectedIngredientButton(ingredient);
-                    sendSelectedIngredients(selectedIngredients);
+                } else {
+                    // kalo udah diselect dimatiin
+                    selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
+                    div.classList.remove('selected');
                 }
+
+                console.log('Selected ingredients:', selectedIngredients);
+                sendSelectedIngredients(selectedIngredients);
             });
         });
 
-        // Function to add a selected ingredient as a button
-        function addSelectedIngredientButton(ingredient) {
-            const button = document.createElement('button');
-            button.classList.add('selected-ingredient-button');
-            button.textContent = ingredient;
-            button.setAttribute('data-ingredient', ingredient);
-            button.addEventListener('click', function () {
-                removeSelectedIngredient(ingredient);
-            });
-            selectedIngredientsContainer.appendChild(button);
-        }
-
-        // Function to remove selected ingredient
-        function removeSelectedIngredient(ingredient) {
-            selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
-            document.querySelector(`.ingredient-card[data-name="${ingredient}"]`).classList.remove('selected');
-            const button = selectedIngredientsContainer.querySelector(`[data-ingredient="${ingredient}"]`);
-            if (button) {
-                selectedIngredientsContainer.removeChild(button);
-            }
-            sendSelectedIngredients(selectedIngredients);
-        }
-
-        // Function to send selected ingredients to the server
         function sendSelectedIngredients(selectedIngredients) {
             fetch('{% url "ingredient:record_ingredients" %}', {
                 method: 'POST',
@@ -371,7 +380,9 @@
                     'Content-Type': 'application/json',
                     'X-CSRFToken': '{{ csrf_token }}',
                 },
-                body: JSON.stringify({ ingredients: selectedIngredients })
+                body: JSON.stringify({
+                    ingredients: selectedIngredients
+                })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -383,7 +394,64 @@
                 });
         }
     });
+    async function getFnb() {
+        return fetch("{% url 'fnb:show_json' %}").then((res) => res.json())
+    }
+    async function refreshFnb() {
+        const fnb = DOMPurify.sanitize(item.fields.fnb);
+        const description = DOMPurify.sanitize(item.fields.description);
+        // document.getElementById("mood_entry_cards").innerHTML = "";
+        // document.getElementById("mood_entry_cards").className = "";
+        const fnbEntries = await getFnb();
+        let htmlString = "";
+        let classNameString = "";
+        // document.getElementById("mood_entry_cards").className = classNameString;
+        // document.getElementById("mood_entry_cards").innerHTML = htmlString;
+    }
 
+    refreshFnb();
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+    function showModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modalContent.classList.remove('opacity-0', 'scale-95');
+            modalContent.classList.add('opacity-100', 'scale-100');
+        }, 50);
+    }
+
+    function hideModal() {
+        const modal = document.getElementById('crudModal');
+        const modalContent = document.getElementById('crudModalContent');
+
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 150);
+    }
+
+    function addFnB() {
+        fetch("{% url 'fnb:add_fnb_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#fnbForm')),
+        })
+            .then(response => refreshFnb())
+
+        document.getElementById("fnbForm").reset();
+        document.querySelector("[data-modal-toggle='crudModal']").click();
+
+        return false;
+    }
+
+    document.getElementById("cancelButton").addEventListener("click", hideModal);
+    document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+    document.getElementById("submitFnB").onclick = addFnB
 </script>
 
 {% endblock content %}

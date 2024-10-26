@@ -1,92 +1,72 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block meta %}
-<title>Add New Food</title>
-{% endblock meta %}
 
 {% block content %}
-<style>
-  .animated-background {
-    position: relative;
-    height: 100vh;
-    background-image: url('{% static "image/in9.png" %}');
-    background-size: cover;
-    background-position: center;
-  }
+<header class="fixed top-0 left-0 right-0 z-20 bg-white shadow-lg">
+    {% include "show_header.html" %}
+</header>
 
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 0;
-  }
+<div class="content-wrapper">
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
+        <h2 class="text-3xl font-bold sm:text-4xl text-center">Add New Food</h2>
 
-  .content-container {
-    position: relative;
-    z-index: 1;
-  }
+        <form id="addFnbForm" method="post">
+            {% csrf_token %}
+            <div class="mt-4">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            
+            <div class="mt-4">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
 
-  .scrollable-ingredients {
-    max-height: 500px;
-    overflow-y: auto;
-    padding: 1rem;
-    background-color: #ffee9e;
-    /* Updated yellow background */
-    border-radius: 8px;
-  }
-</style>
+            <div class="mt-4">
+                {{ form.price.label_tag }}
+                {{ form.price }}
+            </div>
 
-<div class="animated-background">
-  <div class="overlay"></div>
-  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 content-container">
-    <div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white shadow-lg rounded-lg overflow-hidden">
+            <!-- Ingredients selection with checkboxes -->
+            <div class="mt-4">
+                <h3 class="font-semibold">Select Ingredients:</h3>
+                {{ form.ingredients }}
+            </div>
 
-      <!-- Left Section - Form -->
-      <div class="p-8 lg:p-16 bg-white">
-        <div class="flex flex-col justify-between h-full">
-          <div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">Add New Food</h2>
-            <p class="text-gray-500 mb-8">Enter food details below.</p>
-
-            <form class="space-y-6" method="POST">
-              {% csrf_token %}
-              <div class="space-y-4">
-                <div>
-                  {{ form.name.label_tag }}
-                  {{ form.name }}
-                </div>
-                <div>
-                  {{ form.description.label_tag }}
-                  {{ form.description }}
-                </div>
-                <div>
-                  {{ form.price.label_tag }}
-                  {{ form.price }}
-                </div>
-              </div>
-
-              <div>
-                <button type="submit"
-                  class="w-full py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600">
-                  Add Fnb
+            <div class="mt-8">
+                <button type="button" id="submitFnbButton" class="bg-pink-600 text-white py-2 px-4 rounded">
+                    Add Fnb
                 </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="hidden lg:flex flex-col items-center justify-start bg-[#ffee9e] p-8">
-        <h3 class="text-2xl font-semibold text-gray-700 mb-4">What is it made of?</h3>
-        <div class="scrollable-ingredients w-full max-w-md rounded-lg p-6 overflow-y-auto"
-          style="max-height: 500px;">
-          {{ form.ingredients }}
-        </div>
-      </div>
+            </div>
+        </form>
+        <div id="message" class="mt-4"></div>
     </div>
-  </div>
 </div>
 {% endblock content %}
+
+<script>
+document.getElementById('submitFnbButton').addEventListener('click', function() {
+    const form = document.getElementById('addFnbForm');
+    const formData = new FormData(form);
+
+    fetch("{% url 'fnb:add_fnb_ajax' %}", {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageDiv = document.getElementById('message');
+        if (data.success) {
+            messageDiv.innerHTML = '<p class="text-green-500">FNB added successfully!</p>';
+            form.reset();
+        } else {
+            messageDiv.innerHTML = '<p class="text-red-500">Error adding FNB. ' + data.error + '</p>';
+        }
+    })
+    .catch(error => {
+        document.getElementById('message').innerHTML = '<p class="text-red-500">Error adding FNB.</p>';
+    });
+});
+</script>

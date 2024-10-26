@@ -45,7 +45,7 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    return redirect('fnb:landing_page')
+    return redirect('fnb:login')
 
 def show_fnb(request,food = None):
     if food:
@@ -90,3 +90,22 @@ def search_fnbs(request):
 
 def landing_page(request):
     return render(request, 'landing_page.html')
+
+def add_fnb_ajax(request):
+    name = request.POST.get("name")
+    description = request.POST.get("description")
+    price = request.POST.get("price")
+    user = request.user
+
+    new_fnb = Fnb(
+        name=name, description=description,
+        price=price,
+        user=user
+    )
+    new_fnb.save()
+
+    return HttpResponse(b"CREATED", status=201)
+
+def show_json(request):
+    data = Fnb.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
