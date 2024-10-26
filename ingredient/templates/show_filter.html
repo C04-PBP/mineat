@@ -237,7 +237,13 @@
                     })
                     .catch(error => console.error('Error with search:', error));
             } else {
-                document.getElementById('result').innerHTML = '';  // Clear results if query is empty
+                // Reload full list of items if search input is cleared
+                fetch('{% url "fnb:search_fnbs" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerHTML = data.html;
+                    })
+                    .catch(error => console.error('Error reloading items:', error));
             }
         });
 

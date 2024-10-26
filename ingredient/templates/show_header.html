@@ -21,7 +21,9 @@
           <li><a class="menu-item" href="{% url 'ingredient:show_filter' %}"> Home </a></li>
           <li><a class="menu-item" href="{% url 'restaurant:show_restaurant' %}"> Restaurant </a></li>
           <li><a class="menu-item" href="{% url 'forum:show-forum-umum' %}"> Forum </a></li>
+          {% if request.resolver_match.app_name == 'ingredient' %}
           <li><a id="filterToggle" href="javascript:void(0)" class="menu-item"> Filter </a></li>
+          {% endif %}
           <li><a class="menu-item" href="#"> Projects </a></li>
           <li><a class="menu-item" href="#"> Blog </a></li>
         </ul>
