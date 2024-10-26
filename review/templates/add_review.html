@@ -1,4 +1,4 @@
-<div class="p-6 bg-white shadow-md rounded-lg">
+{% comment %} <div class="p-6 bg-white shadow-md rounded-lg">
     <h2 class="text-xl font-bold mb-4">Tulis Review</h2>
     
     {% if user.is_authenticated %}
@@ -38,6 +38,48 @@
     </form>
   
     <!-- Pesan berhasil atau error -->
+    <div id="formMessage" class="mt-4"></div>
+  {% else %}
+    <div class="bg-gray-100 p-4 rounded-lg text-center">
+      <p class="text-gray-700 mb-2">Anda harus login untuk menulis review.</p>
+    </div>
+  {% endif %}
+</div> {% endcomment %}
+
+
+
+<div class="bg-yellow-50 p-8 rounded-lg shadow-md mb-8 max-w-2xl mx-auto">
+  <h2 class="text-2xl font-bold text-red-600 mb-4">Tulis Review</h2>
+
+  {% if user.is_authenticated %}
+    <form id="reviewForm" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="food_id" value="{{ id }}">
+
+      <!-- Rating Stars -->
+      <div id="star-rating" class="flex mb-4 space-x-2">
+        {% for i in "12345" %}
+          <svg class="star w-8 h-8 cursor-pointer transition duration-300 hover:scale-110" data-value="{{ i }}" fill="currentColor"
+               class="text-gray-400 hover:text-yellow-500">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z"></path>
+          </svg>
+        {% endfor %}
+      </div>
+
+      <!-- Hidden Rating Input -->
+      <input type="hidden" name="rating" id="rating" value="0">
+
+      <!-- Review Text Area -->
+      <textarea id="reviewText" name="text" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                placeholder="Tulis ulasan Anda..."></textarea>
+
+      <!-- Submit Button -->
+      <button type="submit" id="submitReviewButton" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-full mt-4 transition hover:bg-red-600">
+        Submit Review
+      </button>
+    </form>
+
+    <!-- Success/Error Message -->
     <div id="formMessage" class="mt-4"></div>
   {% else %}
     <div class="bg-gray-100 p-4 rounded-lg text-center">
