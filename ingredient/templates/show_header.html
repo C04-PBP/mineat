@@ -34,35 +34,23 @@
       </nav>
 
       <div class="flex items-center gap-4">
-        <div class="sm:flex sm:gap-4">
+        <div class="flex flex-wrap gap-4 items-center justify-center sm:justify-start">
           {% if user.is_authenticated %}
-            <span class="text-[#FAA943] mr-4">Welcome, {{ user.username }}</span>
+            <span class="text-[#FAA943] text-center">Welcome, {{ user.username }}</span>
             <a href="{% url 'fnb:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-                Logout
+              Logout
             </a>
           {% else %}
-          <!-- Login and Register Buttons -->
-          <a class="group relative inline-block overflow-hidden border border-[#BB0000] px-8 py-3 focus:outline-none focus:ring"
-            href="{% url 'fnb:login' %}">
-            <span
-              class="absolute inset-y-0 left-0 w-[2px] bg-[#BB0000] transition-all group-hover:w-full group-active:bg-[#BB0000]"></span>
-            <span class="relative text-sm font-medium text-[#BB0000] transition-colors group-hover:text-white"> Login
-            </span>
-          </a>
-          <a class="group relative inline-flex items-center overflow-hidden border border-[#BB0000] px-8 py-3 focus:outline-none focus:ring"
-            href="{% url 'fnb:register' %}">
-            <span
-              class="absolute inset-y-0 left-0 w-[2px] bg-[#BB0000] transition-all group-hover:w-full group-active:bg-[#BB0000]"></span>
-            <span
-              class="relative text-sm font-medium text-[#BB0000] transition-colors group-hover:text-white group-hover:mr-4">
-              Register </span>
-            <span class="absolute -right-full transition-all group-hover:right-4">
-              <svg class="h-5 w-5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke="white">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
-          </a>
+            <a class="group relative inline-block overflow-hidden border border-[#BB0000] px-8 py-3 focus:outline-none focus:ring"
+               href="{% url 'fnb:login' %}">
+              <span class="absolute inset-y-0 left-0 w-[2px] bg-[#BB0000] transition-all group-hover:w-full group-active:bg-[#BB0000]"></span>
+              <span class="relative text-sm font-medium text-[#BB0000] transition-colors group-hover:text-white">Login</span>
+            </a>
+            <a class="group relative inline-block overflow-hidden border border-[#BB0000] px-8 py-3 focus:outline-none focus:ring"
+               href="{% url 'fnb:register' %}">
+              <span class="absolute inset-y-0 left-0 w-[2px] bg-[#BB0000] transition-all group-hover:w-full group-active:bg-[#BB0000]"></span>
+              <span class="relative text-sm font-medium text-[#BB0000] transition-colors group-hover:text-white">Register</span>
+            </a>
           {% endif %}
         </div>
       </div>
