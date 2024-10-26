@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body,
         html {
@@ -76,8 +77,8 @@
         }
 
         .footer {
-            background-color: #333;
-            color: white;
+            background-color: #ffd700;
+            color: black;
             padding: 2rem;
         }
 
@@ -107,14 +108,18 @@
         <div class="logo">
             <img src="{% static 'image/in7.png' %}" alt="Logo" class="w-auto h-40">
         </div>
-        <a href="#" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg mt-8">
+        <a href="{% url 'ingredient:show_filter' %}"
+            class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-lg mt-8"
+            style="font-family: 'League Spartan';">
             Get Started
         </a>
     </div>
 
     <!-- Scrollable Content Section Below Video -->
     <section class="scrollable-section">
-        <h2>Explore Our Features</h2>
+        <h2 style="font-family: 'League Spartan', sans-serif; font-weight: 700;">
+            Discover Minang cuisine within minutes
+        </h2>
         <p>Discover the unique aspects of our platform and see how they can benefit you.</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             <div class="bg-gray-100 p-6 rounded-lg shadow">
@@ -154,7 +159,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2023 Your Company. All rights reserved.</p>
+        <p>&copy; 2023 Mineat. All rights reserved.</p>
         <p>Follow us on <a href="#" class="text-yellow-500 hover:text-yellow-600">Social Media</a></p>
     </footer>
 
