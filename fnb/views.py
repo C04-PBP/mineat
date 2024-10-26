@@ -93,6 +93,7 @@ def landing_page(request):
 
 def add_fnb_ajax(request):
     name = request.POST.get("name")
+    print(name)
     description = request.POST.get("description")
     price = request.POST.get("price")
     user = request.user
@@ -107,5 +108,5 @@ def add_fnb_ajax(request):
     return HttpResponse(b"CREATED", status=201)
 
 def show_json(request):
-    data = Fnb.objects.filter(user=request.user)
+    data = Fnb.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")

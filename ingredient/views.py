@@ -26,15 +26,21 @@ def show_filter(request):
     ingredient = Ingredient.objects.all()
     fnb = Fnb.objects.all()
 
-    paginator = Paginator(fnb,6)
+    # Retrieve the page number from the query string
+    page_number = request.GET.get("page", 1)
 
-    page_number = request.GET.get("page")
-
+    # Set up pagination
+    paginator = Paginator(fnb, 6)
     page_obj = paginator.get_page(page_number)
 
-    context = {"ingredients" : ingredient,"fnb" : page_obj}
-
-    return render(request,"show_filter.html",context)
+    # If AJAX request, return JSON response
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        html = render_to_string('fnb_kosong.html', {"fnbs": page_obj})
+        return JsonResponse({'html': html})
+    
+    # For non-AJAX, render the full page
+    context = {"ingredients": ingredient, "fnb": page_obj}
+    return render(request, "show_filter.html", context)
 
 @csrf_exempt  # To handle the AJAX POST request
 def record_ingredients(request):
@@ -58,10 +64,6 @@ def record_ingredients(request):
                     fnb_set = food
                 else:
                     fnb_set.intersection_update(food)
-
-    
-
-    
 
             if len(ingredients) == 0:
                 fnb = Fnb.objects.all()
