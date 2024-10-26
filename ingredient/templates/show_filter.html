@@ -24,11 +24,12 @@
     </div>
 </div>
 
-<div class="flex flex-row gap-4 content-wrapper">
+<div class="flex flex-row gap-4 content-wrapper min-h-screen"> <!-- Full viewport height -->
+
     <!-- Toggleable Sidebar -->
     <aside id="sidebar"
-        class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container collapsed">
-
+        class="transition-transform transform translate-x-0 w-[20vw] bg-[#ffee9e] relative dropdown-container collapsed flex flex-col">
+        
         <!-- Animated Search Bar -->
         <div class="flex justify-center">
             <div class="relative">
@@ -47,22 +48,20 @@
         </div>
 
         <!-- Scrollable Ingredient List -->
-        <div class="ingredient-div w-full h-[100vh] rounded-[20px] shadow overflow-auto">
+        <div class="ingredient-div w-full rounded-[20px] shadow overflow-y-auto flex-grow justify-center" style="margin-bottom: 20px;">
             {% for ingredient in ingredients %}
             <!-- Ingredient Cards with lazy-load class -->
-            <div class="lazy-load ingredient-card" data-name="{{ ingredient.name }}">
+            <div class="lazy-load ingredient-card " data-name="{{ ingredient.name }}">
                 {% include "ingredient_card.html" with ingredient=ingredient %}
             </div>
             {% endfor %}
         </div>
     </aside>
 
-
-
-    <!-- Content Section -->
+    <!-- Content Section (No changes to content section) -->
     <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
-
 </div>
+
 
 <a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a>
 
