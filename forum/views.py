@@ -46,11 +46,11 @@ def add_forum(request):
 
         if name and comment_text:
             
-            new_forum = Forum(name=name, text=comment_text, )
+            new_forum = Forum(name=name, text=comment_text, user=request.user)
             new_forum.save()
 
-            new_comment = ForumKhusus(text = comment_text)
-            new_comment.forum = new_forum
+            new_comment = ForumKhusus(text=comment_text, forum=new_forum, user=request.user)
+            # new_comment.forum = new_forum
             new_comment.save()
             
             return JsonResponse({
@@ -71,7 +71,7 @@ def add_forum_khusus(request, id):
         data = json.loads(request.body)
         comment_text = data.get('comment')
         if comment_text:
-            new_comment = ForumKhusus.objects.create(text=comment_text, forum=forum)
+            new_comment = ForumKhusus.objects.create(text=comment_text, forum=forum, user=request.user)
             return JsonResponse({
                 'comment_text': new_comment.text,
                 'time_created': new_comment.time_created.strftime('%Y-%m-%d %H:%M')
