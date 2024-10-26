@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from fnb.models import Fnb
 import uuid
+from django.utils import timezone
 # Create your models here.
 class Review(models.Model):
     makanan = models.ForeignKey(Fnb, on_delete=models.CASCADE)
@@ -10,6 +11,7 @@ class Review(models.Model):
     rating = models.PositiveSmallIntegerField()
     text = models.TextField()
     like = models.IntegerField(default=0)
+    created_at = models.DateTimeField(default=timezone.now)
     
     
     @property

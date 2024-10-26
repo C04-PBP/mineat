@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.html import strip_tags
+from django.shortcuts import get_object_or_404
 
 
 def show_review(request):
@@ -88,7 +89,20 @@ def load_reviews(request):
     # Query untuk mendapatkan data review
     food_id = request.GET.get('id')
     fnb_object = Fnb.objects.get(pk=food_id)
-    reviews = Review.objects.filter(makanan=fnb_object)
+    sort_option = request.GET.get('sort')
+
+    # Apply different sorting based on the selected option
+    print("awal")
+    if sort_option == 'newest':
+        reviews = Review.objects.filter(makanan=fnb_object).order_by('-created_at')
+        print(reviews)
+        print("masuk")
+    elif sort_option == 'like':
+        reviews = Review.objects.filter(makanan=fnb_object).order_by('-like')
+    else:  # Default to sorting by date
+        reviews = Review.objects.filter(makanan=fnb_object)
+        print(reviews)
+        print("masuk2")
     
     if request.user.is_authenticated:
     # Ambil semua review yang disukai oleh pengguna saat ini
@@ -98,7 +112,8 @@ def load_reviews(request):
         review_user = "Null"
         
     context = {'reviews': reviews,
-               'review_user': list(review_user)}
+               'review_user': list(review_user),
+               'food_id' : food_id}
     return render(request, 'show_review.html', context)
 
 def load_write_review(request):
@@ -108,8 +123,25 @@ def load_write_review(request):
 def delete_review(request, id):
     # Get mood berdasarkan id
     food_id = request.GET.get('id')
-    review = Review.objects.filter(pk=id)
+    review = Review.objects.get(pk=id)
     # Hapus mood
     review.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('review:show_review') + f'?id={food_id}')
+
+def edit_review(request, id):
+    # Get mood entry berdasarkan id
+    food_id = request.GET.get('id')
+    review = Review.objects.get(pk=id)
+
+    # Set mood entry sebagai instance dari form
+    form = ReviewForm(request.POST or None, instance=review, initial={'food_id': food_id})
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('review:show_review') + f'?id={food_id}')
+
+    context = {'form': form,
+               'id' : food_id}
+    return render(request, "edit_review.html", context)
