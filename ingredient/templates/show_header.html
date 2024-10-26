@@ -35,6 +35,12 @@
 
       <div class="flex items-center gap-4">
         <div class="sm:flex sm:gap-4">
+          {% if user.is_authenticated %}
+            <span class="text-[#FAA943] mr-4">Welcome, {{ user.username }}</span>
+            <a href="{% url 'fnb:logout' %}" class="text-center bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300">
+                Logout
+            </a>
+          {% else %}
           <!-- Login and Register Buttons -->
           <a class="group relative inline-block overflow-hidden border border-[#BB0000] px-8 py-3 focus:outline-none focus:ring"
             href="{% url 'fnb:login' %}">
@@ -57,6 +63,7 @@
               </svg>
             </span>
           </a>
+          {% endif %}
         </div>
       </div>
     </div>
