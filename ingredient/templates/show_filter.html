@@ -102,7 +102,7 @@
             </div>
         </div>
 
-         <!-- Selected Ingredients Button List -->
+        <!-- Selected Ingredients Button List -->
         <div id="selected-ingredients" class="selected-ingredients flex overflow-x-auto space-x-2 px-4 py-2">
             <!-- Selected ingredient buttons will be added here dynamically -->
         </div>
@@ -245,6 +245,29 @@
         opacity: 1;
         padding: 5px 10px;
     }
+
+    .selected-ingredient-button {
+        background-color: #BB0000;
+        /* Red background color */
+        color: white;
+        padding: 4px 10px;
+        /* Add padding for the button look */
+        border-radius: 6px;
+        /* Rounded corners */
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        display: inline-block;
+        margin: 4px 2px;
+        /* Add some space around the button */
+        transition: background-color 0.3s ease;
+    }
+
+
+    .selected-ingredient:hover {
+        background-color: #ff0000;
+        /* Darker red on hover */
+    }
 </style>
 
 <script src="{% static 'js/fnb_card.js' %}"></script>
@@ -253,153 +276,153 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const sidebar = document.getElementById('sidebar');
-    const filterToggle = document.getElementById('filterToggle');
-    let lazyLoadInitialized = false;
+        const sidebar = document.getElementById('sidebar');
+        const filterToggle = document.getElementById('filterToggle');
+        let lazyLoadInitialized = false;
 
-    if (filterToggle) {
-        filterToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('collapsed');
+        if (filterToggle) {
+            filterToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
 
-            if (!lazyLoadInitialized && !sidebar.classList.contains('collapsed')) {
-                initializeLazyLoad();
-                lazyLoadInitialized = true;
-            }
-        });
-    }
-
-    function initializeLazyLoad() {
-        const lazyLoadElements = document.querySelectorAll('.lazy-load');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target);
+                if (!lazyLoadInitialized && !sidebar.classList.contains('collapsed')) {
+                    initializeLazyLoad();
+                    lazyLoadInitialized = true;
                 }
             });
-        }, { root: null, threshold: 0.1 });
-
-        lazyLoadElements.forEach(element => observer.observe(element));
-    }
-
-    // Ingredient selection logic
-    let selectedIngredients = [];
-    const selectedIngredientsContainer = document.getElementById('selected-ingredients');
-
-    document.querySelectorAll('.ingredient-card').forEach(div => {
-        div.addEventListener('click', function () {
-            const ingredient = div.getAttribute('data-name');
-            if (!selectedIngredients.includes(ingredient)) {
-                selectedIngredients.push(ingredient);
-                div.classList.add('selected'); 
-                addSelectedIngredientButton(ingredient);
-                sendSelectedIngredients(selectedIngredients);
-            }
-        });
-    });
-
-    function addSelectedIngredientButton(ingredient) {
-        const button = document.createElement('button');
-        button.classList.add('selected-ingredient-button');
-        button.textContent = ingredient;
-        button.setAttribute('data-ingredient', ingredient);
-        button.addEventListener('click', function () {
-            removeSelectedIngredient(ingredient);
-        });
-        selectedIngredientsContainer.appendChild(button);
-    }
-
-    function removeSelectedIngredient(ingredient) {
-        selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
-        document.querySelector(`.ingredient-card[data-name="${ingredient}"]`).classList.remove('selected');
-        const button = selectedIngredientsContainer.querySelector(`[data-ingredient="${ingredient}"]`);
-        if (button) {
-            selectedIngredientsContainer.removeChild(button);
         }
-        sendSelectedIngredients(selectedIngredients);
-    }
 
-    async function sendSelectedIngredients(selectedIngredients) {
-        try {
-            const response = await fetch('{% url "ingredient:record_ingredients" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
-                body: JSON.stringify({ ingredients: selectedIngredients })
+        function initializeLazyLoad() {
+            const lazyLoadElements = document.querySelectorAll('.lazy-load');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { root: null, threshold: 0.1 });
+
+            lazyLoadElements.forEach(element => observer.observe(element));
+        }
+
+        // Ingredient selection logic
+        let selectedIngredients = [];
+        const selectedIngredientsContainer = document.getElementById('selected-ingredients');
+
+        document.querySelectorAll('.ingredient-card').forEach(div => {
+            div.addEventListener('click', function () {
+                const ingredient = div.getAttribute('data-name');
+                if (!selectedIngredients.includes(ingredient)) {
+                    selectedIngredients.push(ingredient);
+                    div.classList.add('selected');
+                    addSelectedIngredientButton(ingredient);
+                    sendSelectedIngredients(selectedIngredients);
+                }
             });
+        });
 
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+        function addSelectedIngredientButton(ingredient) {
+            const button = document.createElement('button');
+            button.classList.add('selected-ingredient-button');
+            button.textContent = ingredient;
+            button.setAttribute('data-ingredient', ingredient);
+            button.addEventListener('click', function () {
+                removeSelectedIngredient(ingredient);
+            });
+            selectedIngredientsContainer.appendChild(button);
+        }
+
+        function removeSelectedIngredient(ingredient) {
+            selectedIngredients = selectedIngredients.filter(i => i !== ingredient);
+            document.querySelector(`.ingredient-card[data-name="${ingredient}"]`).classList.remove('selected');
+            const button = selectedIngredientsContainer.querySelector(`[data-ingredient="${ingredient}"]`);
+            if (button) {
+                selectedIngredientsContainer.removeChild(button);
             }
+            sendSelectedIngredients(selectedIngredients);
+        }
 
-            const data = await response.json();
-            const resultContainer = document.getElementById('result');
-            resultContainer.innerHTML = data.html;
+        async function sendSelectedIngredients(selectedIngredients) {
+            try {
+                const response = await fetch('{% url "ingredient:record_ingredients" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ ingredients: selectedIngredients })
+                });
 
-            // Initialize tilt effect on newly loaded items only
-            if (typeof initializeTiltEffect === 'function') {
-                initializeTiltEffect();
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+
+                const data = await response.json();
+                const resultContainer = document.getElementById('result');
+                resultContainer.innerHTML = data.html;
+
+                // Initialize tilt effect on newly loaded items only
+                if (typeof initializeTiltEffect === 'function') {
+                    initializeTiltEffect();
+                }
+
+            } catch (error) {
+                console.error("Error recording ingredients:", error);
             }
-
-        } catch (error) {
-            console.error("Error recording ingredients:", error);
         }
-    }
 
-    // AJAX Search for Fnbs
-    document.getElementById('filter-search-bar').addEventListener('input', function () {
-        const query = this.value;
+        // AJAX Search for Fnbs
+        document.getElementById('filter-search-bar').addEventListener('input', function () {
+            const query = this.value;
 
-        if (query.trim() !== '') {
-            fetch(`{% url 'fnb:search_fnbs' %}?q=${encodeURIComponent(query)}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('result').innerHTML = data.html;
+            if (query.trim() !== '') {
+                fetch(`{% url 'fnb:search_fnbs' %}?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerHTML = data.html;
+                    })
+                    .catch(error => console.error('Error with search:', error));
+            } else {
+                fetch('{% url "fnb:search_fnbs" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('result').innerHTML = data.html;
+                    })
+                    .catch(error => console.error('Error reloading items:', error));
+            }
+        });
+
+        const ingredientSearchBar = document.getElementById('ingredient-search-bar');
+        ingredientSearchBar.addEventListener('input', function () {
+            const query = this.value;
+
+            if (query.trim() !== '') {
+                fetch('{% url "ingredient:search_ingredient" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify({ ingredient: query })
                 })
-                .catch(error => console.error('Error with search:', error));
-        } else {
-            fetch('{% url "fnb:search_fnbs" %}')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('result').innerHTML = data.html;
-                })
-                .catch(error => console.error('Error reloading items:', error));
-        }
+                    .then(response => response.json())
+                    .then(data => {
+                        const ingredientCards = document.querySelectorAll('.ingredient-card');
+                        ingredientCards.forEach(card => { card.style.display = 'none'; });
+                        const ingredients = JSON.parse(data.ingredients);
+                        ingredients.forEach(item => {
+                            const matchingCard = document.querySelector(`.ingredient-card[data-name="${item.fields.name}"]`);
+                            if (matchingCard) { matchingCard.style.display = ''; }
+                        });
+                    })
+                    .catch(error => console.error('Error with ingredient search:', error));
+            } else {
+                document.querySelectorAll('.ingredient-card').forEach(card => { card.style.display = ''; });
+            }
+        });
     });
-
-    const ingredientSearchBar = document.getElementById('ingredient-search-bar');
-    ingredientSearchBar.addEventListener('input', function () {
-        const query = this.value;
-
-        if (query.trim() !== '') {
-            fetch('{% url "ingredient:search_ingredient" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}',
-                },
-                body: JSON.stringify({ ingredient: query })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    const ingredientCards = document.querySelectorAll('.ingredient-card');
-                    ingredientCards.forEach(card => { card.style.display = 'none'; });
-                    const ingredients = JSON.parse(data.ingredients);
-                    ingredients.forEach(item => {
-                        const matchingCard = document.querySelector(`.ingredient-card[data-name="${item.fields.name}"]`);
-                        if (matchingCard) { matchingCard.style.display = ''; }
-                    });
-                })
-                .catch(error => console.error('Error with ingredient search:', error));
-        } else {
-            document.querySelectorAll('.ingredient-card').forEach(card => { card.style.display = ''; });
-        }
-    });
-});
-const modal = document.getElementById('crudModal');
+    const modal = document.getElementById('crudModal');
     const modalContent = document.getElementById('crudModalContent');
     const openModalButton = document.getElementById('openModalButton');
     const cancelButton = document.getElementById("cancelButton");
@@ -441,29 +464,29 @@ const modal = document.getElementById('crudModal');
             headers: { 'X-CSRFToken': '{{ csrf_token }}' },
             body: new FormData(this)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                // Update the FnB list in the #result container
-                document.getElementById('result').innerHTML = data.html;
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Update the FnB list in the #result container
+                    document.getElementById('result').innerHTML = data.html;
 
-                // Reset the form inputs
-                this.reset();
+                    // Reset the form inputs
+                    this.reset();
 
-                // Close the modal
-                hideModal();
-            } else {
-                console.error("Error adding FnB:", data.error);
-            }
-        })
-        .catch(error => {
-            console.error("Error adding FnB:", error);
-        });
+                    // Close the modal
+                    hideModal();
+                } else {
+                    console.error("Error adding FnB:", data.error);
+                }
+            })
+            .catch(error => {
+                console.error("Error adding FnB:", error);
+            });
     });
 </script>
 
