@@ -62,18 +62,17 @@
 
 {% block content %}
 <a class="tilt-card-container" href='{% url "review:show_review" %}?id={{ fnb.id }}'>
-    <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#F2F2F2] to-[#F2F2F2]">
-        <div class="image-container absolute inset-4 grid place-content-center rounded-xl shadow-lg bg-white"
-            style="transform: translateZ(75px);">
-            <img src="{{ fnb.image }}" alt="{{ fnb.name }}" class="rounded-xl object-cover h-full w-full" />
-            
+    <div class="tilt-card relative h-72 w-72 rounded-xl bg-gradient-to-br from-[#F2F2F2] to-[#F2F2F2]">
+        <div class="image-container absolute inset-4 grid place-content-start rounded-xl shadow-lg bg-white"
+             style="transform: translateZ(60px); height: 88%;">
+            <img src="{{ fnb.image }}" alt="{{ fnb.name }}" class="rounded-xl object-cover w-full h-full" />
             <div class="overlay rounded-xl"></div>
-
             <div class="text-content">
-                <p class="text-center text-xl font-bold [text-shadow:_0_1px_0_rgb(0_0_0_/_100%)]">{{ fnb.name }}</p>
-                <p class="text-center text-l description [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]" >{{ fnb.description }}</p>
+                <p class="text-center text-xl font-bold">{{ fnb.name }}</p>
+                <p class="text-center text-l description">{{ fnb.description }}</p>
             </div>
         </div>
     </div>
 </a>
+
 {% endblock content %}
