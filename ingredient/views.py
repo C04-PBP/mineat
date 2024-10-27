@@ -100,9 +100,3 @@ def search_ingredient(request):
         
         return JsonResponse({'ingredients': serialized_ingredients})
     
-def show_card(request):
-    return render(request,"nyoba2.html")
-
-def show_fnb_json(request):
-    data = Fnb.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
