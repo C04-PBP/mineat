@@ -18,6 +18,7 @@ urlpatterns = [
     # path('get_fnb_data/<int:fnb_id>/', get_fnb_data, name='get_fnb_data'),
     # path('edit_fnb_ajax/<int:fnb_id>/', edit_fnb_ajax, name='edit_fnb_ajax'),
     path('fnb/edit_fnb/<uuid:id>/', edit_fnb, name='edit_fnb'),
-    path('fnb/delete_fnb/<uuid:id>/', delete_fnb, name='delete_fnb')
+    path('fnb/delete_fnb/<uuid:id>/', delete_fnb, name='delete_fnb'),
     # path('', landing_page, name='landing_page'),
+    path('show_fnb', show_fnb, name='show_fnb'),
 ]

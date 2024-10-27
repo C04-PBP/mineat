@@ -1,9 +1,33 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h2>Edit FnB Item</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="bg-blue-500 text-white p-2 rounded">Save</button>
-</form>
+<div class="edit-fnb-container bg-gray-100 p-8 max-w-md mx-auto rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Edit FnB Item</h2>
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-full bg-blue-600 text-white p-3 rounded-lg transition hover:bg-blue-700">Save</button>
+    </form>
+</div>
+
+<style>
+    .edit-fnb-container {
+        background-image: url('https://example.com/background-image.jpg'); /* Replace with your URL */
+        background-size: cover;
+        background-position: center;
+    }
+
+    form input, form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    form input:focus, form textarea:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+    }
+</style>
 {% endblock content %}
