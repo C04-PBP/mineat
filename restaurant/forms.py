@@ -4,7 +4,7 @@ from .models import Restaurant, Location, Fnb
 class RestaurantForm(forms.ModelForm):
     class Meta:
         model = Restaurant
-        fields = ['name', 'address', 'location', 'fnb']
+        fields = ['name', 'image', 'address', 'location', 'fnb']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
