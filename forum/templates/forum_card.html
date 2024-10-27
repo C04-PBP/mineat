@@ -8,10 +8,7 @@
     <div
         class="group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl mx-auto w-full max-w-3xl rounded-lg">
         
-        <!-- Animated Background Circle -->
         <span class="absolute top-10 left-10 z-0 h-20 w-20 rounded-full bg-yellow-400 opacity-60 transition-transform duration-300 group-hover:scale-[5]"></span>
-
-        <!-- Content Wrapper -->
         <div class="relative z-10 mx-auto max-w-3xl">
             <!-- Icon with Hover Effect -->
             <span class="grid h-20 w-20 place-items-center rounded-full bg-red-600 transition-all duration-300 group-hover:bg-transparent">
@@ -28,13 +25,13 @@
             <!-- Meta Information -->
             <div class="space-y-1 text-sm text-gray-500">
                 <p>Posted by: <strong class="text-black">{{ forum.user.username }}</strong></p>
-                <p>Date: {{ forum.time_created|date:"M d, Y H:i" }}</p>
+                <p>Date: {{ forum.time_created|date:"M d, Y H:i" }} WIB</p>
             </div>
 
             <!-- Link to Discussion -->
             <div class="pt-5 text-base font-semibold leading-7">
                 <p>
-                    <a href="{% url 'forum:forum-khusus' forum.id %}" class="text-yellow-500 font-semibold transition-all duration-300 group-hover:text-red-500">Follow the discussion &rarr;</a>
+                    <a href="{% url 'forum:forum-khusus' forum.id %}" class="text-yellow-500 font-semibold transition-all duration-300 group-hover:text-red-500 hover:underline">Follow the discussion &rarr;</a>
                 </p>
             </div>
         </div>

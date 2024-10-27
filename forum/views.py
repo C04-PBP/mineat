@@ -42,8 +42,8 @@ def show_forum(request):
 def add_forum(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        name = data.get('name')
-        comment_text = data.get('comment')
+        name = strip_tags(data.get('name'))
+        comment_text = strip_tags(data.get('comment'))
 
         if name and comment_text:
             
@@ -74,15 +74,13 @@ def add_forum(request):
 
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
-# Jangan lupa nanti enable user di model supaya bisa ngerubah post date
-# @login_required
 @csrf_exempt
 def add_forum_khusus(request, id):
     forum = get_object_or_404(Forum, pk=id)
 
     if request.method == 'POST':
         data = json.loads(request.body)
-        comment_text = data.get('comment')
+        comment_text = strip_tags(data.get('comment'))
         if comment_text:
             new_comment = ForumKhusus.objects.create(text=comment_text, forum=forum, user=request.user)
             return JsonResponse({
