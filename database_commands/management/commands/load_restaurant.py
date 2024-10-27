@@ -37,13 +37,13 @@ class Command(BaseCommand):
                             image = row[2]
                         )
                         if created:
-                            self.stdout.write(f"Successfully created Restaurant: {row[0]}")
-                            random_num_of_food = int.from_bytes(os.urandom(1), 'big') % 11  # % 11 to get a number between 0 and 10
+                            # self.stdout.write(f"Successfully created Restaurant: {row[0]}")
+                            random_num_of_food = int.from_bytes(os.urandom(1), 'big') % 26  
+                            while random_num_of_food < 10:
+                                random_num_of_food = int.from_bytes(os.urandom(1), 'big') % 26 
 
                             for i in range(random_num_of_food):
-                                random_food_num = 0  
-                                while random_food_num <  10:
-                                    random_food_num = int.from_bytes(os.urandom(1), 'big') % 26
+                                random_food_num = int.from_bytes(os.urandom(1), 'big') % 101
                                 restaurant.fnb.add(fnb[random_food_num%len(fnb)])
                         else:
                             self.stdout.write(f"Restaurant {row[0]} already exists.")

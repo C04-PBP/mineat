@@ -28,10 +28,10 @@ class Command(BaseCommand):
                             image = row[2].strip(" ")
                             
                         )
-                        if created:
-                            self.stdout.write(f"Successfully created Location: {row[0]}")
-                        else:
-                            self.stdout.write(f"Location {row[0]} already exists.")
+                        # if created:
+                        #     self.stdout.write(f"Successfully created Location: {row[0]}")
+                        # else:
+                        #     self.stdout.write(f"Location {row[0]} already exists.")
 
                     except Exception as e:
                         self.stderr.write(f"Error creating Food from row {row}: {e}")
