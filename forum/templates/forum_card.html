@@ -28,13 +28,13 @@
             <!-- Meta Information -->
             <div class="space-y-1 text-sm text-gray-500">
                 <p>Posted by: <strong class="text-black">{{ forum.user.username }}</strong></p>
-                <p>Date: {{ forum.time_created|date:"M d, Y H:i" }}</p>
+                <p>Date: {{ forum.time_created|date:"M d, Y H:i" }} WIB</p>
             </div>
 
             <!-- Link to Discussion -->
             <div class="pt-5 text-base font-semibold leading-7">
                 <p>
-                    <a href="{% url 'forum:forum-khusus' forum.id %}" class="text-yellow-500 font-semibold transition-all duration-300 group-hover:text-red-500">Follow the discussion &rarr;</a>
+                    <a href="{% url 'forum:forum-khusus' forum.id %}" class="text-yellow-500 font-semibold transition-all duration-300 group-hover:text-red-500 hover:underline">Follow the discussion &rarr;</a>
                 </p>
             </div>
         </div>
