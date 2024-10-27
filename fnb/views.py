@@ -101,6 +101,7 @@ def add_fnb_ajax(request):
         name = request.POST.get("name")
         description = request.POST.get("description")
         price = request.POST.get("price")
+        image = request.POST.get("image")
         
         # Check if the user is authenticated
         if request.user.is_authenticated:
@@ -110,6 +111,7 @@ def add_fnb_ajax(request):
                     name=name,
                     description=description,
                     price=price,
+                    image=image,
                     user=request.user  # Set the user as the creator
                 )
                 new_fnb.save()
@@ -118,7 +120,8 @@ def add_fnb_ajax(request):
                 return JsonResponse({"status": "created", "fnb": {
                     "name": name,
                     "description": description,
-                    "price": price
+                    "price": price,
+                    "image": image,
                 }}, status=201)
             
             except Exception as e:
