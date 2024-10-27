@@ -1,108 +1,112 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import Fnb
 from django.contrib.auth.models import User
+from fnb.models import Fnb
+from ingredient.models import Ingredient
+import uuid
+import json
 
-class FnbModelTests(TestCase):
+# Create your tests here.
+
+class FnbModelTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username="testuser", password="12345")
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
         self.fnb = Fnb.objects.create(
-            name="Burger",
-            description="Tasty burger",
-            price=10000,
-            user=self.user
+            user=self.user,
+            name="Test Fnb",
+            image="test_image.jpg",
+            price=100,
+            description="Test Fnb Description"
         )
 
     def test_fnb_creation(self):
-        """Test the creation of an Fnb instance"""
-        self.assertTrue(isinstance(self.fnb, Fnb))
-        self.assertEqual(self.fnb.__str__(), self.fnb.name)
+        self.assertEqual(self.fnb.name, "Test Fnb")
+        self.assertEqual(self.fnb.price, 100)
+        self.assertEqual(self.fnb.description, "Test Fnb Description")
 
-    def test_fnb_price(self):
-        """Test if price is assigned correctly"""
-        self.assertEqual(self.fnb.price, 10000)
+    def test_fnb_string_representation(self):
+        self.assertEqual(str(self.fnb), "Test Fnb")
 
-class FnbFormTests(TestCase):
-    def test_valid_form(self):
-        """Test form validation for Fnb creation"""
-        data = {
-            'name': 'Salad',
-            'description': 'Fresh and healthy',
-            'price': 7000
-        }
-        form = FnbForm(data=data)
-        self.assertTrue(form.is_valid())
 
-    def test_invalid_form(self):
-        """Test form invalidity without all required fields"""
-        data = {
-            'name': '',
-            'description': 'Incomplete item',
-            'price': ''
-        }
-        form = FnbForm(data=data)
-        self.assertFalse(form.is_valid())
-
-class FnbViewTests(TestCase):
+class FnbViewTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username="testuser", password="12345")
+        self.user = User.objects.create_user(username="testuser", password="testpassword")
+        self.ingredient1 = Ingredient.objects.create(name="Ingredient 1")
+        self.ingredient2 = Ingredient.objects.create(name="Ingredient 2")
         self.fnb = Fnb.objects.create(
-            name="Pizza",
-            description="Cheesy pizza",
-            price=20000,
-            user=self.user
+            user=self.user,
+            name="Test Fnb",
+            image="test_image.jpg",
+            price=100,
+            description="Test Fnb Description"
         )
+        self.client.login(username="testuser", password="testpassword")
 
-    def test_fnb_list_view(self):
-        """Test that the list view returns a 200 status and correct template"""
-        response = self.client.get(reverse('fnb:list'))
+    def test_show_fnb_view(self):
+        response = self.client.get(reverse("fnb:show_fnb"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'fnb/list.html')
+        self.assertContains(response, "Test Fnb")
+        self.assertTemplateUsed(response, "show_fnb.html")
 
-    def test_fnb_detail_view(self):
-        """Test the detail view of a single Fnb item"""
-        response = self.client.get(reverse('fnb:detail', kwargs={'pk': self.fnb.pk}))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, self.fnb.name)
-
-    def test_fnb_create_view_authenticated(self):
-        """Test create view with an authenticated user"""
-        self.client.login(username="testuser", password="12345")
-        response = self.client.post(reverse('fnb:create'), {
-            'name': 'New Fnb',
-            'description': 'New Description',
-            'price': 5000,
+    def test_add_fnb_view(self):
+        response = self.client.post(reverse("fnb:add_fnb"), {
+            "name": "New Fnb",
+            "description": "New Description",
+            "price": 200,
+            "ingredients": [self.ingredient1.id, self.ingredient2.id]  # Select ingredients
         })
-        self.assertEqual(response.status_code, 302)  # Redirect after success
-        self.assertTrue(Fnb.objects.filter(name="New Fnb").exists())
+        self.assertEqual(response.status_code, 302)  # Redirect after creation
+        new_fnb = Fnb.objects.get(name="New Fnb")
+        self.assertTrue(new_fnb)
 
-    def test_fnb_create_view_unauthenticated(self):
-        """Test create view without authentication (should redirect)"""
-        response = self.client.post(reverse('fnb:create'), {
-            'name': 'Unauthorized Fnb',
-            'description': 'This should fail',
-            'price': 5000,
-        })
-        self.assertEqual(response.status_code, 302)
-        self.assertFalse(Fnb.objects.filter(name="Unauthorized Fnb").exists())
+        # Check if ingredients are linked to the Fnb
+        self.assertEqual(new_fnb.fnb.count(), 2)
 
-    def test_fnb_update_view(self):
-        """Test the update view for an existing Fnb item"""
-        self.client.login(username="testuser", password="12345")
-        response = self.client.post(reverse('fnb:update', kwargs={'pk': self.fnb.pk}), {
-            'name': 'Updated Pizza',
-            'description': 'Extra cheesy',
-            'price': 25000,
+    def test_edit_fnb_view(self):
+        response = self.client.post(reverse("fnb:edit_fnb", args=[self.fnb.id]), {
+            "name": "Updated Fnb",
+            "description": "Updated Description",
+            "price": 150,
+            "ingredients": [self.ingredient1.id]
         })
-        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)  # Redirect after update
         self.fnb.refresh_from_db()
-        self.assertEqual(self.fnb.name, 'Updated Pizza')
-        self.assertEqual(self.fnb.price, 25000)
+        self.assertEqual(self.fnb.name, "Updated Fnb")
+        self.assertEqual(self.fnb.price, 150)
 
-    def test_fnb_delete_view(self):
-        """Test the delete view for an Fnb item"""
-        self.client.login(username="testuser", password="12345")
-        response = self.client.post(reverse('fnb:delete', kwargs={'pk': self.fnb.pk}))
+    def test_delete_fnb_view(self):
+        response = self.client.post(reverse("fnb:delete_fnb", args=[self.fnb.id]))
         self.assertEqual(response.status_code, 302)
-        self.assertFalse(Fnb.objects.filter(pk=self.fnb.pk).exists())
+        self.assertFalse(Fnb.objects.filter(id=self.fnb.id).exists())
+
+    def test_search_fnbs(self):
+        response = self.client.get(reverse("fnb:search_fnbs"), {"q": "Test"})
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Test Fnb", response.json()["html"])
+
+    def test_add_fnb_ajax_authenticated(self):
+        response = self.client.post(reverse("fnb:add_fnb_ajax"), {
+            "name": "AJAX Fnb",
+            "description": "Description for AJAX",
+            "price": 300,
+            "image": "ajax_image.jpg"
+        })
+        self.assertEqual(response.status_code, 201)
+        self.assertTrue(Fnb.objects.filter(name="AJAX Fnb").exists())
+
+    def test_add_fnb_ajax_unauthenticated(self):
+        self.client.logout()
+        response = self.client.post(reverse("fnb:add_fnb_ajax"), {
+            "name": "AJAX Fnb",
+            "description": "Description for AJAX",
+            "price": 300,
+            "image": "ajax_image.jpg"
+        })
+        self.assertEqual(response.status_code, 403)
+
+    def test_show_json(self):
+        response = self.client.get(reverse("fnb:show_json"))
+        self.assertEqual(response.status_code, 200)
+        json_data = json.loads(response.content)
+        self.assertTrue(any(item["fields"]["name"] == "Test Fnb" for item in json_data))
