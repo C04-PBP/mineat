@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!kxt(npnszvj+5(l8r8h9so6jtdbm2a&(o@!#yw%t5md$+_4-!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1",]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "ragnall-muhammad-mineat.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -136,3 +136,6 @@ else:
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://ragnall-muhammad-mineat.pbp.cs.ui.ac.id/",
+                        "https://ragnall-muhammad-mineat.pbp.cs.ui.ac.id/"]
