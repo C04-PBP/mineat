@@ -16,11 +16,13 @@
         </a>
     </div>
 
+    <!-- Location Name -->
     <div class="bg-red-900 shadow-md rounded-lg p-6 mb-4">
         <h1 class="text-white text-4xl font-bold">{{ location.name }}</h1><br>
         <img src="{{ location.image }}" alt="{{ location.name }}">
     </div>
 
+    <!-- Location Trivia -->
     <div class="bg-red-900 shadow-md rounded-lg p-6 mb-4">
         <h2 class="text-white text-2xl font-semibold">Trivia</h2>
         <div id="trivia-container">
@@ -29,14 +31,17 @@
         </div>
         
         <!-- Edit Button -->
+        {% if user.is_authenticated and user.is_staff %}
         <div id="trivia-buttons" class="mt-4">
             <button id="edit-trivia" class="text-yellow-500 hover:text-lime-500 font-semibold">Edit</button>
             <button id="delete-trivia" class="ml-4 text-red-500 hover:text-red-700 font-semibold">Delete</button>
             <button id="save-trivia" class="hidden text-lime-500 hover:text-lime-700 font-semibold">Save</button>
             <button id="cancel-edit" class="hidden text-red-500 hover:text-red-700 font-semibold">Cancel</button>
         </div>
+        {% endif %}
     </div>
 
+    <!-- All Restaurants in Location -->
     <h2 class="mt-6 text-2xl font-semibold">Restaurants in {{ location.name }}</h2>
     <div class="grid grid-cols-1 pt-10 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for restaurant in restaurants %}
@@ -48,7 +53,7 @@
                 </div>
             </div>
         {% empty %}
-            <p>No restaurants found in this location.</p>
+            <p>Can't eat in this District</p>
         {% endfor %}
     </div>
 

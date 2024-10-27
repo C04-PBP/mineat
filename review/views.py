@@ -23,6 +23,7 @@ def show_review(request):
 
     context = {
         'name': fnb_object.name,
+        'image': fnb_object.image,
         'price': fnb_object.price,
         'description': fnb_object.description,
         'id': fnb_object.id,  # Ubah menjadi list untuk kemudahan penggunaan di template

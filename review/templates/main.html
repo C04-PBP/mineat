@@ -4,11 +4,20 @@
 {% endblock meta %}
 
 {% block content %}
+{% include 'show_header.html' %}
+<div class="bg-white max-w-7xl mx-auto p-4 pt-20">
+    <!-- Back Button -->
+    <div class="flex justify-start mb-4">
+        <a href="{% url 'ingredient:show_filter' %}" class="text-red-500 hover:underline font-semibold">
+            &larr; Back to All Food and Beverages
+        </a>
+    </div>
 
-<div>
     <h5 class="font-semibold text-lg">Nama Produk :</h5>
     <p class="mb-4">{{ name }}</p>
 
+    <img src="{{ image }}" alt="{{ name }}" class="max-w-lg w-full h-128 object-cover rounded-md">
+    <br>
     <h5 class="font-semibold text-lg">Harga :</h5>
     <p class="mb-4">Rp. {{ price }}</p>
 
@@ -25,9 +34,9 @@
 
 </div>
 
-<h2 class="text-xl font-bold mb-4">Review Section</h2>
+<h2 class="text-xl font-bold mb-4 mx-40">Review Section</h2>
 
-<div id="show_review_space"></div>
+<div id="show_review_space" class="mx-40"></div>
 
 <div id="add_review_space"></div>
 

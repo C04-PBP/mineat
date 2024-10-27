@@ -37,10 +37,20 @@ def ajax_search_district(request):
     html = render_to_string('hasil_search_restaurant.html', {'restaurants': restaurants})
     return JsonResponse({'html': html})
 
+def ajax_search_fnb(request):
+    fnb_query = request.GET.get('fnb_q', '')
+
+    if fnb_query:
+        restaurants = Restaurant.objects.filter(fnb__name__icontains=fnb_query).distinct()
+    else:
+        restaurants = Restaurant.objects.all()
+
+    html = render_to_string('hasil_search_restaurant.html', {'restaurants': restaurants})
+    return JsonResponse({'html': html})
+
 def restaurant_details(request):
     restaurant_id = request.GET.get('id')
     restaurant = Restaurant.objects.get(id=restaurant_id)
-    # Now pass this restaurant to the template for detailed information
     context = {
         "restaurant": restaurant,
         "fnb_items": restaurant.fnb.all(),

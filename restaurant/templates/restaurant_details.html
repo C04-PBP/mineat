@@ -20,6 +20,7 @@
     <div class="bg-red-900 shadow-md rounded-lg p-6 mb-4">
         <div class="flex justify-between items-center">
             <h1 class="text-white text-4xl font-bold">{{ restaurant.name }}</h1>
+            {% if user.is_authenticated and user.is_staff %}
             <div class="flex flex-col items-end">
                 <a href="{% url 'restaurant:delete_restaurant' restaurant.pk %}" class="text-red-500 hover:text-red-700 font-semibold mb-1">
                     Delete Restaurant
@@ -28,15 +29,17 @@
                     Edit Restaurant
                 </a>
             </div>
+            {% endif %}
         </div>
         <br>
         <img src="{{ restaurant.image }}" alt="{{ restaurant.name }}">
     </div>
 
-    <!-- Restaurant Address -->
+    <!-- Restaurant Address and District Link -->
     <div class="bg-red-900 shadow-md rounded-lg p-6 mb-4">
         <h2 class="text-white text-2xl font-semibold">Address:</h2>
         <p class="text-white">{{ restaurant.address }}</p>
+        <br>
         <h2 class="text-white text-2xl font-semibold">District:</h2>
         <p class="text-white">{{ restaurant.location.name }}</p>
         <a href="{% url 'location:location_details' %}?id={{ restaurant.location.id }}" class="text-yellow-500 hover:underline">
@@ -44,19 +47,21 @@
         </a>
     </div>
 
-    <!-- Food and Beverages Section -->
+    <!-- Restaurant Menu -->
     <div class="bg-red-900 shadow-md rounded-lg p-6 mb-4">
-        <h2 class="text-white text-2xl font-semibold">Food and Beverages</h2>
+        <h2 class="text-white text-2xl font-semibold">Menu</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
             {% for fnb_item in restaurant.fnb.all %}
                 <div class="bg-white shadow-md rounded-lg p-4">
-                    <img src="{{ fnb_item.image }}" alt="{{ fnb_item.name }}" class="w-full h-32 object-cover rounded-md">
+                    <a href="{% url 'review:show_review' %}?id={{ fnb_item.id }}">
+                        <img src="{{ fnb_item.image }}" alt="{{ fnb_item.name }}" class="w-full h-48 object-cover rounded-md transform transition duration-300 hover:scale-105">
+                    </a>
                     <h3 class="text-xl font-semibold mt-2">{{ fnb_item.name }}</h3>
                     <p class="text-gray-600 mt-1">{{ fnb_item.description }}</p>
                     <p class="text-indigo-600 font-bold mt-2">Rp {{ fnb_item.price }}</p>
                 </div>
             {% empty %}
-                <p class="col-span-full text-gray-600">No food and beverages available.</p>
+                <p class="col-span-full text-gray-600">What restaurant doesn't sell any food? This one</p>
             {% endfor %}
         </div>
     </div>
