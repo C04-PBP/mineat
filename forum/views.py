@@ -83,10 +83,19 @@ def add_forum_khusus(request, id):
         comment_text = strip_tags(data.get('comment'))
         if comment_text:
             new_comment = ForumKhusus.objects.create(text=comment_text, forum=forum, user=request.user)
-            return JsonResponse({
-                'comment_text': new_comment.text,
-                'time_created': new_comment.time_created.strftime('%Y-%m-%d %H:%M')
+
+            html = render_to_string('comment.html', {
+                'comment': new_comment
             })
+
+            return JsonResponse({
+                'html': html
+            })
+            # return JsonResponse({
+            #     'comment_text': new_comment.text,
+            #     'time_created': new_comment.time_created.strftime('%Y-%m-%d %H:%M'),
+            #     'username': new_comment.user.username
+            # })
         return JsonResponse({'error': 'Comment text is required'}, status=400)
 
     comments = forum.forum_khusus.all()

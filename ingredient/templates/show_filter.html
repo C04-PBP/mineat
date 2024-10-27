@@ -64,6 +64,12 @@
                             placeholder="Describe your FnB" required></textarea>
                     </div>
                     <div class="mb-4">
+                        <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+                        <textarea id="image" name="image"
+                            class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700"
+                            placeholder="Insert your FnB Image link" required></textarea>
+                    </div>
+                    <div class="mb-4">
                         <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
                         <input type="number" id="price" name="price" min="1" max="1000000000000"
                             class="mt-1 block w-full border border-gray-300 rounded-md p-2 hover:border-indigo-700"
@@ -122,12 +128,13 @@
     <!-- Content Section -->
     <div id="result" class="flex-1">{% include "fnb_kosong.html" with fnbs=fnb %}</div>
 </div>
-
+{% if request.user.is_staff %}
 <button data-modal-target="crudModal" data-modal-toggle="crudModal"
-    class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
-    onclick="showModal();">
+    class="btn bg-[#bb0000] hover:bg-[#a20000] text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+    onclick="showModal();" style="position: fixed; bottom: 20px; right: 20px;">
     Add New FnB by AJAX
 </button>
+{% endif %}
 <!-- <a href="{% url 'fnb:add_fnb' %}" class="add-fnb-button">Add Fnb</a> -->
 
 <!-- Styles -->
