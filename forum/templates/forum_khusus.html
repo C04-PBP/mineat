@@ -81,10 +81,7 @@ document.getElementById('submit-btn').addEventListener('click', function() {
                 alert(data.error);
             } else {
                 const commentList = document.getElementById('comments-list');
-                const newComment = document.createElement('li');
-                newComment.innerHTML = `${data.comment_text} - <small>${data.time_created}</small>`;
-                commentList.appendChild(newComment);
-
+                commentList.insertAdjacentHTML('beforeend', data.html);
                 document.getElementById('new-comment').value = '';
             }
         })

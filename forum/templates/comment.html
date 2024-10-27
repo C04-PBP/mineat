@@ -1,0 +1,4 @@
+<li class="p-4 bg-gray-50 rounded-lg shadow-sm hover:shadow-lg transition-all">
+    <p class="text-gray-800">{{ comment.text }}</p>
+    <small class="text-gray-500">By: {{ comment.user.username }} on {{ comment.time_created|date:"M d, Y H:i" }} WIB</small>
+</li>
