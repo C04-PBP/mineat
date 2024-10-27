@@ -12,23 +12,19 @@
         transition: transform 0.3s ease-out;
     }
 
-    /* Dark overlay that appears on hover */
     .tilt-card .overlay {
         position: absolute;
         inset: 0;
         background-color: rgba(0, 0, 0, 0.4);
-        /* Dark overlay */
         opacity: 0;
         transition: opacity 0.3s ease;
         border-radius: inherit;
     }
 
-    /* Display overlay on hover */
     .tilt-card-container:hover .tilt-card .overlay {
         opacity: 1;
     }
 
-    /* Text content with sliding effect */
     .tilt-card .text-content {
         position: absolute;
         bottom: 10px;
@@ -36,47 +32,49 @@
         text-align: center;
         color: white;
         transform: translateY(30px) translateZ(50px);
-        /* Initial position below with 3D effect */
         transition: transform 0.3s ease;
     }
 
-    /* Slide up text content on hover */
     .tilt-card-container:hover .tilt-card .text-content {
         transform: translateY(0) translateZ(50px);
-        /* Slide up and maintain 3D effect */
     }
 
-    /* Hide description initially */
     .tilt-card .text-content .description {
         opacity: 0 !important;
         transition: opacity 0.3s ease;
     }
 
-    /* Show description on hover */
     .tilt-card-container:hover .tilt-card .text-content .description {
         opacity: 1 !important;
+    }
+
+    .tilt-card .image-container {
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease-out;
+    }
+
+    
+    .tilt-card .image-container img {
+        transform: translateZ(30px); 
+        transition: transform 0.3s ease-out;
     }
 </style>
 {% endblock meta %}
 
 {% block content %}
-<div class="text-slate-900 grid place-content-center">
-    <a class="tilt-card-container" href='{% url "review:show_review" %}?id={{ fnb.id }}'>
-        <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
-            <!-- Background image container with 3D translation -->
-            <div class="absolute inset-4 grid place-content-center rounded-xl bg-white shadow-lg"
-                style="transform: translateZ(75px); background-image: url('{{ fnb.image }}'); background-size: cover; background-position: center;">
+<div class="tilt-card-container" href='{% url "review:show_review" %}?id={{ fnb.id }}'>
+    <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
+        <div class="image-container absolute inset-4 grid place-content-center rounded-xl shadow-lg"
+            style="transform: translateZ(75px);">
+            <img src="{{ fnb.image }}" alt="{{ fnb.name }}" class="rounded-xl object-cover h-full w-full" />
+            
+            <div class="overlay rounded-xl"></div>
 
-                <!-- Dark overlay -->
-                <div class="overlay rounded-xl"></div>
-
-                <!-- Sliding text content on hover -->
-                <div class="text-content">
-                    <p class="text-center text-xl font-bold">{{ fnb.name }}</p>
-                    <p class="text-center text-l description">{{ fnb.description }}</p>
-                </div>
+            <div class="text-content">
+                <p class="text-center text-xl font-bold">{{ fnb.name }}</p>
+                <p class="text-center text-l description">{{ fnb.description }}</p>
             </div>
         </div>
-    </a>
+    </div>
 </div>
 {% endblock content %}
