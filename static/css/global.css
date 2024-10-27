@@ -1,10 +1,24 @@
 @keyframes identifier {
-    0%   { background_position: 0% 50%; }
-    100% { background_position: 0% 50%; }
-    50% { background_position: '100% 50%' }
+    0% {
+        background_position: 0% 50%;
+    }
+
+    100% {
+        background_position: 0% 50%;
+    }
+
+    50% {
+        background_position: '100% 50%'
+    }
 
 }
 
+
 .content-wrapper {
-    margin-top: 64px; /* Adjust this value to match your navbar's height */
+    margin-top: 64px;
+    /* Adjust this value to match your navbar's height */
+}
+
+body {
+    font-family: 'League Spartan', sans-serif;
 }
