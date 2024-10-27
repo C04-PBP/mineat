@@ -8,11 +8,22 @@
     {% block meta %}{% endblock meta %}
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
-    
+    <script>
+      tailwind.config = {
+          theme: {
+              extend: {
+                  fontFamily: {
+                      spartan: ['"League Spartan"', 'sans-serif']
+                  }
+              }
+          }
+      }
+  </script>
   </head>
 
-  <body>
+  <body class="font-spartan">
     {% block content %}{% endblock content %}
   </body>
 </html>
