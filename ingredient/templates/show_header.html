@@ -60,7 +60,7 @@
 
     <!-- Hamburger button for mobile view -->
     <button id="hamburger"
-      class="absolute left-4 top-4 block md:hidden rounded bg-gray-100 p-2.5 text-gray-600 transition hover:text-gray-600/75">
+      class="absolute left-4 top-4 block md:hidden rounded bg-gray-100 p-2.5 ml-20 text-gray-600 transition hover:text-gray-600/75">
       <span class="sr-only">Toggle menu</span>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
         stroke-width="2">
@@ -74,14 +74,16 @@
       <ul class="flex flex-col items-start gap-4 p-4 text-sm">
         <li><a class="text-gray-500 transition hover:text-gray-500/75" href="{% url 'ingredient:show_filter' %}"> Home
           </a></li>
+        {% if request.resolver_match.app_name == 'ingredient' %}
+        <li><a id="filterToggleMobile" href="javascript:void(0)" class="text-gray-500 transition hover:text-gray-500/75"> 
+          Ingredients </a></li>
+        {% endif %}
         <li><a class="text-gray-500 transition hover:text-gray-500/75" href="{% url 'restaurant:show_restaurant' %}">
-            Restaurant </a></li>
-        <li><a class="text-gray-500 transition hover:text-gray-500/75" href="{% url 'forum:show-forum-umum' %}"> Forum
-          </a></li>
-        <li><a id="filterToggleMobile" href="javascript:void(0)"
-            class="text-gray-500 transition hover:text-gray-500/75"> Filter </a></li>
-        <li><a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Projects </a></li>
-        <li><a class="text-gray-500 transition hover:text-gray-500/75" href="#"> Blog </a></li>
+            Restaurants </a></li>
+        <li><a class="text-gray-500 transition hover:text-gray-500/75" href="{% url 'location:show_location' %}">
+            Locations </a></li>
+        <li><a class="text-gray-500 transition hover:text-gray-500/75" href="{% url 'forum:show-forum-umum' %}"> 
+          Forum </a></li>
       </ul>
     </nav>
   </div>
