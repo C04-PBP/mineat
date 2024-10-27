@@ -290,12 +290,23 @@
     document.addEventListener("DOMContentLoaded", function () {
         const sidebar = document.getElementById('sidebar');
         const filterToggle = document.getElementById('filterToggle');
+        const filterToggleMobile = document.getElementById('filterToggleMobile');
         let lazyLoadInitialized = false;
 
         if (filterToggle) {
             filterToggle.addEventListener('click', () => {
                 sidebar.classList.toggle('collapsed');
 
+                if (!lazyLoadInitialized && !sidebar.classList.contains('collapsed')) {
+                    initializeLazyLoad();
+                    lazyLoadInitialized = true;
+                }
+            });
+        }
+
+        if (filterToggleMobile) {
+            filterToggleMobile.addEventListener('click', () => {
+                sidebar.classList.toggle('collapsed');
                 if (!lazyLoadInitialized && !sidebar.classList.contains('collapsed')) {
                     initializeLazyLoad();
                     lazyLoadInitialized = true;
