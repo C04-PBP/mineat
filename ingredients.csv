@@ -1,88 +1,101 @@
-food;ingredient
-Asam padeh; Fish, tamarind, chilies, turmeric, shallots, garlic, ginger, lemongrass, salt, water,  
-Ayam bakar; Chicken, tamarind, kecap manis (sweet soy sauce), garlic, shallots, chili, turmeric, lemongrass, salt, oil,  
-Ayam balado; Chicken, red chilies, shallots, garlic, tomatoes, lime leaves, salt, sugar, oil,  
-Ayam bumbu; Chicken, garlic, turmeric, coriander, cumin, ginger, shallots, salt, coconut milk, oil,  
-Ayam goreng; Chicken, garlic, turmeric, coriander, salt, water, oil,  
-Ayam lado ijo; Chicken, green chilies, shallots, garlic, lime leaves, salt, oil,  
-Ayam percik; Chicken, coconut milk, tamarind, turmeric, chili paste, garlic, ginger, lemongrass, salt, oil,  
-Ayam pop goreng; Chicken, coconut water, garlic, shallots, bay leaves, lime leaves, salt, oil,
-Ayam pop rebus; Chicken, coconut water, garlic, shallots, bay leaves, lime leaves, salt, oil,
-Balado; Chilies, shallots, garlic, tomatoes, salt, sugar, oil,  
-Baluik goreng; Small freshwater eels, turmeric, garlic, salt, oil,  
-Bubur kampiun; Rice flour, coconut milk, palm sugar, pandan leaves, jackfruit, mung beans, sweet potato,  
-Daun ubi tumbuk; Cassava leaves, coconut milk, shallots, garlic, lemongrass, turmeric, salt,  
-Dendeng; Beef, garlic, coriander, tamarind, salt, oil,  
-Dendeng balado; Thin beef slices, red chilies, shallots, garlic, tomatoes, lime leaves, salt, oil,  
-Dendeng batokok; Thin beef slices, garlic, tamarind, salt, chilies, oil,  
-Gulai daging; Meat, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, kaffir lime leaves, salt, water,  
-Gulai ati; Cow liver, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, salt,  
-Gulai ayam; Chicken, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,  
-Gulai babek; Cow tripe, coconut milk, turmeric, chilies, garlic, shallots, lemongrass, salt,  
-Gulai banak; Cow brain, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,  
-Gulai cancang; Meat and internal organs, coconut milk, turmeric, garlic, chilies, lemongrass, salt,  
-Gulai gajeboh; Cow fat, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,  
-Gulai tambusu; Cow intestines, eggs, tofu, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves,  
-Gulai itik; Duck, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,  
-Gulai jariang; Jengkol (stinky beans), coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,  
-Gulai kepala ikan; Fish head, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,  
-Gulai kambiang; Mutton, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,  
-Gulai kepala ikan kakap merah; Red snapper's head, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,  
-Gulai limpo; Cow spleen, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,  
-Gulai sumsum; Cow bone marrow, coconut milk, turmeric, garlic, shallots, chilies, lemongrass,  
-Gulai tunjang; Cow foot tendons, coconut milk, turmeric, garlic, chilies, lemongrass, salt,  
-Gulai talua; Boiled eggs, coconut milk, turmeric, garlic, shallots, chilies, lemongrass,  
-Gulai udang; Shrimp, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,
-Gulai paku; Paku, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, kaffir lime leaves, salt, water,
-Ikan bilih; Small freshwater fish, salt, oil,  
-Kalio; Beef (or other meat), coconut milk, turmeric, garlic, shallots, chilies, lemongrass, kaffir lime leaves,  
-Kepiting saus padang; Crab, chilies, shallots, garlic, lemongrass, turmeric, lime leaves, salt, oil,  
-Ketupat; Rice, palm leaves, water,  
-Lele goreng; Catfish, turmeric, garlic, salt, oil,  
-Lemang; Sticky rice, coconut milk, pandan leaves, bamboo tubes,  
-Martabak; Dough, ground beef, scallions, garlic, coriander, cumin, oil,  
-Martabak kubang; Dough, ground beef, garlic, shallots, curry powder, eggs, oil,  
-Nasi briyani; Basmati rice, ghee, mutton or chicken, onions, garlic, ginger, cloves, cardamom, cinnamon, yogurt, saffron,  
-Nasi kapau; Rice, various dishes,  
-Nasi kari or nasi gulai; Rice, coconut milk, turmeric, chilies, garlic, shallots, lemongrass,  
-Nasi padang; Rice, pre-cooked dishes,  
-Palai; Fish, grated coconut, turmeric, garlic, shallots, banana leaves,  
-Paru goreng; Cow lung, turmeric, garlic, salt, oil,  
-Pergedel jaguang; Corn, flour, eggs, garlic, shallots, salt, oil,  
-Petai goreng; Stinky beans (Parkia speciosa), oil,  
-Rajungan goreng; Crab, salt, oil,  
-Rendang; Beef, coconut milk, turmeric, garlic, shallots, chilies, lemongrass, kaffir lime leaves,  
-Roti canai; Flour, water, ghee or oil, eggs,  
-Roti jala; Flour, water, eggs, coconut milk, pandan leaves,  
-Sambal lado tanak; Green chilies, coconut milk, anchovies, stinky beans, garlic, shallots,  
-Sarikayo; Coconut milk, eggs, palm sugar, pandan leaves,  
-Satay ayam;Chicken, peanut sauce, sweet soy sauce, garlic, shallots, skewers, 
-Satay daging;Beef, sweet soy sauce, garlic, shallots, skewers, 
-Sate padang; Meat, turmeric, garlic, lemongrass, shallots, thick sauce (rice flour-based),  
-Soto; Meat, broth (spices like turmeric, garlic, ginger), vegetables,  
-Soto padang; Beef, broth, garlic, shallots, lime leaves, vegetables,  
-Talua balado; Eggs, red chilies, garlic, shallots, tomatoes, salt,  
-Terong balado; Eggplant, red chilies, garlic, shallots, tomatoes, salt,  
-Udang balado; Shrimp, red chilies, garlic, shallots, tomatoes, lime leaves, salt,  
-Galamai; Rice flour, palm sugar, coconut milk,  
-Keripik balado; Cassava, red chili paste, garlic, shallots, sugar, oil,  
-Keripik sanjai; Cassava, salt, oil,  
-Kerupuk jangek; Cow skin, salt, oil,  
-Kue putu; Rice flour, pandan leaves, coconut, palm sugar,  
-Lupis; Glutinous rice, banana leaves, coconut, palm sugar,  
-Peyek; Flour, water, peanuts, garlic, coriander, salt, oil,  
-Peyek udang; Flour, water, shrimp, garlic, coriander, salt, oil,  
-Pinyaram; Rice flour, palm sugar, coconut milk,  
-Roti tisu; Flour, water, oil or ghee,  
-Serabi; Rice flour, coconut milk, pandan leaves,  
-Tapai; Sticky rice, yeast, banana leaves,  
-Lopek sarikayo; Glutinous rice, coconut milk, palm sugar, pandan leaves,  
-Wajik; Glutinous rice, palm sugar, coconut milk,  
-Es ampiang dadiah; Buffalo milk (fermented), shaved ice, palm sugar, rice flour,  
-Cindua; Rice flour jelly, lupis, durian, palm sugar, shaved ice,  
-Dadiah; Fermented buffalo milk,  
-Es campur; Mixed fruits (coconut, jackfruit), tapioca pearls, shaved ice, syrup, condensed milk,  
-Es tebak; Avocado, jackfruit, tebak, condensed milk, ice,  
-Teh talua; Tea, eggs, sugar,  
-Teh tarik; Tea, condensed milk,  
-Gulai sayua; Vegetable, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, kaffir lime leaves, salt, water,
+food,ingredient
+Asam padeh,"Fish, tamarind, chilies, turmeric, shallots, garlic, ginger, lemongrass, salt, water,"
+Ayam bakar,"Chicken, tamarind, kecap manis (sweet soy sauce), garlic, shallots, chili, turmeric, lemongrass, salt, oil,"
+Ayam balado,"Chicken, red chilies, shallots, garlic, tomatoes, lime leaves, salt, sugar, oil,"
+Ayam bumbu,"Chicken, garlic, turmeric, coriander, cumin, ginger, shallots, salt, coconut milk, oil,"
+Ayam goreng,"Chicken, garlic, turmeric, coriander, salt, water, oil,"
+Ayam lado ijo,"Chicken, green chilies, shallots, garlic, lime leaves, salt, oil,"
+Ayam percik,"Chicken, coconut milk, tamarind, turmeric, chili paste, garlic, ginger, lemongrass, salt, oil,"
+Ayam pop goreng,"Chicken, coconut water, garlic, shallots, bay leaves, lime leaves, salt, oil,"
+Ayam pop rebus,"Chicken, coconut water, garlic, shallots, bay leaves, lime leaves, salt, oil,"
+Sambalado,"Chilies, shallots, garlic, tomatoes, salt, sugar, oil,"
+Baluik goreng,"Small freshwater eels, turmeric, garlic, salt, oil,"
+Bubur kampiun,"Rice Flour, coconut milk, palm sugar, pandan leaves, jackfruit, mung beans, sweet potato,"
+Daun ubi tumbuk,"Cassava leaves, coconut milk, shallots, garlic, lemongrass, turmeric, salt,"
+Dendeng,"Beef, garlic, coriander, tamarind, salt, oil,"
+Dendeng balado,"Thin beef slices, red chilies, shallots, garlic, tomatoes, lime leaves, salt, oil,"
+Dendeng batokok,"Thin beef slices, garlic, tamarind, salt, chilies, oil,"
+Gulai daging,"Meat, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, kaffir lime leaves, salt, water,"
+Gulai ati,"Cow liver, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, salt,"
+Gulai ayam,"Chicken, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,"
+Gulai babek,"Cow tripe, coconut milk, turmeric, chilies, garlic, shallots, lemongrass, salt,"
+Gulai banak,"Cow brain, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,"
+Gulai cancang,"Meat and internal organs, coconut milk, turmeric, garlic, chilies, lemongrass, salt,"
+Gulai gajeboh,"Cow fat, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,"
+Gulai tambusu,"Cow intestines, eggs, tofu, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves,"
+Gulai itik,"Duck, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,"
+Gulai jariang,"Jengkol (stinky beans), coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,"
+Gulai kepala ikan,"Fish head, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,"
+Gulai kambiang,"Mutton, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,"
+Gulai kepala ikan kakap merah,"Red snapper's head, coconut milk, turmeric, garlic, chilies, lemongrass, kaffir lime leaves, salt,"
+Gulai limpo,"Cow spleen, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,"
+Gulai sumsum,"Cow bone marrow, coconut milk, turmeric, garlic, shallots, chilies, lemongrass,"
+Gulai tunjang,"Cow foot tendons, coconut milk, turmeric, garlic, chilies, lemongrass, salt,"
+Gulai talua,"Boiled eggs, coconut milk, turmeric, garlic, shallots, chilies, lemongrass,"
+Gulai udang,"Shrimp, coconut milk, turmeric, garlic, shallots, lemongrass, kaffir lime leaves, salt,"
+Gulai paku,"Paku, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, kaffir lime leaves, salt, water,"
+Ikan bilih,"Small freshwater fish, salt, oil,"
+Kalio Daging,"Beef (or other meat), coconut milk, turmeric, garlic, shallots, chilies, lemongrass, kaffir lime leaves,"
+Kepiting saus padang,"Crab, chilies, shallots, garlic, lemongrass, turmeric, lime leaves, salt, oil,"
+Ketupat,"Rice, palm leaves, water,"
+Lele goreng,"Catfish, turmeric, garlic, salt, oil,"
+Lemang,"Sticky rice, coconut milk, pandan leaves, bamboo tubes,"
+Martabak,"Dough, ground beef, scallions, garlic, coriander, cumin, oil,"
+Martabak kubang,"Dough, ground beef, garlic, shallots, curry powder, eggs, oil,"
+Nasi briyani,"Basmati rice, ghee, mutton or chicken, onions, garlic, ginger, cloves, cardamom, cinnamon, yogurt, saffron,"
+Nasi kapau,"Rice, various dishes,"
+Nasi kari or nasi gulai,"Rice, coconut milk, turmeric, chilies, garlic, shallots, lemongrass,"
+Nasi padang,"Rice, pre-cooked dishes,"
+Palai,"Fish, grated coconut, turmeric, garlic, shallots, banana leaves,"
+Paru goreng,"Cow lung, turmeric, garlic, salt, oil,"
+Pergedel jaguang,"Corn, Flour, eggs, garlic, shallots, salt, oil,"
+Petai goreng,"Stinky beans (Parkia speciosa), oil,"
+Rajungan goreng,"Crab, salt, oil,"
+Rendang,"Beef, coconut milk, turmeric, garlic, shallots, chilies, lemongrass, kaffir lime leaves,"
+Roti canai,"Flour, water, ghee or oil, eggs,"
+Roti jala,"Flour, water, eggs, coconut milk, pandan leaves,"
+Sambal lado tanak,"Green chilies, coconut milk, anchovies, stinky beans, garlic, shallots,"
+Sarikayo,"Coconut milk, eggs, palm sugar, pandan leaves,"
+Satay ayam,"Chicken, peanut sauce, sweet soy sauce, garlic, shallots, skewers,"
+Satay daging,"Beef, sweet soy sauce, garlic, shallots, skewers,"
+Sate padang,"Meat, turmeric, garlic, lemongrass, shallots, thick sauce (rice Flour-based),"
+Soto,"Meat, broth (spices like turmeric, garlic, ginger), vegetables,"
+Soto padang,"Beef, broth, garlic, shallots, lime leaves, vegetables,"
+Talua balado,"Eggs, red chilies, garlic, shallots, tomatoes, salt,"
+Terong balado,"Eggplant, red chilies, garlic, shallots, tomatoes, salt,"
+Udang balado,"Shrimp, red chilies, garlic, shallots, tomatoes, lime leaves, salt,"
+Galamai,"Rice Flour, palm sugar, coconut milk,"
+Keripik balado,"Cassava, red chili paste, garlic, shallots, sugar, oil,"
+Keripik sanjai,"Cassava, salt, oil,"
+Kerupuk jangek,"Cow skin, salt, oil,"
+Kue putu,"Rice Flour, pandan leaves, coconut, palm sugar,"
+Lupis,"Glutinous rice, banana leaves, coconut, palm sugar,"
+Peyek,"Flour, water, peanuts, garlic, coriander, salt, oil,"
+Peyek udang,"Flour, water, shrimp, garlic, coriander, salt, oil,"
+Pinyaram,"Rice Flour, palm sugar, coconut milk,"
+Roti tisu,"Flour, water, oil or ghee,"
+Serabi,"Rice Flour, coconut milk, pandan leaves,"
+Tapai,"Sticky rice, yeast, banana leaves,"
+Lopek sarikayo,"Glutinous rice, coconut milk, palm sugar, pandan leaves,"
+Wajik,"Glutinous rice, palm sugar, coconut milk,"
+Es ampiang dadiah,"Buffalo milk (fermented), shaved ice, palm sugar, rice Flour,"
+Cindua,"Rice Flour jelly, lupis, durian, palm sugar, shaved ice,"
+Dadiah,"Fermented buffalo milk,"
+Es campur,"Mixed fruits (coconut, jackfruit), tapioca pearls, shaved ice, syrup, condensed milk,"
+Es tebak,"Avocado, jackfruit, tebak, condensed milk, ice,"
+Teh talua,"Tea, eggs, sugar,"
+Teh tarik,"Tea, condensed milk,"
+Gulai sayua,"Vegetable, coconut milk, turmeric, chilies, shallots, garlic, lemongrass, kaffir lime leaves, salt, water, oil"
+Ayam kurma,"Chicken, kurma (dates), onion, garlic, ginger, lemongrass, turmeric, coriander, chili peppers, oil"
+Jariang lado tomat,"Jengkol (dogfruit), tomato, chili peppers, shallots, garlic, salt, sugar, oil"
+Ikan Panggang,"Fish (snapper, mackerel, or other), turmeric, garlic, shallots, red chilies, lime, salt, pepper."
+Ayam Cabe Merah,"Chicken, red chilies, garlic, shallots, lemongrass, kaffir lime leaves, ginger, salt, sugar."
+Sambal Teri,"Dried anchovies, red chilies, garlic, shallots, lime juice, salt, sugar."
+Ayam Gulai Nangka,"Chicken, young jackfruit, coconut milk, red chilies, turmeric, galangal, lemongrass, bay leaves."
+Pangek Masin,"Fish (catfish or mackerel), tamarind, coconut milk, turmeric, garlic, shallots, red chilies, salt."
+Lado Ijo,"Green chilies, Garlic, Shallots, Salt, Lime juice or tamarind, Sugar (optional), Water"
+Cumi Saus Padang,"Squid, Cooking oil, Garlic (minced), Shallots (sliced), Red chilies (sliced), Tomato sauce, Sweet soy sauce, Salt, Black pepper, Lime juice, Water"
+Kalio Ayam,"Chicken, Coconut milk, Cooking oil, Garlic (minced), Shallots (sliced), Turmeric, Ginger (sliced), Lemongrass, Red chilies (sliced), Salt, Sugar, Water"
+Kacang Tojin,"Raw peanuts, Coconut milk, Cooking oil, Salt, Sugar, Tamarind paste, Water, Chili powder (optional)"
+Udang Saus Padang,"Prawns, Cooking oil, Garlic (minced), Shallots (sliced), Red chilies (sliced), Tomato sauce, Sweet soy sauce, Salt, Black pepper, Lime juice, Water"
+Es Cendol,"Cendol, Coconut milk, Palm sugar, Water, Ice cubes, Pandan leaves (optional)"

@@ -33,14 +33,17 @@ class Command(BaseCommand):
                         restaurant, created = Restaurant.objects.get_or_create(
                             name = row[0].strip(" "),
                             address = row[1].strip(" "),
-                            location = locations[location_index]
+                            location = locations[location_index],
+                            image = row[2]
                         )
                         if created:
                             self.stdout.write(f"Successfully created Restaurant: {row[0]}")
                             random_num_of_food = int.from_bytes(os.urandom(1), 'big') % 11  # % 11 to get a number between 0 and 10
 
                             for i in range(random_num_of_food):
-                                random_food_num = int.from_bytes(os.urandom(1), 'big') % 93  # % 101 to get a number between 0 and 100
+                                random_food_num = 0  
+                                while random_food_num <  10:
+                                    random_food_num = int.from_bytes(os.urandom(1), 'big') % 26
                                 restaurant.fnb.add(fnb[random_food_num%len(fnb)])
                         else:
                             self.stdout.write(f"Restaurant {row[0]} already exists.")

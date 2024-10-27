@@ -7,7 +7,7 @@ class Command(BaseCommand):
     help = 'Memasukkan Food ke dataset'
 
     def handle(self,*args,**kwargs):
-        path = "fnb4.csv"
+        path = "fnb3.csv"
         default_user,_ = User.objects.get_or_create(
                     username="bang etmin",
                     defaults={
@@ -32,7 +32,7 @@ class Command(BaseCommand):
                             name = row[0].strip(" "),
                             price = row[1],
                             description = row[2],
-                            image = row[3]
+                            image = row[4]
                         )
                         if created:
                             self.stdout.write(f"Successfully created Food: {row[0]}")

@@ -31,7 +31,7 @@ class Command(BaseCommand):
                             food = Fnb.objects.get(name= name)
                             ingridient.fnb.add(food)
                         except Fnb.DoesNotExist:
-                            self.stdout.write(f"Ingredient : Food with name {i} don't exist ")
+                            self.stdout.write(f"Ingredient {row[0]}:  Food with name {i} don't exist ")
                         
 
         except FileNotFoundError:

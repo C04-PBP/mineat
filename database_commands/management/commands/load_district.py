@@ -12,7 +12,7 @@ class Command(BaseCommand):
 
         try:
             with open(path, 'rt', encoding='utf-8') as file:  
-                reader = csv.reader(file, dialect='excel',delimiter=";")
+                reader = csv.reader(file, dialect='excel',delimiter=",")
 
 
                 # Skip header 
@@ -24,6 +24,8 @@ class Command(BaseCommand):
                         # Pake get or create biar gada duplicate
                         _, created = Location.objects.get_or_create(
                             name = row[0].strip(" "),
+                            trivia = row[1].strip(" "),
+                            image = row[2].strip(" ")
                             
                         )
                         if created:
