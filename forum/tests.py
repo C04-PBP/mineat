@@ -9,12 +9,10 @@ import json
 class ForumTests(TestCase):
 
     def setUp(self):
-        # Create a user and log them in
         self.user = User.objects.create_user(username='testuser', password='password')
         self.client = Client()
         self.client.login(username='testuser', password='password')
 
-        # Create sample data for testing
         self.forum = Forum.objects.create(
             name="Test Forum",
             text="This is a test forum.",
@@ -30,18 +28,15 @@ class ForumTests(TestCase):
         )
 
     def test_show_forum_view(self):
-        # Test the show_forum view without filters
         response = self.client.get(reverse('forum:show-forum-umum'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Test Forum")
 
     def test_show_forum_view_with_filter(self):
-        # Test the show_forum view with unanswered filter
         response = self.client.get(reverse('forum:show-forum-umum') + '?filter_unanswered=true')
         self.assertEqual(response.status_code, 200)
 
     def test_add_forum_view(self):
-        # Test adding a forum with valid data
         data = {
             'name': 'New Forum',
             'comment': 'This is a new comment.'
@@ -55,7 +50,6 @@ class ForumTests(TestCase):
         self.assertTrue(Forum.objects.filter(name="New Forum").exists())
 
     def test_add_forum_khusus_view(self):
-        # Test adding a forum_khusus comment to an existing forum
         data = {
             'comment': 'This is another test comment.'
         }
@@ -68,9 +62,8 @@ class ForumTests(TestCase):
         self.assertTrue(ForumKhusus.objects.filter(text="This is another test comment.").exists())
 
     def test_add_forum_invalid_data(self):
-        # Test adding a forum with invalid data
         data = {
-            'name': '',  # Empty name should fail
+            'name': '',
             'comment': ''
         }
         response = self.client.post(
@@ -81,6 +74,5 @@ class ForumTests(TestCase):
         self.assertEqual(response.status_code, 400)
     
     def test_logout_redirect(self):
-        # Test logout and redirection to the landing page
         response = self.client.get(reverse('fnb:logout'))
-        self.assertEqual(response.status_code, 302)  # Check redirection
+        self.assertEqual(response.status_code, 302)

@@ -5,11 +5,11 @@
 
 {% block content %}
 {% include 'show_header.html' %}
-<div class="pt-20 bg-gray-100 p-6"> <!-- Add padding-top to avoid collision with header -->
+<div class="pt-20 bg-gray-100 p-6"> 
     <h1 class="text-4xl text-center font-bold text-black mb-4">Discussion Forum</h1>
     
     <!-- Add Forum Box -->
-    <div class="bg-yellow-100 p-6 rounded-lg shadow-lg mb-6 mx-auto lg:w-1/2"> <!-- Center and restrict width -->
+    <div class="bg-yellow-100 p-6 rounded-lg shadow-lg mb-6 mx-auto lg:w-1/2">
         <h2 class="text-2xl font-semibold text-red-600 mb-4">Add a new forum</h2>
         {% if user.is_authenticated %}
         <form id="comment-form" class="space-y-4">
@@ -71,7 +71,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': getCookie('csrftoken')  // Add CSRF token for security
+                        'X-CSRFToken': getCookie('csrftoken')
                     },
                     body: JSON.stringify({
                         'name': name,
@@ -82,7 +82,7 @@
                 if (response.ok) {
                     const newComment = await response.json();
                     addCommentToPage(newComment);
-                    form.reset();  // Clear the form after submission
+                    form.reset();
                 } else {
                     console.error('Failed to submit the comment.');
                 }
@@ -94,7 +94,6 @@
         }
     });
 
-    // Function to add the new comment to the comment section
     function addCommentToPage(commentData) {
         const commentSection = document.getElementById('comment-section');
 
@@ -106,7 +105,6 @@
         commentSection.prepend(commentDiv);
     }
 
-    // Utility function to get CSRF token
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
