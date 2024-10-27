@@ -184,11 +184,11 @@
             <div class="text-center md:text-left space-y-2">
                 <h3 class="font-bold">Our Features</h3>
                 <ul class="space-y-1">
-                    <li><a href="#" class="hover:text-yellow-400">Food and Beverage</a></li>
-                    <li><a href="#" class="hover:text-yellow-400">Ingredient</a></li>
-                    <li><a href="#" class="hover:text-yellow-400">Restaurant</a></li>
+                    <li><a href="{% url 'ingredient:show_filter' %}" class="hover:text-yellow-400">Food and Beverage</a></li>
+                    <li><a href="{% url 'ingredient:show_filter' %}" class="hover:text-yellow-400">Ingredient</a></li>
+                    <li><a href="{% url 'restaurant:show_restaurant' %}" class="hover:text-yellow-400">Restaurant</a></li>
                     <li><a href="#" class="hover:text-yellow-400">Review</a></li>
-                    <li><a href="#" class="hover:text-yellow-400">Forum</a></li>
+                    <li><a href="{% url 'forum:show-forum-umum' %}" class="hover:text-yellow-400">Forum</a></li>
                 </ul>
             </div>
         </div>
