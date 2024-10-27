@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
 from fnb.models import Fnb
@@ -136,3 +136,36 @@ def add_fnb_ajax(request):
 def show_json(request):
     data = Fnb.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+# def get_fnb_data(request, fnb_id):
+#     fnb = Fnb.objects.get(id=fnb_id)
+#     data = {
+#         'name': fnb.name,
+#         'description': fnb.description,
+#         'price': fnb.price,
+#     }
+#     return JsonResponse(data)
+
+# def edit_fnb_ajax(request, fnb_id):
+#     fnb = Fnb.objects.get(id=fnb_id)
+#     fnb.name = request.POST.get('name')
+#     fnb.description = request.POST.get('description')
+#     fnb.price = request.POST.get('price')
+#     fnb.save()
+#     return HttpResponse(b"UPDATED", status=200)
+
+def edit_fnb(request, id):
+    fnb = get_object_or_404(Fnb, id=id)
+    if request.method == "POST":
+        form = FnbForm(request.POST, instance=fnb)
+        if form.is_valid():
+            form.save()
+            return redirect('ingredient:show_filter')  # Adjust to your post-edit redirect page
+    else:
+        form = FnbForm(instance=fnb)
+    return render(request, 'edit_fnb.html', {'form': form, 'fnb': fnb})
+
+def delete_fnb(request, id):
+    fnb = Fnb.objects.get(pk=id)
+    fnb.delete()
+    return HttpResponseRedirect(reverse('ingredient:show_filter'))
