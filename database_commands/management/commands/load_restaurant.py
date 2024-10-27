@@ -12,9 +12,8 @@ class Command(BaseCommand):
         path = "restaurants.csv"
         
         locations = Location.objects.all()
-        location_index = 0
+        
         fnb = Fnb.objects.all()
-        counter = 0
 
         try:
             with open(path, 'rt', encoding='utf-8') as file:  
@@ -26,15 +25,14 @@ class Command(BaseCommand):
                 next(reader, None)
 
                 for i,row in enumerate(reader):
-                    counter += 1
                     try:
                         
                         # Pake get or create biar gada duplicate
                         restaurant, created = Restaurant.objects.get_or_create(
                             name = row[0].strip(" "),
                             address = row[1].strip(" "),
-                            location = locations[location_index],
-                            image = row[2]
+                            location = Location.objects.get(name = row[3]),
+                            image = row[-1]
                         )
                         if created:
                             # self.stdout.write(f"Successfully created Restaurant: {row[0]}")
@@ -48,10 +46,7 @@ class Command(BaseCommand):
                         else:
                             self.stdout.write(f"Restaurant {row[0]} already exists.")
                         
-                        if counter ==  2:
-                            location_index += 1
-                            counter = 0
-
+                        
 
                     except Exception as e:
                         self.stderr.write(f"Error creating Restaurant from row {row}: {e}")

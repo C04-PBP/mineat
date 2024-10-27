@@ -1,23 +1,36 @@
-Restaurant Name,Address,Type of Cuisine
-Lamun Ombak,"Jl. Khatib Sulaiman No.99, Padang",Minangkabau
-Restoran Sederhana,"Jl. Ir. H. Juanda No. 25, Padang",Minangkabau
-RM Pauh Piaman,"Jl. Bandar Purus No. 29, Padang",Minangkabau
-Restoran Ganti Nan Lamo,"Jl. Samudera No. 3, Padang",Minangkabau
-Simpang Raya,"Jl. Bundo Kanduang No.20, Padang",Minangkabau
-Pagi Sore,"Jl. Pondok No. 143, Padang",Minangkabau
-RM Selamat,"Jl. Veteran No. 22, Padang",Minangkabau
-Restoran Family Benteng,"Jl. Gajah Mada No. 15, Padang",Minangkabau
-Resto Rumah Kayu,"Jl. By Pass, Koto Tangah, Padang",Minangkabau
-Restoran Soto Garuda,"Jl. S. Parman No.110, Padang",Minangkabau
-Restoran Pagi Sore,"Jl. Sudirman No.65, Padang",Minangkabau
-RM Sederhana,"Jl. S. Parman No.44, Padang",Minangkabau
-Ampera Sederhana,"Jl. Pondok No. 45, Padang",Minangkabau
-Bofet Rajawali,"Jl. Pondok No.195, Padang",Minangkabau
-Soto Padang Danguang-Danguang,"Jl. Nipah No.34, Padang",Minangkabau
-RM Sari Raso,"Jl. Sawahan No.29, Padang",Minangkabau
-Restoran Pagi Sore Syariah,"Jl. Khatib Sulaiman No.109, Padang",Minangkabau
-Restoran Air Mancur,"Jl. Perintis Kemerdekaan No.11, Padang",Minangkabau
-RM Saribundo,"Jl. Bandar Purus No.30, Padang",Minangkabau
-Hoya Resto,"Jl. Rasuna Said No.54, Padang",Minangkabau
-Warung Sate Padang Mak Syukur,"Jl. Imam Bonjol No.28, Padang",Minangkabau
-Restoran Selera Minang,"Jl. Aru No.33, Padang",Minangkabau
+Restaurant Name,Address,Type of Cuisine,District,Src,Link Foto Restaurant
+Lamun Ombak,"Jl. Khatib Sulaiman No.99, Padang",Minangkabau,Padang Utara,,https://minangkabau-airport.co.id/userdata/pariwisata/ads5a027c169c4bc.jpg
+Restoran Sederhana,"Jl. Rasuna Said No.81A, Rimbo Kaluang, Padang",Minangkabau,Padang Barat,,https://fastly.4sqi.net/img/general/600x600/12734647_gjA_ViFEs186XqfcoxGGr8BLRDV7i2NufmDb0E0BTig.jpg
+RM Pauh Piaman,"Jl. Bandar Purus No. 29, Padang",Minangkabau,Padang Utara,,https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/c8851c45-77c4-4c73-bf0f-e7db6934192b.jpg
+LALADO Resto Padang,"Jl. Veteran No.52, Padang Pasir, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipPzZMp6eMFr0EfLnG8yoKbuECvTguGXvPWByBVo=s1360-w1360-h1020
+Simpang Raya,"Jl. Bundo Kanduang No.20, Padang",Minangkabau,Lubuk Kilangan,khansa,https://lh3.googleusercontent.com/p/AF1QipMoQJFIf3OYPayh3G5tlxfcVG3-dRzcLm5nNicY=s1360-w1360-h1020
+Pagi Sore,"Jl. Pondok No. 143, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipPnRTwAUA2u2RmeR8LBzhCnJypZgAmLF7tC2v3g=s1360-w1360-h1020
+Resto Selamat,"Jl. Pasar Raya No.7, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipNR0yoEWqCHEP--Z54avLVxK-yS5O--sGXGFjbL=s1360-w1360-h1020
+Lapau Nasi Mama Andalas,"Jl. Andalas Timur Raya Jl. Andalas No.71, Padang",Minangkabau,Padang Timur,,https://lh3.googleusercontent.com/p/AF1QipM6upe7TDSHgRymlexzlrDNe4hQyapYejmp_Mex=s1360-w1360-h1020
+Rumah Makan Ampera Padi Rimbun,"Jl. Andalas No.9, Padang",Minangkabau,Kuranji,,https://lh3.googleusercontent.com/p/AF1QipOTDBXO7_66k4x5r3gN8YnrQEF_1i6KZa_eshP-=s1360-w1360-h1020
+Restoran Soto Garuda,"Jl. S. Parman No.110, Padang",Minangkabau,Padang Utara,,https://lh3.googleusercontent.com/p/AF1QipMaf1P8Ob1gE_16cNYdWpxo5eS4n8pLsirI9U8m=s1360-w1360-h1020
+RM Ampalu Raya,"Jl. Permindo No.61c, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipMyWxn6HobEPC4Nzrz960NdafLwvlXD3CBZH4Am=s1360-w1360-h1020
+Rumah Makan Sederhana,"Jl. By Pass No.Km.8, Padang",Minangkabau,Kuranji,,https://lh5.googleusercontent.com/p/AF1QipPtpbCSHtJLzFdtjhVord-Sa5oSAwIK2_jh76Uj=w408-h306-k-no
+Rumah Makan Bahagia,"Jl. Ujung Gurun No.91A, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipMz5WDyQagjEvQPi4RY7A5ntvVCNkaQN2lTK_5U=s1360-w1360-h1020
+Rumah Makan Sepakat,"Jl. By pass No.km 11, Padang",Minangkabau,Kuranji,,https://lh3.googleusercontent.com/p/AF1QipOZzSUwyh_jQIc1ux7CXuEQnNP0R9MKYhFKlm4u=s1360-w1360-h1020
+Rumah Makan Sinar Padang,"Jl. Moh. Thamrin, Alang Laweh, Padang",Minangkabau,Padang Selatan,,https://lh3.googleusercontent.com/p/AF1QipNPuzmnTMpajK5eViPxyVh4K1MV2HtIKRoreb4=s1360-w1360-h1020
+RM Sari Raso,"Jl. Karya No.3, Belakang Pd., Padang",Minangkabau,Padang Selatan,,https://media-cdn.tripadvisor.com/media/photo-s/12/13/b8/ec/photo2jpg.jpg
+Rumah Makan VII Koto Talago,"Jl. Jhoni Anwar No.Kelurahan No.17, Padang",Minangkabau,Padang Utara,,https://lh3.googleusercontent.com/p/AF1QipMfCv5oU_RRNSg_BgK9lA9FLaMSABN1CUDTAO0S=s680-w680-h510
+Bofet Soto Rajawali,Jl. Ir. H. Juanda No. 29,Minangkabau,Padang Barat,zacky,https://lh3.googleusercontent.com/p/AF1QipOfG6HXSGdT_kIl_UC7M-j8BKWcgT7mzVBd6e50=s1360-w1360-h1020
+Malabar Arham,Jl. Thamrin No. 1,Minangkabau,Padang Selatan,,https://rentalmobilpadang.co.id/wp-content/uploads/2019/12/Martabak-Malabar-Arham-e1576932932317.jpg
+Sate Itjap,Jl. Rasuna Said No. 99,Minangkabau,Padang Utara,,https://lh5.googleusercontent.com/p/AF1QipPQ7cTJCirxUJoDRrlmlgHUu08kCGtFv5fen4Ve=w480-h240-k-no
+Sari Bundo,"Jl. Piai 3C4C+4JQ, Padang",Minangkabau,Pauh,,https://lh3.googleusercontent.com/p/AF1QipOelS-I3bmglDOPi5yLeND6D9acgT1Q6wnZRvMK=s1360-w1360-h1020
+Rumah Makan Taman Surya,Jl. Tamansiswa No. 15,Minangkabau,Padang Utara,,https://lh3.googleusercontent.com/p/AF1QipMucy2GYqlxcQZpn6g9OzG8CXFFHCZYpduAxKE2=s1360-w1360-h1020
+Restoran Kubang Hayuda,"Jl. Prof. M. Yamin SH No. 138B, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipPE1fJpyuCWE2eMPbYKPL5zD-eTKPbvM_MJ6bmD=s680-w680-h510
+Rumah Makan Beringin,"29W6+RHR, Jl. Imam Bonjol, Belakang Pd., Padang",Minangkabau,Lubuk Begalung,,https://lh3.googleusercontent.com/p/AF1QipPp3flxWfEPYUdpDsP1-mXsL83YkMGN9L78BC8P=s1360-w1360-h1020
+RM. Minang Saiyo,"Jln. Raya Siteba pondok kopi no.24B, Surau gadang, Padang",Minangkabau,Nanggalo,Gege,https://dzglkev4c34xb.cloudfront.net/horego.com/nanggalo/restaurant/rm-minang-saiyo/ambience/af1qipoqdnpbbby4j0inowzzdopauslonpamrcs3assk.jpg
+Rumah Makan Awak Basamo,"Jl. Jhoni Anwar, Kp. Lapai, Padang",Minangkabau,Nanggalo,,https://dzglkev4c34xb.cloudfront.net/horego.com/nanggalo/restaurant/rumah-makan-awak-basamo/other/af1qipop3xkdnutxmu9x2xyetkv7azljhc8ka6fjjjbw.jpg
+Rumah Makan Talago Biru,"Jl. Sisingamangaraja, Simpang Haru, Padang",Minangkabau,Padang Timur,Khansa,https://lh3.googleusercontent.com/p/AF1QipPNmAo2mFHSB5-3uWRHJxnLEjt8bPX5BrxZbrbe=s680-w680-h510
+Rumah Makan Silungkang,"Jl. Sawahan Timur depan Stasiun Padang, Padang",Minangkabau,Padang Timur,,https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.myedisi.com%2Frakyatsumbar%2F20210129%2F425696%2Frm-silungkang-tetap-pertahankan-sedekah&psig=AOvVaw2slo1dp0pxzKn7r5hFUNMP&ust=1729829452006000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLiNiYKTpokDFQAAAAAdAAAAABAn
+Ayam Bakar Sing A Song,"Jl. Perintis Kemerdekaan No. 4C, Padang",Minangkabau,Padang Timur,,https://lh5.googleusercontent.com/p/AF1QipMyIWWaWJjrU-Kzv0PSXfHT59mmGQlZ5kwmRtKT=w408-h544-k-no
+Rumah Makan Ajo Paris,"Jl. S. Parman No.126, Lolong Belanti, Padang",Minangkabau,Padang Utara,,https://lh3.googleusercontent.com/p/AF1QipOrsLhA2tp3ZC5DM_9s_xDaL-2mOPHFnDpmj2I6=s1360-w1360-h1020
+Rumah Makan Lapau Nasi Mama Veteran Asli,"Jl. Veteran No.74, Padang Pasir, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipPKyesk4On0mYfU9-OIsT-C9E6Ta3_QtG7WoBN4=s1360-w1360-h1020
+Rumah Makan Ronny,"Jl. Batang Arau No.47A, Berok Nipah, Padang",Minangkabau,Padang Barat,,https://lh3.googleusercontent.com/p/AF1QipOaBp8fbfjWCriU5vxFhab5qYDoMeZ64vockQ5z=s1360-w1360-h1020
+Rumah Makan Kembar Group,"Jl. Raya Balai Gadang No.Kelurahan, Balai Gadang, Padang",Minangkabau,Koto Tangah,,https://lh3.googleusercontent.com/p/AF1QipMi7pwawCS1NMFW0Y_In6Xl43yI-cTrlNcRTC6I=s1360-w1360-h1020
+Rumah Makan Bernama,"Jl. S. Parman No.114, Lolong Belanti, Padang",Minangkabau,Padang Utara,,https://lh3.googleusercontent.com/p/AF1QipMI6RM8susMwHgYoQeilFryA6ZakJRxMxmGIHnR=s1360-w1360-h1020
+Pondok Ikan Bakar Aru Lubeg,"Jl. Aru No.34, Lubuk Begalung Nan XX, Padang",Minangkabau,Lubuk Begalung,,https://lh5.googleusercontent.com/p/AF1QipOeN8L8tUr_IPtR_fDkZkJE9aj76_jnQ6hkbh-g=w426-h240-k-no
