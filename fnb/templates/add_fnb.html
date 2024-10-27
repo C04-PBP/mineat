@@ -9,7 +9,7 @@
     <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
         <h2 class="text-3xl font-bold sm:text-4xl text-center">Add New Food</h2>
 
-        <form id="addFnbForm" method="post">
+        <form method="post">
             {% csrf_token %}
             <div class="mt-4">
                 {{ form.name.label_tag }}
@@ -26,47 +26,17 @@
                 {{ form.price }}
             </div>
 
-            <!-- Ingredients selection with checkboxes -->
             <div class="mt-4">
                 <h3 class="font-semibold">Select Ingredients:</h3>
-                {{ form.ingredients }}
+                {{ form.ingredients }}  <!-- Checkboxes for ingredients -->
             </div>
 
             <div class="mt-8">
-                <button type="button" id="submitFnbButton" class="bg-pink-600 text-white py-2 px-4 rounded">
+                <button type="submit" class="bg-pink-600 text-white py-2 px-4 rounded">
                     Add Fnb
                 </button>
             </div>
         </form>
-        <div id="message" class="mt-4"></div>
     </div>
 </div>
 {% endblock content %}
-
-<script>
-document.getElementById('submitFnbButton').addEventListener('click', function() {
-    const form = document.getElementById('addFnbForm');
-    const formData = new FormData(form);
-
-    fetch("{% url 'fnb:add_fnb_ajax' %}", {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const messageDiv = document.getElementById('message');
-        if (data.success) {
-            messageDiv.innerHTML = '<p class="text-green-500">FNB added successfully!</p>';
-            form.reset();
-        } else {
-            messageDiv.innerHTML = '<p class="text-red-500">Error adding FNB. ' + data.error + '</p>';
-        }
-    })
-    .catch(error => {
-        document.getElementById('message').innerHTML = '<p class="text-red-500">Error adding FNB.</p>';
-    });
-});
-</script>

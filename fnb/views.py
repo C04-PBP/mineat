@@ -91,21 +91,47 @@ def search_fnbs(request):
 def landing_page(request):
     return render(request, 'landing_page.html')
 
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Fnb
+
 def add_fnb_ajax(request):
-    name = request.POST.get("name")
-    print(name)
-    description = request.POST.get("description")
-    price = request.POST.get("price")
-    user = request.user
+    if request.method == "POST":
+        # Get form data from the request
+        name = request.POST.get("name")
+        description = request.POST.get("description")
+        price = request.POST.get("price")
+        
+        # Check if the user is authenticated
+        if request.user.is_authenticated:
+            try:
+                # Create and save a new Fnb object
+                new_fnb = Fnb(
+                    name=name,
+                    description=description,
+                    price=price,
+                    user=request.user  # Set the user as the creator
+                )
+                new_fnb.save()
 
-    new_fnb = Fnb(
-        name=name, description=description,
-        price=price,
-        user=user
-    )
-    new_fnb.save()
+                # Optional: Send a JSON response with the new Fnb data
+                return JsonResponse({"status": "created", "fnb": {
+                    "name": name,
+                    "description": description,
+                    "price": price
+                }}, status=201)
+            
+            except Exception as e:
+                # Log and return an error response
+                print(f"Error saving Fnb: {e}")
+                return JsonResponse({"status": "error", "message": str(e)}, status=500)
+        else:
+            # Return error if user is not authenticated
+            return JsonResponse({"status": "error", "message": "User not authenticated"}, status=403)
+    
+    # Return an error if the request is not POST
+    return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
 
-    return HttpResponse(b"CREATED", status=201)
 
 def show_json(request):
     data = Fnb.objects.all()

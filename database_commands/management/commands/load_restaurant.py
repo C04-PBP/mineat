@@ -18,7 +18,7 @@ class Command(BaseCommand):
 
         try:
             with open(path, 'rt', encoding='utf-8') as file:  
-                reader = csv.reader(file, dialect='excel')
+                reader = csv.reader(file, dialect='excel',delimiter=",")
 
 
 
