@@ -172,3 +172,4 @@ def delete_fnb(request, id):
     fnb = Fnb.objects.get(pk=id)
     fnb.delete()
     return HttpResponseRedirect(reverse('ingredient:show_filter'))
+

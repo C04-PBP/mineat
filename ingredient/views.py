@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core import serializers
 from django.core.paginator import Paginator
 from fnb.models import Fnb
+from django.http import HttpResponse, HttpResponseRedirect
 from ingredient.models import Ingredient
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -88,4 +89,7 @@ def search_ingredient(request):
         serialized_ingredients = serializers.serialize('json', ingredients)
         
         return JsonResponse({'ingredients': serialized_ingredients})
-    
+
+def show_json(request):
+    data = Ingredient.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
