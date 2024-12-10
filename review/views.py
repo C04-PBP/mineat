@@ -1,6 +1,8 @@
 from django.shortcuts import render,  redirect
 from fnb.models import Fnb
 from django.shortcuts import render, reverse
+from django.core import serializers
+
 from review.models import Review, ReviewLike
 from review.forms import ReviewForm
 from django.views.decorators.csrf import csrf_exempt
@@ -146,3 +148,7 @@ def edit_review(request, id):
     context = {'form': form,
                'id' : food_id}
     return render(request, "edit_review.html", context)
+
+def show_json(request):
+    data = Review.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")

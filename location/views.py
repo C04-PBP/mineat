@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from location.models import Location
+from django.core import serializers
 from restaurant.models import Restaurant
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.template.loader import render_to_string
@@ -53,3 +54,13 @@ def update_trivia(request):
         except Location.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Location not found'})
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+def show_json(request):
+    data = []
+    for i in Location.objects.all():
+        data.append({
+            "title": i.name,
+            "imageUrl": i.image
+        })
+    return JsonResponse(data,safe=False)
+
