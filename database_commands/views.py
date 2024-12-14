@@ -1,35 +1,37 @@
-from django.shortcuts import render
+import datetime
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login,logout
-from django.http import JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.core import serializers
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
+
 # Create your views here.
 
 def login_flutter(request):
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
-
         if form.is_valid():
             user = form.get_user()
-            
             login(request, user)
-
-            response = JsonResponse({'Cookie': request.session.session_key})
-
-            # Optionally, you can set a session cookie or a custom token
-            # If you're using sessions (default in Django), the sessionid cookie is automatically set
-            # For example, if you want to manually set a cookie, you could do:
-            # response.set_cookie('sessionid', request.session.session_key)
-
-            # Or, if you're using JWT tokens:
-            # token = generate_jwt_token(user)  # Implement JWT token generation if needed
-            # response.set_cookie('token', token)
-
+            response = HttpResponseRedirect(reverse("main:show_main"))
+            response.set_cookie('last_login', str(datetime.datetime.now()))
             return response
         else:
+            messages.error(request, "Invalid username or password. Please try again.")
+    else:
+        form = AuthenticationForm(request)
 
-            return JsonResponse({'error': 'Invalid credentials'}, status=400)
+    context = {'form': form}
+    return render(request, 'login.html', context)
 
     
 def logout_flutter(request):
