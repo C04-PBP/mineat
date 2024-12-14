@@ -93,3 +93,5 @@ def search_ingredient(request):
 def show_json(request):
     data = Ingredient.objects.all()
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+

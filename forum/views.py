@@ -105,7 +105,7 @@ def show_forum_umum_json(request):
     data = []
     for i in Forum.objects.all():
         data.append({
-            "user": i.user.get_full_name,
+            "user": i.user.username,
             "title": i.name,
             "time_created": i.time_created.strftime('%Y-%m-%d %H:%M'),
             "text": i.text
@@ -113,13 +113,12 @@ def show_forum_umum_json(request):
 
     return JsonResponse(data,safe=False)
 
-# Belum dites
 def show_forum_khusus_json(request,id):
     data = []
-    forum_khusus = Forum.objects.filter(forum = id)
+    forum_khusus = ForumKhusus.objects.filter(forum = id)
     for i in forum_khusus:
         data.append({
-            "user": i.user.get_full_name,
+            "user": i.user.username,
             "text": i.text,
             "time_created": i.time_created.strftime('%Y-%m-%d %H:%M')
         })

@@ -11,6 +11,6 @@ urlpatterns = [
     path('load_write_review/', load_write_review, name='load_write_review'),
     path('delete/<uuid:id>', delete_review, name='delete_review'),
     path('edit-review/<uuid:id>', edit_review, name='edit_review'),
-    path("json/", show_json, name= "json")
+    path("<uuid:id>/json/", show_json, name= "json")
     
 ]

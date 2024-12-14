@@ -27,4 +27,5 @@ urlpatterns = [
     path("forum/",include("forum.urls")),
     path("review/",include("review.urls")),
     path('', views.landing_page, name='landing_page'),
+    path('flutter/',include('database_commands.urls'))
 ]
