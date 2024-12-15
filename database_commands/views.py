@@ -53,7 +53,7 @@ def logout_flutter(request):
         }, status=401)
     
 @csrf_exempt
-def register(request):
+def register_flutter(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         username = data['username']
