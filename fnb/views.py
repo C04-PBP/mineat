@@ -163,7 +163,7 @@ def edit_fnb(request, id):
         form = FnbForm(request.POST, instance=fnb)
         if form.is_valid():
             form.save()
-            return redirect('ingredient:show_filter')  # Adjust to your post-edit redirect page
+            return redirect('ingredient:show_filter')
     else:
         form = FnbForm(instance=fnb)
     return render(request, 'edit_fnb.html', {'form': form, 'fnb': fnb})

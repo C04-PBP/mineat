@@ -10,15 +10,14 @@
         transition: transform 0.3s ease-out;
     }
     .content-wrapper {
-        margin-top: 64px; /* Adjust according to your navbar's height */
+        margin-top: 64px;
     }
 
-    /* Style for the button at the bottom-left of the screen */
     .add-fnb-button {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background-color: #BB0000; /* Button color */
+        background-color: #BB0000;
         color: white;
         padding: 10px 20px;
         border-radius: 8px;
@@ -29,7 +28,7 @@
     }
 
     .add-fnb-button:hover {
-        background-color: #ff0000; /* Hover color */
+        background-color: #ff0000;
     }
 </style>
 {% endblock meta %}
@@ -54,7 +53,6 @@
 
         <!-- Results Section -->
         <div id="fnb-results" class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center">
-          <!-- Initial results loaded here -->
           {% for fnb in fnbs %}
           <div class="tilt-card-container">
             <div class="tilt-card relative h-96 w-72 rounded-xl bg-gradient-to-br from-[#FFF3B0] to-[#FFF3B0]">
