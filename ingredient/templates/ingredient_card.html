@@ -74,12 +74,46 @@
         color: black;
         z-index: -2;
     }
+
+    /* Keyframes for left-to-right animation for the arrow */
+    @keyframes slideInArrow {
+        0% {
+            transform: translateX(-10px);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    /* Arrow hidden by default, appears on hover */
+    .arrow-slide {
+        display: inline-block;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Show arrow on hover with slide-in animation */
+    .stacked-cards:hover .arrow-slide {
+        animation: slideInArrow 0.3s ease forwards;
+    }
+
+    /* Ensure text is always visible */
+    .text-always-visible {
+        display: inline-block;
+        margin-right: 5px; /* Add a small space between text and arrow */
+    }
 </style>
 {% endblock meta %}
 
 {% block content %}
 <!-- Card container with stacking -->
 <div class="stacked-cards bg-[#BB0000] rounded-lg shadow-lg py-6 w-[200px] relative">
-    <h2 class="text-xl text-white font-bold mb-4">→ {{ ingredient.name }}</h2>
+    <h2 class="text-xl text-white font-bold mb-4">
+        <span class="text-always-visible">{{ ingredient.name }}</span>
+        <span class="arrow-slide">→</span>
+    </h2>
 </div>
 {% endblock content %}

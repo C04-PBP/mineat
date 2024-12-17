@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from restaurant.models import Restaurant
+from django.core import serializers
 from location.models import Location
 from restaurant.forms import RestaurantForm
 from django.urls import reverse
@@ -98,3 +99,15 @@ def add_restaurant_ajax(request):
         form = RestaurantForm()
         html = render_to_string('add_restaurant_ajax.html', {'form': form}, request=request)
         return JsonResponse({'html': html})
+    
+
+def show_json(request):
+    data = []
+    for i in Restaurant.objects.all():
+        data.append({
+            "title": i.name,
+            "address" : i.address,
+            "district" : i.location.name,
+            "imageUrl": i.image
+        })
+    return JsonResponse(data,safe=False)

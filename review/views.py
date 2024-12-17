@@ -1,11 +1,13 @@
 from django.shortcuts import render,  redirect
 from fnb.models import Fnb
 from django.shortcuts import render, reverse
+from django.core import serializers
+
 from review.models import Review, ReviewLike
 from review.forms import ReviewForm
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.utils.html import strip_tags
 from django.shortcuts import get_object_or_404
 
@@ -146,3 +148,15 @@ def edit_review(request, id):
     context = {'form': form,
                'id' : food_id}
     return render(request, "edit_review.html", context)
+
+def show_json(request,id):
+    data = []
+    for i in Review.objects.filter(makanan = id):
+        data.append({
+            "user": i.user.username,
+            "rating" : i.rating,
+            "text" : i.text,
+            "time_created": i.created_at
+        })
+
+    return JsonResponse(data,safe=False)

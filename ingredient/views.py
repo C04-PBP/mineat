@@ -1,23 +1,13 @@
-from django.shortcuts import render, redirect, reverse
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.core import serializers
 from django.core.paginator import Paginator
-from fnb.views import show_fnb
 from fnb.models import Fnb
+from django.http import HttpResponse, HttpResponseRedirect
 from ingredient.models import Ingredient
-from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-import datetime
-from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-from django.utils.html import strip_tags
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from django.db.models import Count
 from django.template.loader import render_to_string
 
 # Create your views here.
@@ -99,4 +89,9 @@ def search_ingredient(request):
         serialized_ingredients = serializers.serialize('json', ingredients)
         
         return JsonResponse({'ingredients': serialized_ingredients})
-    
+
+def show_json(request):
+    data = Ingredient.objects.all()
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+

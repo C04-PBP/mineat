@@ -13,6 +13,7 @@ class RestaurantForm(forms.ModelForm):
         self.fields['location'].label_from_instance = lambda obj: obj.name
 
         # For fnb, show the names instead of object representation
+        self.fields['fnb'].required = False
         self.fields['fnb'].widget = forms.CheckboxSelectMultiple()
         self.fields['fnb'].queryset = Fnb.objects.all()
         self.fields['fnb'].label_from_instance = lambda obj: obj.name

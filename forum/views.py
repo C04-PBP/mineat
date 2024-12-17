@@ -100,3 +100,27 @@ def add_forum_khusus(request, id):
 
     comments = forum.forum_khusus.all()
     return render(request, 'forum_khusus.html', {'forum': forum, 'comments': comments})
+
+def show_forum_umum_json(request):
+    data = []
+    for i in Forum.objects.all():
+        data.append({
+            "user": i.user.username,
+            "title": i.name,
+            "time_created": i.time_created.strftime('%Y-%m-%d %H:%M'),
+            "text": i.text
+        })
+
+    return JsonResponse(data,safe=False)
+
+def show_forum_khusus_json(request,id):
+    data = []
+    forum_khusus = ForumKhusus.objects.filter(forum = id)
+    for i in forum_khusus:
+        data.append({
+            "user": i.user.username,
+            "text": i.text,
+            "time_created": i.time_created.strftime('%Y-%m-%d %H:%M')
+        })
+
+    return JsonResponse(data,safe=False)
