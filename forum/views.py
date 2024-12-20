@@ -141,7 +141,15 @@ def create_forum_flutter(request):
             text=data["text"]
         )
 
+        new_replies = ForumKhusus.objects.create(
+            user=request.user,
+            forum=new_forum,
+            text=data["text"],
+            time_created=timezone.now(),
+        )
+
         new_forum.save()
+        new_replies.save()
 
         return JsonResponse({"status": "success"}, status=200)
     else:
@@ -150,20 +158,15 @@ def create_forum_flutter(request):
 @csrf_exempt
 def create_replies_flutter(request, id):
     if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            forum = Forum.objects.get(id=id)
-            new_replies = ForumKhusus.objects.create(
-                user=request.user,
-                forum=forum,
-                text=data["text"],
-                time_created=timezone.now(),
-            )
-            new_replies.save()
-            return JsonResponse({"status": "success"}, status=200)
-        except Forum.DoesNotExist:
-            return JsonResponse({"status": "error", "message": "Forum not found"}, status=404)
-        except Exception as e:
-            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+        data = json.loads(request.body)
+        forum = Forum.objects.get(id=id)
+        new_replies = ForumKhusus.objects.create(
+            user=request.user,
+            forum=forum,
+            text=data["text"],
+            time_created=timezone.now(),
+        )
+        new_replies.save()
+        return JsonResponse({"status": "success"}, status=200)
     else:
         return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
