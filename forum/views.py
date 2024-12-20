@@ -110,7 +110,8 @@ def show_forum_umum_json(request):
             "user": i.user.username,
             "title": i.name,
             "time_created": i.time_created.strftime('%Y-%m-%d %H:%M'),
-            "text": i.text
+            "text": i.text,
+            "reply_count": i.forum_khusus.all().count()
         })
 
     return JsonResponse(data,safe=False)
