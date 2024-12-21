@@ -1,7 +1,7 @@
 from django.urls import path
 from restaurant.views import show_restaurant, ajax_search_restaurant, ajax_search_district, ajax_search_fnb
 from restaurant.views import restaurant_details, add_restaurant, delete_restaurant, edit_restaurant
-from restaurant.views import add_restaurant_ajax
+from restaurant.views import add_restaurant_ajax,show_json
 
 
 app_name = 'restaurant'
@@ -16,4 +16,5 @@ urlpatterns = [
     path('delete/<uuid:id>', delete_restaurant, name='delete_restaurant'),
     path('edit-restaurant/<uuid:id>', edit_restaurant, name='edit_restaurant'),
     path('add-restaurant-ajax/', add_restaurant_ajax, name='add_restaurant_ajax'),
+    path('json/', show_json, name="json")
 ]

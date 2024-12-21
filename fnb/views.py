@@ -137,8 +137,19 @@ def add_fnb_ajax(request):
 
 
 def show_json(request):
-    data = Fnb.objects.all()
-    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+    data = []
+    for i in Fnb.objects.all():
+        ingredients_list = ""
+        for ingredient in Ingredient.objects.filter(fnb=i):
+            ingredients_list += f"{ingredient.name}, " 
+        data.append({
+            "title": i.name,
+            "price": i.price,
+            "description": i.description,
+            "ingredients": ingredients_list,
+            "imageUrl": i.image.url
+        })
+    return JsonResponse(data,safe=False)
 
 # def get_fnb_data(request, fnb_id):
 #     fnb = Fnb.objects.get(id=fnb_id)
@@ -172,3 +183,4 @@ def delete_fnb(request, id):
     fnb = Fnb.objects.get(pk=id)
     fnb.delete()
     return HttpResponseRedirect(reverse('ingredient:show_filter'))
+
