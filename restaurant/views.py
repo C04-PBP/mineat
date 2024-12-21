@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from ingredient.models import Ingredient
 from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
 from restaurant.models import Restaurant
@@ -104,16 +105,24 @@ def add_restaurant_ajax(request):
 def show_json(request):
     data = []
     for i in Restaurant.objects.all():
-        foods = [
-            {
-                "id": str(fnb.id),
-                "name": fnb.name,
-                "image": fnb.image.url if fnb.image else None,
-                "price": fnb.price,
-                "description": fnb.description,
-            }
-            for fnb in i.fnb.all()
-        ]
+        foods = []
+        for j in i.fnb.all():
+            
+
+            ingredients_list = ""
+
+            for ingredient in Ingredient.objects.filter(fnb=j):
+                    ingredients_list += f"{ingredient.name}, "
+            foods.append(
+                {
+                    "id" : j.id,
+                    "title": j.name,
+                    "price": j.price,
+                    "description": j.description,
+                    "ingredients": ingredients_list,
+                    "imageUrl": j.image.url
+                }
+            )
         data.append({
             "title": i.name,
             "address" : i.address,

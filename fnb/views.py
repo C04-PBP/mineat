@@ -143,6 +143,7 @@ def show_json(request):
         for ingredient in Ingredient.objects.filter(fnb=i):
             ingredients_list += f"{ingredient.name}, " 
         data.append({
+            "id" : i.id,
             "title": i.name,
             "price": i.price,
             "description": i.description,
