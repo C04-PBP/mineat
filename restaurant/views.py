@@ -104,10 +104,21 @@ def add_restaurant_ajax(request):
 def show_json(request):
     data = []
     for i in Restaurant.objects.all():
+        foods = [
+            {
+                "id": str(fnb.id),
+                "name": fnb.name,
+                "image": fnb.image.url if fnb.image else None,
+                "price": fnb.price,
+                "description": fnb.description,
+            }
+            for fnb in i.fnb.all()
+        ]
         data.append({
             "title": i.name,
             "address" : i.address,
             "district" : i.location.name,
-            "imageUrl": i.image
+            "imageUrl": i.image,
+            "foodsInTheRestaurant": foods,
         })
     return JsonResponse(data,safe=False)
