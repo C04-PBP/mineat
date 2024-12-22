@@ -3,6 +3,7 @@ from fnb.models import Fnb
 from django.shortcuts import render, reverse
 from django.core import serializers
 import json
+from django.contrib.auth.models import User
 from review.models import Review, ReviewLike
 from review.forms import ReviewForm
 from django.views.decorators.csrf import csrf_exempt
@@ -169,7 +170,7 @@ def create_review_flutter(request):
         data = json.loads(request.body)
         fnb_object = Fnb.objects.get(pk=data["id"])
         new_review = Review(
-            user=request.user,
+            user=User.objects.get(username=data["name"]),
             rating=data["rating"],
             makanan=fnb_object,
             text=data["content"],
