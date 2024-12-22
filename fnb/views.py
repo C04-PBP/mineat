@@ -1,3 +1,5 @@
+import json
+import uuid
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core import serializers
@@ -15,6 +17,8 @@ from django.utils.html import strip_tags
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from .forms import FnbForm
+from django.contrib.auth.models import User
+
 
 # Create your views here.
 def register(request):
@@ -139,17 +143,17 @@ def add_fnb_ajax(request):
 def show_json(request):
     data = []
     for i in Fnb.objects.all():
-        ingredients_list = ""
-        for ingredient in Ingredient.objects.filter(fnb=i):
-            ingredients_list += f"{ingredient.name}, " 
+        # Use the ingredients field from the model directly as a string
+        ingredients_list = i.ingredients if i.ingredients else ""  # Use "" if no ingredients
         data.append({
+            "id": i.id,
             "title": i.name,
             "price": i.price,
             "description": i.description,
-            "ingredients": ingredients_list,
-            "imageUrl": i.image.url
+            "ingredients": ingredients_list,  # Ensure it's a string
+            "imageUrl": i.image.url,
         })
-    return JsonResponse(data,safe=False)
+    return JsonResponse(data, safe=False)
 
 # def get_fnb_data(request, fnb_id):
 #     fnb = Fnb.objects.get(id=fnb_id)
@@ -184,4 +188,55 @@ def delete_fnb(request, id):
     fnb.delete()
     return HttpResponseRedirect(reverse('ingredient:show_filter'))
 
+@csrf_exempt
+def create_fnb_flutter(request):
+    if request.method == 'POST':
+        try:
+            # Parse the JSON data from the request
+            data = json.loads(request.body)
+            print("Received data:", data)  # Log the incoming data for debugging
+            print(type(data['ingredients']))
 
+            # Generate a random UUID for the id
+            random_id = uuid.uuid4()
+
+            # Assign a default user (e.g., the first user in the database)
+            default_user = User.objects.first()
+            if not default_user:
+                return JsonResponse({"status": "error", "message": "No default user found"}, status=500)
+
+            # Create the Fnb object with the UUID and other data
+            new_fnb = Fnb.objects.create(
+                id=random_id,  # Set the generated UUID as the ID
+                name=data["title"],
+                image=data["imageUrl"],  # Use the correct key name
+                price=data["price"],
+                description=data["description"],
+                ingredients=data["ingredients"],
+                user=default_user  # Assign the default user
+            )
+
+            # Return success response
+            return JsonResponse({"status": "success", "id": str(random_id)}, status=200)
+
+        except KeyError as e:
+            # Handle missing fields in the request body
+            print("Missing field in request data:", str(e))
+            return JsonResponse({"status": "error", "message": f"Missing field: {str(e)}"}, status=400)
+        except Exception as e:
+            # Handle other exceptions
+            print("Error occurred:", str(e))
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
+
+@csrf_exempt
+def delete_fnb_flutter(request, id):
+    if request.method == 'DELETE':
+        try:
+            fnb = Fnb.objects.get(id=id)
+            fnb.delete()
+            return JsonResponse({'message': 'Food item deleted successfully'}, status=200)
+        except Fnb.DoesNotExist:
+            return JsonResponse({'error': 'Food item not found'}, status=404)
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
