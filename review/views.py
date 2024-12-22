@@ -2,7 +2,7 @@ from django.shortcuts import render,  redirect
 from fnb.models import Fnb
 from django.shortcuts import render, reverse
 from django.core import serializers
-
+import json
 from review.models import Review, ReviewLike
 from review.forms import ReviewForm
 from django.views.decorators.csrf import csrf_exempt
@@ -160,3 +160,23 @@ def show_json(request,id):
         })
 
     return JsonResponse(data,safe=False)
+
+
+@csrf_exempt
+def create_review_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        fnb_object = Fnb.objects.get(pk=data["id"])
+        new_review = Review(
+            user=request.user,
+            rating=data["rating"],
+            makanan=fnb_object,
+            text=data["content"],
+        )
+
+        new_review.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
