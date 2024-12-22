@@ -146,7 +146,11 @@ def show_json(request):
         # Use the ingredients field from the model directly as a string
         ingredients_list = i.ingredients if i.ingredients else ""  # Use "" if no ingredients
         data.append({
+<<<<<<< HEAD
             "id": i.id,
+=======
+            "id" : i.id,
+>>>>>>> c4902da4c956f3839a5adeff2c19d167db640c40
             "title": i.name,
             "price": i.price,
             "description": i.description,

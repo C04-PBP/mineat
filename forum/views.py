@@ -16,6 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 from django.db.models import Count
+from django.utils import timezone
 
 # Create your views here.
 def show_forum(request):
@@ -105,10 +106,12 @@ def show_forum_umum_json(request):
     data = []
     for i in Forum.objects.all():
         data.append({
+            "id": i.id,
             "user": i.user.username,
             "title": i.name,
             "time_created": i.time_created.strftime('%Y-%m-%d %H:%M'),
-            "text": i.text
+            "text": i.text,
+            "reply_count": i.forum_khusus.all().count()
         })
 
     return JsonResponse(data,safe=False)
@@ -118,9 +121,53 @@ def show_forum_khusus_json(request,id):
     forum_khusus = ForumKhusus.objects.filter(forum = id)
     for i in forum_khusus:
         data.append({
+            "id": i.forum.id,
             "user": i.user.username,
             "text": i.text,
             "time_created": i.time_created.strftime('%Y-%m-%d %H:%M')
         })
 
     return JsonResponse(data,safe=False)
+
+# COBA
+@csrf_exempt
+def create_forum_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_forum = Forum.objects.create(
+            user=request.user,
+            name=data["title"],
+            time_created=timezone.now(),
+            text=data["text"]
+        )
+
+        new_replies = ForumKhusus.objects.create(
+            user=request.user,
+            forum=new_forum,
+            text=data["text"],
+            time_created=timezone.now(),
+        )
+
+        new_forum.save()
+        new_replies.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+    
+@csrf_exempt
+def create_replies_flutter(request, id):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        forum = Forum.objects.get(id=id)
+        new_replies = ForumKhusus.objects.create(
+            user=request.user,
+            forum=forum,
+            text=data["text"],
+            time_created=timezone.now(),
+        )
+        new_replies.save()
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error", "message": "Invalid method"}, status=401)
