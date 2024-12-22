@@ -6,6 +6,8 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.template.loader import render_to_string
+from restaurant.views import show_json
+from ingredient.models import Ingredient
 
 # Create your views here.
 
@@ -57,10 +59,46 @@ def update_trivia(request):
 
 def show_json(request):
     data = []
-    for i in Location.objects.all():
-        data.append({
+    restaurant_data = []
+    restaurantsInTheDistrict = []
+    for i in Restaurant.objects.all():
+        foods = []
+        for j in i.fnb.all():
+            
+
+            ingredients_list = ""
+
+            for ingredient in Ingredient.objects.filter(fnb=j):
+                    ingredients_list += f"{ingredient.name}, "
+            foods.append(
+                {
+                    "id" : j.id,
+                    "title": j.name,
+                    "price": j.price,
+                    "description": j.description,
+                    "ingredients": ingredients_list,
+                    "imageUrl": j.image.url
+                }
+            )
+        restaurant_data.append({
             "title": i.name,
-            "imageUrl": i.image
+            "address" : i.address,
+            "district" : i.location.name,
+            "imageUrl": i.image,
+            "foodsInTheRestaurant": foods,
         })
+    for k in Location.objects.all():
+        for l in restaurant_data:
+            if k.name == l['district']:
+                print(k.name)
+                print(l['district'])
+                restaurantsInTheDistrict.append(l)
+        data.append({
+            "title": k.name,
+            "imageUrl": k.image,
+            "trivia": k.trivia,
+            "restaurantsInTheDistrict": restaurantsInTheDistrict,
+        })
+        restaurantsInTheDistrict = []
     return JsonResponse(data,safe=False)
 
