@@ -131,3 +131,33 @@ def show_json(request):
             "foodsInTheRestaurant": foods,
         })
     return JsonResponse(data,safe=False)
+
+def show_json_by_id(request, id):
+    data = []
+    for i in Restaurant.objects.filter(name=id):
+        foods = []
+        for j in i.fnb.all():
+            
+
+            ingredients_list = ""
+
+            for ingredient in Ingredient.objects.filter(fnb=j):
+                    ingredients_list += f"{ingredient.name}, "
+            foods.append(
+                {
+                    "id" : j.id,
+                    "title": j.name,
+                    "price": j.price,
+                    "description": j.description,
+                    "ingredients": ingredients_list,
+                    "imageUrl": j.image.url
+                }
+            )
+        data.append({
+            "title": i.name,
+            "address" : i.address,
+            "district" : i.location.name,
+            "imageUrl": i.image,
+            "foodsInTheRestaurant": foods,
+        })
+    return JsonResponse(data,safe=False)
