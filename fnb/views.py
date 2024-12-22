@@ -21,6 +21,7 @@ from django.contrib.auth.models import User
 
 
 # Create your views here.
+@csrf_exempt
 def register(request):
     form = UserCreationForm()
 
@@ -33,6 +34,7 @@ def register(request):
     context = {'form':form}
     return render(request, 'register.html', context)
 
+@csrf_exempt
 def login_user(request):
    if request.method == 'POST':
       form = AuthenticationForm(data=request.POST)
@@ -47,6 +49,7 @@ def login_user(request):
    context = {'form': form}
    return render(request, 'login.html', context)
 
+@csrf_exempt
 def logout_user(request):
     logout(request)
     return redirect('landing_page')
