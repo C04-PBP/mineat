@@ -140,20 +140,36 @@ def add_fnb_ajax(request):
     return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
 
 
+# def show_json(request):
+#     data = []
+#     for i in Fnb.objects.all():
+#         # Use the ingredients field from the model directly as a string
+#         ingredients_list = i.ingredients if i.ingredients else ""  # Use "" if no ingredients
+#         data.append({
+#             "id" : i.id,
+#             "title": i.name,
+#             "price": i.price,
+#             "description": i.description,
+#             "ingredients": ingredients_list,  # Ensure it's a string
+#             "imageUrl": i.image.url,
+#         })
+#     return JsonResponse(data, safe=False)
+
 def show_json(request):
     data = []
     for i in Fnb.objects.all():
-        # Use the ingredients field from the model directly as a string
-        ingredients_list = i.ingredients if i.ingredients else ""  # Use "" if no ingredients
+        ingredients_list = ""
+        for ingredient in Ingredient.objects.filter(fnb=i):
+            ingredients_list += f"{ingredient.name}, " 
         data.append({
-            "id" : i.id,
+            "id": i.id,
             "title": i.name,
             "price": i.price,
             "description": i.description,
-            "ingredients": ingredients_list,  # Ensure it's a string
-            "imageUrl": i.image.url,
+            "ingredients": ingredients_list if ingredients_list else i.ingredients,
+            "imageUrl": i.image.url
         })
-    return JsonResponse(data, safe=False)
+    return JsonResponse(data,safe=False)
 
 # def get_fnb_data(request, fnb_id):
 #     fnb = Fnb.objects.get(id=fnb_id)
@@ -240,3 +256,38 @@ def delete_fnb_flutter(request, id):
         except Fnb.DoesNotExist:
             return JsonResponse({'error': 'Food item not found'}, status=404)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@csrf_exempt
+def update_fnb_flutter(request, id):
+    if request.method == "PUT":
+        try:
+            # Parse the JSON data from the request body
+            data = json.loads(request.body)
+            print("Received data for update:", data)
+
+            # Get the Fnb object by ID
+            fnb = get_object_or_404(Fnb, id=id)
+
+            # Update the Fnb object with the new data
+            fnb.name = data.get("title", fnb.name)
+            fnb.description = data.get("description", fnb.description)
+            fnb.price = data.get("price", fnb.price)
+            fnb.image = data.get("imageUrl", fnb.image)
+            fnb.ingredients = data.get("ingredients", fnb.ingredients)
+            fnb.save()
+
+            # Return a success response
+            return JsonResponse({"status": "success", "message": "Fnb updated successfully"}, status=200)
+
+        except KeyError as e:
+            # Handle missing fields in the request data
+            return JsonResponse({"status": "error", "message": f"Missing field: {str(e)}"}, status=400)
+
+        except Exception as e:
+            # Handle other errors
+            print("Error occurred while updating Fnb:", str(e))
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+    # Return an error if the request method is not PUT
+    return JsonResponse({"status": "error", "message": "Invalid request method"}, status=405)
+
